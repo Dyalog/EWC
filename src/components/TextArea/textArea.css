@@ -1,0 +1,24 @@
+.textArea:focus {
+  outline: none;
+  border: none;
+}
+
+.textArea:active {
+  outline: none;
+  border: none;
+}
+
+.textArea::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
+.textArea::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.textArea {
+  resize: none;
+  overflow: hidden;
+  border: none;
+  outline: none;
+}

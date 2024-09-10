@@ -1,0 +1,132 @@
+.scroll-bar-icon {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.scroll-bar-icon-vertical {
+  transform: rotate(0deg);
+}
+
+.scroll-bar-icon-horizontal {
+  transform: rotate(90deg);
+  
+}
+
+.scroll-bar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+}
+
+
+/* Track */
+.track {
+  background-color: #ccc;
+  position: relative;
+}
+
+/* Thumb */
+.thumb {
+  background-color: grey;
+  position: absolute;
+  cursor: pointer;
+}
+
+/* ScrollBar.css */
+
+/* ScrollBar Container */
+.scroll-bar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+/* Track */
+.track {
+  background-color: #ccc;
+  position: relative;
+  border-radius: 5px;
+}
+
+/* Thumb */
+.thumb {
+  background-color: grey;
+  position: absolute;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+/* Vertical Arrow Icons */
+.arrow-icon.up,
+.arrow-icon.down {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}
+
+/* Horizontal Arrow Icons */
+.arrow-icon.left,
+.arrow-icon.right {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}
+
+/* Centering Arrow Icons */
+.arrow-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: lightgray;
+  border-radius: 50%;
+  margin: 5px; /* Adjust margin as needed */
+}
+
+/* Add any additional styles as needed */
+
+/* Example: */
+.arrow-icon svg {
+  fill: white;
+}
+
+/* Optional: Hover effect for arrow icons */
+.arrow-icon:hover {
+  background-color: darkgray;
+}
+
+.icon-style {
+  position: absolute;
+  /* width: 10px;
+  height: 10px; */
+  text-align: center;
+  background-color: #ccc;
+  cursor: pointer;
+  display: block;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  color: grey;
+  border: 1px solid white;
+  font-size: 10px;
+}
+
+.scroll-bar {
+  background-color: lightgray;
+  border: 1px solid white;
+}
+
+.scroll-bar:hover .scroll-bar-icon,
+.scroll-bar:hover + .scroll-bar-icon,
+.scroll-bar:hover .scroll-bar-icon.showButtons {
+  opacity: 1;
+}

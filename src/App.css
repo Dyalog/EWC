@@ -1,0 +1,46 @@
+* {
+  margin: 0;
+  padding: 0;
+  /* font-family: 'Great Vibes', cursive;
+  font-family: 'Noto Sans', sans-serif;
+  font-family: 'Open Sans', sans-serif; */
+  font-family: 'Noto Sans', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+input[type='number'] {
+  text-align: right;
+}
+
+input[type='number']:focus {
+  outline: none;
+  border-bottom: 2px solid blue !important;
+}
+
+input[type='date']:focus {
+  outline: none;
+}
+
+input[type='text']:focus {
+  outline: none;
+  border-bottom: 2px solid blue !important;
+  /* outline-color: blue; */
+}
+
+select:focus-visible {
+  outline-style: dotted;
+}
+
+.custom-select::after {
+  content: '\25BC';
+}
+
+.split-sash-content.split-sash-content-vscode.split-sash-content-active {
+  background-color: #f0f0f0;
+}
+/* input[type='date']::-webkit-calendar-picker-indicator {
+  display: none;
+} */
+
+div:focus {
+  outline: none; /* This removes the outline */
+}
