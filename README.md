@@ -8,4 +8,4 @@ To experiment with it:
 * Start Dyalog APL Unicode Version 18.2 or later
 * ]link.create # /tmp/ewc
 
-For more documentation, see the [User Guide](https://dyalog.github.io/ewc/0.1/).
+For more documentation, see the [User Guide](https://dyalog.github.io/EWC/0.1/).
