@@ -1,0 +1,113 @@
+ {end}←processEvent ns;Info;ID;Event;event;events;fns;info;fn;z;async;class;e;code;res;gui;shift;k;i
+
+ :If 2=ns.⎕NC'CodeLocation'
+     code←⍎ns.CodeLocation
+ :Else
+     code←CODELOCATION
+ :EndIf
+
+ :If 9=code.⎕NC '_EWC_GUI_NS'
+     gui←code._EWC_GUI_NS
+ :Else
+     gui←code
+ :EndIf
+
+ end←0
+ (Event ID Info)←ns.Event.(EventName ID({0::⍵ ⋄ Info}⍬))
+
+ :If Event≡'KeyPress'
+ :AndIf (≢JSKeys)≥z←JSKeys⍳Info[1]
+     shift←4⊃Info
+     Info[1 2]←(k←⊃APLKeys[z;1+2⌊4⊃Info]) ({⍵×⍵∊8 9 10}3⊃Info)
+     :If shift>2 ⋄ Info[1]←⊂'' ⋄ :EndIf
+     →(0≡k)⍴0 ⍝ Ignore KeyPress with 0 in APLKeys (Shift/Ctrl & friends)
+     :If Info[3]=13
+         Info[2]←Info[3]-3×Info[4]=2 ⍝ Last condition puts 10 in for ctrl+enter
+     :ElseIf Info[3]=9
+         Info[2]←Info[3]×Info[4]≠2
+     :ElseIf 229 2≡Info[3 4] ⍝ Ctrl BS
+         Info[1 2 3]←'' 127 8
+     :EndIf
+ :EndIf
+
+ :Trap 6
+     :If ID≡⊂'null'
+         'E'Log'Client sent null ID'
+         →0
+     :Else
+         event←gui⍎z←ID,'.Event'
+     :EndIf
+ :Else
+     'E'Log'*** Unable to find ',z,', cannot process ',⎕JSON ns
+     →0
+ :EndTrap
+
+ (events fns)←↓⍉↑event
+ :If ~(⊂Event)∊events
+     'E'Log'*** No callback defined for event ',Event,' on object ',ID
+     →0
+ :EndIf
+
+ fn←⊃info←(events⍳⊂Event)⊃fns
+ 'P' Log 'Action = ',(⍕fn),' for ',(⎕JSON ns.Event),' at ',⎕SI,¨'[',¨(⍕¨⎕LC),¨']'
+ →((fn≡¯1)∨end←fn≡1)⍴0
+
+ async←'&'=¯1↑fn
+ fn←(⍕code),'.',(-async)↓fn
+ res←⍬
+
+ :Hold 'EWC.processEvent',⍕code
+     :If (⊂Event)∊⊆2⊃BREAK
+     :OrIf (⊂ID)∊⊆1⊃BREAK
+         ⎕←'Stopping on ',⎕JSON ns
+         ∘∘∘
+     :EndIf
+
+     :If 3≠⎕NC fn
+         'E'Log'Callback function not found: ',fn
+     :ElseIf 1=≢info
+         'P'Log'    Monadic',(async/' async'),' call to ',fn
+         :If async
+             (⍎fn)&(ID Event),Info
+         :ElseIf 0=1 2⊃⎕AT fn ⍝ Niladic fn
+             ⍎fn
+         :Else
+             :Trap 85 ⍝ No result
+                 res←0(85⌶)fn,'(ID Event),Info'
+             :EndTrap
+         :EndIf
+     :ElseIf 2=≢info
+         'P'Log'    Dyadic',(async/' async'),' call to ',fn
+         :If async
+             (2⊃info)(⍎fn)&(ID Event),Info
+         :Else
+             :Trap 85
+                res←0(85⌶)'(2⊃info)',fn,'(ID Event),Info'
+             :EndTrap
+         :EndIf
+     :Else
+         'E'Log'*** Ill-formed event: ',⍕event
+     :EndIf
+ :EndHold
+
+ :If 6=i←⍬ 1 (,1) 0 (,0) ⍳ ⊂res
+ :AndIf res≢ID Event,Info
+     'D'Log'Callback function ',fn,' returned modified event: ',⍕res
+ :EndIf
+
+ :If 2=ns.Event.⎕NC 'EventID' ⍝ Is client expecting a response?
+     sendCBResponse ns.Event.EventID (i≤3) ns.Conn ⍝ Proceed if res∊⍬ 1 (,1)
+ :EndIf
+
+ :If 1 ⍝ Recording events
+ :AndIf 9=⎕NC(⍕code),'.',ID
+ :AndIf 9=⎕NC class←'classes.',⎕C code⍎ID,'.Type'
+     class←⍎class
+     e←{0::⍵ ⋄ class.SupportedEvents}''
+     :If ~(⊂Event)∊e
+     :AndIf isChar Event
+         'D'Log'Adding event ',Event,,' to ',⍕class
+         class.SupportedEvents←∪e,⊂Event
+         ⎕SE.Link.Add(⍕class),'.SupportedEvents'
+     :EndIf
+ :EndIf

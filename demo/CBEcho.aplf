@@ -1,0 +1,2 @@
+CBEcho args
+⎕←'   Event received:' args

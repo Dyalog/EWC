@@ -1,0 +1,32 @@
+ DemoFlexBoxes connected;BY;BX;RY;RX;P;formsize;cols;rows;points;sizes;radii;colours;flex;vert;horz
+ EWC.CONNECTED←connected
+ ⎕PW←1000
+
+ formsize←600 400
+ (rows cols)←3 2
+
+ ⍝ vert←'flex-direction: column, margin: 5px'
+ ⍝ horz←'flex-direction: row, flex-wrap: wrap, justify-content: space-between, gap: 5px, align-items: end'
+
+ 'F1'eWC'Form' 'Boxes and Lines'(50 50)formsize('Coord' 'Pixel')('Flex' 'fill')('Event' 'Configure' 'CBUpdateLinesFlex')
+ 'F1.FNT'eWC'Font' 'Segoe UI'('Size' 20)
+
+ 'F1.INPUT'eWC'SubForm'('Size'(100,1↓formsize))('Border' 1)('Flex' 'row')
+
+ 'F1.INPUT.ROWS'eWC'SubForm'('Flex' 'column')
+ 'F1.INPUT.ROWS.L'eWC'Label' 'Rows'
+ 'F1.INPUT.ROWS.EDIT'eWC'Edit'(⍕rows)('FieldType' 'Numeric')('Event' 'GotFocus' 'CBEchoGotFocus')('FontObj' 'F1.FNT')('EdgeStyle' 'Ridge')
+
+ 'F1.INPUT.COLS'eWC'SubForm'('Flex' 'column')
+ 'F1.INPUT.COLS.L'eWC'Label' 'Cols'
+ 'F1.INPUT.COLS.EDIT'eWC'Edit'(⍕cols)('FieldType' 'Numeric')('Event' 'GotFocus' 'CBEchoGotFocus')('FontObj' 'F1.FNT')('EdgeStyle' 'Ridge')
+
+ 'F1.INPUT.GO'eWC'Button' 'Draw Boxes'('Size'(23 80))('Event' 'Select' 'CBUpdateLinesFlex')
+ 'F1.INPUT.CLR'eWC'Button' 'Clear'('Size'(23 50))('Event' 'Select' 'CBUpdateLinesFlex')
+ 'F1.INPUT.HIDE'eWC'Button' 'Hide Graphics'('Size'(23 110))('Style' 'Check')('Event' 'Select' 'CBUpdateLinesFlex')
+
+ 'F1.INPUT.DEMO'eWC'SubForm'('Flex' 'column')
+
+ 'F1.BX'eWC'SubForm' ('Flex' 'Column') ⍝ To draw boxes in
+
+ CBUpdateLinesFlex,⊂'F1.INPUT.GO'

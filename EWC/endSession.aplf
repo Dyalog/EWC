@@ -1,0 +1,14 @@
+r←endSession args;⎕TRAP;rc;conn;event;m;id
+⎕TRAP←0 'S'
+(rc conn event)←3↑args
+m←(2⊃SESSIONS)≠⊃2⊃⎕VFI ¯8↑conn
+
+:If 1=≢id←(~m)/1⊃SESSIONS
+    :If MODE=2
+       'W' Log 'Closing session w/out Signal',⍕id
+    :EndIf
+    SESSIONS←(m∘/¨2↑SESSIONS),m/2↓SESSIONS
+:Else
+    'W' Log 'Session not found for closed connection ',conn
+:EndIf
+WSS.Conx←(~WSS.Conx[;1]∊⊂conn)⌿WSS.Conx

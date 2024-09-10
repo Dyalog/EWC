@@ -1,0 +1,14 @@
+ demoDrawBoxesFlex(form size rows cols);sf;boxsize;starts;n;sizes;radii;fstyles;fcol;fills
+⍝ Draw a subform and put boxes in it
+
+ sf←form,'.BX'
+ size←sf eWG 'Size'
+
+ boxsize←size÷rows cols
+ n←≢starts←⌊,(¯0.95++⍳rows cols)×⊂boxsize
+ sizes←n⍴⊂⌊0.9×boxsize
+ radii←5 5 ⍝ n⍴⊂5 5
+ fcol←n⍴⊂0 0 0 ⍝ Black
+ fills←n⍴↓255×⍉2 2 2⊤¯1+⍳16
+ fstyles←n⍴0 ¯1
+ (sf,'.R1')eWC'Rect'(↓⍉↑starts)(↓⍉↑sizes)(radii)fcol('FillCol'fills)('FStyle'fstyles)

@@ -1,0 +1,58 @@
+ {mode} Run web;rc;msg;r;root;seps
+ ⍝ Initialise the Demo application
+ ⍝ web: 'Desktop' (0), 'Browser' (1) or 'Multi' (2)
+
+ COORD←'Pixel'
+ EWC←##.EWC
+ EWC.PORT←22322
+ EWC.SHOWDEVTOOLS←0
+ root←{⊃⎕NPARTS ¯1↓⍵}⊃⎕NPARTS 4⊃5179⌶⊃⎕SI
+ EWC.RESOURCES←1 2⍴'images'(root,'/demo/images')
+
+ :If 2=⎕NC 'mode'
+     MODE←mode
+ :Else
+     MODE←'Demo' ⍝ Only display demos listed in DEMOS
+ :EndIf
+
+ ⎕USING←''
+ ⍝ seps←System.Globalization.CultureInfo.CurrentCulture.NumberFormat.(NumberDecimalSeparator NumberGroupSeparator)
+ ⍝ EWC.settings.Locale.(Decimal Thousand)←seps
+
+ :Trap 0
+     'e'EWC.Init web
+ :Else
+     (⊃⎕DMX.DM)⎕SIGNAL⊃⎕DMX.EN
+ :EndTrap
+ EWC.NOIDQ←0 ⍝ Allow interactive DQ while running demo
+
+ :Select EWC.MODE
+ :Case 0 ⍝ Desktop
+     ⎕SE.Posn←200 300
+     DemoMenu 1
+     :If EWC.NOIDQ
+        r←eDQ'F1'
+        EWC.Stop
+        ⎕EX'F1'
+     :EndIf
+
+ :Case 1 ⍝ Browser
+     ⎕←'Connect Browser to port ',(⍕EWC.PORT),' ...'
+     :Repeat
+        ⍞←'.'
+        ⎕DL 1
+     :Until 2=⎕NC'_EWC.ID'
+     ⎕←''
+     :If '''Browser'''≡¯5↑2 ⎕NQ'.' 'GetEnvironment' 'LX'
+         ⎕←r←eDQ'.'
+         :If r≡'F1' 'Close'
+             ⎕←'Bye bye...'
+             ⎕DL 3
+             ⎕OFF
+         :EndIf
+         ∘∘∘ ⍝ Abnormal web termination
+     :EndIf
+
+  :Case 2 ⍝ Multi
+     ⎕←'Running in Multi mode on port ',(⍕EWC.PORT)
+  :EndSelect

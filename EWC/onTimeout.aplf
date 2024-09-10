@@ -1,0 +1,6 @@
+r←onTimeout args;m;conns
+
+:If 2=⎕NC 'WSS.Conx'
+:AndIf ∨/m←~WSS.LDRC.Exists¨conns←WSS.Conx[;1]
+    endSession¨{0 ⍵ 'Close'}¨m/conns
+:EndIf

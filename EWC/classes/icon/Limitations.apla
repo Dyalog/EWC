@@ -1,0 +1,5 @@
+(
+ 'The `File` property must refer to a file which resides in one of the folders'
+ 'defined in the EWC.RESOURCES array. See [Images](../Discussion/Images.md)'
+ 'for more information.'
+)

@@ -1,0 +1,11 @@
+setDefaults
+⍝ Establish defaults - Looking forward to ⎕VGET
+
+ 'MAXLOG'       default 2000
+ 'LOGMODES'     default ⎕A ⍝ Log everything (see Log)
+ 'RESOURCES'    default 1 2⍴⊂''
+ 'PORT'         default 22322
+ 'MAXSESSIONS'  default 100
+ 'BREAK'        default ⍬ ⍬ ⍝ IDs Events
+ 'SHOWDEVTOOLS' default 0
+ 'FONTMAP'      default FontMap

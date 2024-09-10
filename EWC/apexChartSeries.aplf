@@ -1,0 +1,52 @@
+ series←apexChartSeries data;n;yvalues;i
+⍝ Massage an array into ApexCharts Series format
+⍝     (if a namespace or JSON string is provided, just pass it through
+⍝ Accepted formats:
+⍝    simple numeric vector or matrix, or vector of numeric vectors: One or more series
+⍝    one simple matrix and one simple vector: Multiple series with one set of xvalues
+⍝    nested array is interpreted as two up to four parameters:
+⍝        y-values series-name x-values chart-type
+
+ :If 9=⎕NC'data'                            ⍝ scalar namespace
+     series←,data                           ⍝    Series must be a list
+
+ :ElseIf 80=⎕DR data ⍝ character
+     :Trap 0
+         series←,0 ⎕JSON⍠'Dialect' 'JSON5'⊣data ⍝ Better be JSON then
+     :Else
+         (⊃⎕DMX.Message)⎕SIGNAL 501
+     :EndTrap
+
+ :ElseIf (10|⎕DR data)∊1 3 5 7              ⍝ Non-Complex numeric data
+     data←(¯2↑1 1,⍴data)⍴data               ⍝ Make vector 1-row matrix
+     series←⎕NS¨(≢data)⍴⊂''
+     series.data←↓data
+
+ :ElseIf (1∧.=≡¨data)∧(10|⎕DR∊data)∊1 3 5 7 ⍝ Vector of numeric arrays
+     :If (2=⍴data)∧(2 1≡≢∘⍴¨data)           ⍝ Matrix and vector?
+         series←⎕NS''
+         series.data←⎕NS¨(≢2⊃data)⍴⊂''
+         series.data.x←2⊃data
+         series.data.y←↓⍉⊃data
+     :Else                                  ⍝ Vector of vectors
+         series←⎕NS¨(≢data)⍴⊂''
+         series.data←data
+     :EndIf
+     series←,series
+
+ :ElseIf (1∧.=≡¨yvalues)∧(10|⎕DR∊yvalues←⊃¨data)∊1 3 5 7  ⍝ 1st element of each vector is numeric
+     n←≢¨data
+     series←⎕NS¨(≢data)⍴⊂''
+     series.data←{⎕NS¨(≢⍵)⍴⊂''}¨yvalues     ⍝ One namespace per data point
+     series.data.y←yvalues
+     :If 0<≢i←⍸n≥2                          ⍝ Got name?
+         series[i].name←2⊃¨data[i]
+     :AndIf 0<≢i←⍸n≥3                       ⍝ Got xvalues?
+         series[i].data.x←3⊃¨data[i]
+     :AndIf 0<≢i←⍸n≥4                       ⍝ Got chart type
+         series[i].type←4⊃¨data[i]
+     :EndIf
+
+ :ElseIf
+     'Invalid series format'⎕SIGNAL 501
+ :EndIf

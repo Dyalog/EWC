@@ -1,0 +1,103 @@
+ r←con Handler payload;ns;Event;ID;Info;events;fns;fn;event;reqfn;info;sns;i;code;conn;coni;sock;z;m;msg;sessionspace;form;hr;CALLER;app;new;old;token;TID;URL
+ ⎕TRAP←0 'S'
+ 'R'Log'#',(⍕con),': ',payload
+ i←(2⊃SESSIONS)⍳con
+ :If i>≢1⊃SESSIONS
+     'W'Log'Message received from closed session #',⍕con
+     →0
+ :EndIf
+ code←(sessionspace←(2+i)⊃SESSIONS).code
+
+ :If (⊂10↑payload)∊'Initialise' 'Initialize' '{"Initiali'
+     :If 2=⎕NC'IGNORE1Init'
+     :AndIf IGNORE1Init≠0
+         IGNORE1Init←0
+         :Return
+     :EndIf
+
+     :If '{'=⊃payload
+     :AndIf 0≠≢ns←{0::⍬ ⋄ (⎕JSON ⍵).Initialise}payload
+         :If 2=ns.⎕NC 'Version' ⋄ CLIENTVERSION←ns.Version ⋄ :EndIf
+         :If 2=ns.⎕NC 'Function' ⋄ fn←reqfn←ns.Function ⋄ :Else ⋄ fn←'' ⋄ :EndIf
+         :If 2=ns.⎕NC 'URL' ⋄ URL←ns.URL ⋄ :Else ⋄ URL←'' ⋄ :EndIf
+     :Else
+         fn←reqfn←(10↓payload)~'()'
+     :EndIf
+     fn,←(0=≢fn)/'Initialise'
+     app←code
+     app._EWC.URL←URL
+     app._EWC.QUERY←ParseQueryString (URL⍳'?')↓URL
+     app._EWC.HDRS←⊃WSS.Conx[(¯8↑¨WSS.Conx[;1])⍳⊂,'ZI8' ⎕FMT con;2]
+     :If 0≠app.⎕NC 'workNamespace' ⍝ /// change this name in DWI
+        app←app.workNamespace
+     :EndIf
+     :If 3=app.⎕NC fn
+         app._EWC.TID←(app⍎fn)&CONNECTED
+     :ElseIf 0≠≢reqfn ⍝ Explicit function requested
+         'E'Log'Initialise: Function not found: ',(⍕code),'.',fn
+     :EndIf
+ :Else
+     :Trap 999
+         :If 0=⎕NC 'code._EWC'
+             'E' Log '_EWC not found in ',⍕code
+             →0
+         :EndIf
+         sns←code._EWC ⍝ Session Namespace
+         :Trap 11 ⍝ DOMAIN ERROR
+             ns←0 ⎕JSON sns.buffer,payload
+             sns.buffer←''
+         :Else
+             :If 1=⎕DMX.ENX ⍝ unexpected end of input
+                 sns.buffer,←payload
+                 →0         ⍝ fight another day
+             :EndIf
+         :EndTrap
+
+         :Select ,ns.⎕NL 9
+         :Case 'Event'
+             ns.Conn←con
+             ns ⎕TPUT token←DQ_TOKENBASE+TOKENSTEP×1⌈sns.ID×MODE=2
+             'N' Log 'NQ of token ',(⍕token),': ',⎕JSON ns
+             :Hold 'EWC_DQTOKENS'
+                 :If 0=≢DQTOKENS ⍝ No active DQ
+                    'N' Log '    Poking ',(⍕sns),'.TIMER'
+                    sns.⎕NQ'TIMER' 1001 ⍝ Wake it up
+                 :EndIf
+             :EndHold
+         :CaseList 'WG' 'WX'
+             ns ⎕TPUT WG_TOKENBASE+TOKENSTEP×1⌈sns.ID×MODE=2 ⍝ ⊃getConnection sns ns.WG.ID
+         :Case 'FormatCell'
+             :If 0≠≢msg←code formatCell ns
+                 'T'Log('#',⍕con),': ',msg
+                 z←con WSS.Send msg
+             :EndIf
+         :Case 'Signal'
+             :If ns.Signal.Name≡'Close' ⍝ Client about to close the socket
+                 closeConnection con
+             :Else
+                 'E'Log'Unknown signal received: ',payload
+             :EndIf
+         :Case 'DeviceCapabilities'
+             devCaps←sessionspace.devCaps←(0 ⎕JSON payload).DeviceCapabilities
+             'code._EWC' ⎕NS 'devCaps'
+             :If MODE=0 ⍝ Desktop
+                 :For form :In 'Form'∆WN code
+                     :If 9=⎕NC form,'.HR'
+                         hr←⍎form,'.HR'
+                         CALLER←code
+                         old←⍎form,'.(Posn,Size)'
+                         new←hr.Posn,hr.Size-HRBorder
+                         :If old≢new
+                             ∆NQ form 'Configure',new
+                         :EndIf
+                     :EndIf
+                 :EndFor
+             :EndIf
+         :Else
+             'E'Log'Invalid message received: ',payload
+         :EndSelect
+     :Else
+         'E'Log'Message processing failed:'
+         'E'Log←↑⎕DMX.DM
+     :EndTrap
+ :EndIf

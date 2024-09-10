@@ -1,0 +1,120 @@
+ {prefix}Init args;mode;z;i;t;fn;folder;⎕TRAP;DPR_FORM;_EWC
+ ⎕IO←⎕ML←1
+
+ ⎕TRAP←0 'S'
+ CLIENTVERSION←'0.0.0' ⍝ Until we know better
+
+ :If 80=⎕DR args ⋄ args←⊆args ⋄ :EndIf
+ :Select ≢args←,args
+ :Case 1 ⋄ mode←⊃args ⋄ CODELOCATION←⊃⎕RSI
+ :Case 2 ⋄ (mode CODELOCATION)←args
+ :Else
+     'Right agument: mode [codelocation]'⎕SIGNAL 5
+ :EndSelect
+
+ :If 0=⎕NC'prefix'
+     prefix←'e'
+ :EndIf
+
+ :If ~(⊂mode)∊0 1 2
+     mode←¯1+'desktop' 'browser' 'multi'⍳⊂⎕C mode,(0=≢mode)/'desktop'
+     'Mode argument should be one of Desktop/0, Browser/1 or Multi/2'⎕SIGNAL(mode=3)/11
+ :EndIf
+
+ :If (mode=2)∧prefix≠'e'
+     'e is the only permitted prefix in Multi mode' ⎕SIGNAL 11
+ :EndIf
+
+ USEHR←mode=0
+ MODE←mode
+
+ :Trap 0
+     z←1÷CODELOCATION ⎕THIS≡⍎⍕CODELOCATION ⎕THIS ⍝ Will DOMAIN ERROR if not OK
+ :Else
+     'EWC only works with named namespaces'⎕SIGNAL 11
+ :EndTrap
+
+ TOOLSPACES←⎕THIS,{0::⍬ ⋄ ∪#.DWI∩⎕RSI}⍬
+
+ :If mode=2
+     :If CODELOCATION∊# ⎕SE
+     :OrIf 3≠CODELOCATION.⎕NC'Init'
+         'Multi-mode must be initialised from a namespace containing a function Init'⎕SIGNAL 11
+     :EndIf
+ :EndIf
+
+
+ EWCFolder←⊃⎕NPARTS 4⊃5179⌶⊃⎕SI
+
+ :If 0=⎕NC'JSClientFolder'
+     :If ⎕NEXISTS folder←'jswc-client/dist/',⍨{⊃⎕NPARTS ¯1↓⍵}⍣2⊢EWCFolder ⍝ Is there a separate checkout of client?
+         JSClientFolder←folder
+     :ElseIf ⎕NEXISTS folder←(⊃⎕NPARTS ¯1↓EWCFolder),'/client/dist/'
+         JSClientFolder←folder
+     :Else
+         'Unable to locate EWC Client'⎕SIGNAL 11
+     :EndIf
+ :EndIf
+ ⎕←'Using client found at ',JSClientFolder
+
+ setDefaults
+
+ establishCovers CODELOCATION prefix
+
+ CONNECTED←1 ⍝ /// This should go
+ RECORD←0
+ USEWIN32←0
+
+ :If MODE≠2 ⍝ Only going to have 1 instance of codelocation
+     make_EWC CODELOCATION ⍝ So create the timer here
+ :EndIf
+
+ :If 9=⎕NC 'WSS'
+     ⎕←'Closing existing Web Socket Server...'
+     WSS.Stop
+     ⎕DL 5
+ :EndIf
+
+ WSS←wss.New''
+ :If 9=⎕NC'#.DRC'
+     WSS.LDRC←#.DRC
+ :EndIf
+ WSS.HTMLFolder←JSClientFolder
+ WSS.ShowHTMLRenderer←0
+ WSS.Aliases←RESOURCES
+ WSS.OnConnect←''
+ WSS.OnWSUpgrade←(⍕⎕THIS),'.newSession'
+ WSS.OnHTTPHeader←''
+ WSS.OnWSReceive←''
+ WSS.OnClose←(⍕⎕THIS),'.endSession'
+ WSS.OnTimeout←(⍕⎕THIS),'.onTimeout'
+ WSS.Handler←'Handler'
+ WSS.Port←PORT
+ WSS.WaitTimeout←500
+
+ allocateTokens
+ DQTOKENS←⍬      ⍝ No tokens currently being DQ's
+
+ HRBorder←40 17  ⍝ Additional space required for HR chrome
+ MENUOffset←23 0 ⍝ Space to allow for menu
+ NOIDQ←1      ⍝ No interactive DQ
+ WGID←0
+ WG_TIMEOUT←3 ⍝ Seconds to wait for response
+ SESSIONS←⍬ ⍬ ⍝ (IDs, Connections, SessionData)
+ QUEUEIDS←QUEUEDATA←⍬
+
+ (EVENTNUMS EVENTNAMES)←↓⍉EVENTS
+ eventNames←⎕C EVENTNAMES
+
+ (JSKeys APLKeys)←1 1 0 0⊂keyMap ⋄ JSKeys←,JSKeys
+
+ z←WSS.Start 0
+ :If 0≠⊃⊃z
+     (⍕z)⎕SIGNAL 11
+ :EndIf
+
+ :If 4≤⍴devCaps←'.' ⎕WG 'DevCaps'
+     DPR←100÷⍨4⊃devCaps
+ :Else
+     DPR←1
+ :EndIf

@@ -1,0 +1,21 @@
+ {R}←∆EX names;caller;msg;ex;EX;z;⎕TRAP;cn;n;ID;conn
+ ⎕TRAP←0 'S'
+ names←,⊆names
+ n←≢cn←⍕caller←findCaller
+ names←((1+n)×(n↑¨names)∊⊂cn)↓¨names
+ (ID conn)←getConnection caller names
+ 'D' Log 'EX at ',⍕2↑showCallStack
+
+ EX←⎕NS''
+ ex←EX.EX←⎕NS''
+ ex.ID←names
+
+ R←caller.⎕EX names
+ msg←⎕JSON EX
+
+ :If CONNECTED
+     z←conn WSS.Send msg
+     'T' Log msg
+ :Else
+     'T' Log '(not connected): ',msg
+ :EndIf

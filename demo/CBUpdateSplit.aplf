@@ -1,0 +1,60 @@
+CBUpdateSplit args;e;scores;cols;fcol;pass;X;Y;H;W;label;txt;rs;rp;sp;ss;ls;t;fs;ts;bp;bs;width;depth;menusize
+Event←⎕NS ''
+e←Event.Event←⎕NS ''
+e.(ID EventName Info)←(2↑args),⊂2↓args
+⎕←⎕JSON e
+label←'F1.RIGHT.TOP.Average'
+
+:Select 1⊃args
+:Case 'F1' ⍝ Configure
+     :If 9=⎕NC 'F1.RIGHT.TOP.DEPTH'
+        'F1.RIGHT.TOP.DEPTH' eWS 'Value' (5⊃args)
+        'F1.RIGHT.TOP.WIDTH' eWS 'Value' (6⊃args)
+     :EndIf
+:Case 'F1.RIGHT.BOT.TABLE.Players' ⍝ CellChanged
+     scores←('F1.RIGHT.BOT.TABLE.Players' eWG 'Values')[;3]
+     label eWS 'Caption' ('Average score:',1⍕+/scores÷≢scores)
+:Case 'F1.RIGHT.TOP.RESIZE'
+     depth←'F1.RIGHT.TOP.DEPTH' eWG 'Value'
+     width←'F1.RIGHT.TOP.WIDTH' eWG 'Value'
+     eNQ 'F1' 'Configure',('F1' eWG 'Posn'),depth width
+     menusize←'F1.MENU' eWG 'Size'
+:CaseList 'F1.SPLIT' 'F1.RIGHT.SPLIT'
+     (X Y H W)←4↑e.Info
+     txt←,⍕('XYHW',¨':'),¨⍕¨X Y H W
+
+     :Select 1⊃args
+     :Case 'F1.SPLIT' ⍝ Validate move of vertical splitter
+        (fs ls)←'F1' 'F1.LEFT' eWG¨ 'Size' 'Size'
+        (rs rp)←'F1.RIGHT' eWG 'Size' 'Posn'
+        (ss sp)←'F1.SPLIT' eWG 'Size' 'Posn'
+        :If ls[2]≠sp[2]
+            txt,←' *** left width (',(⍕ls[2]),') ≠ split pos (',(⍕sp[2]),')'
+        :EndIf
+        :If rp[2]≠sp[2]+ss[2]
+            txt,←' *** right pos (',(⍕rp[2]),') ≠ split pos+width (',(⍕sp[2]+ss[2]),')'
+        :EndIf
+        :If rs[2]≠t←fs[2]-sp[2]+ss[2]
+            txt,←' *** right width (',(⍕rs[2]),') ≠ form-split pos (',(⍕t),')'
+        :EndIf
+
+     :Case 'F1.RIGHT.SPLIT' ⍝ Validate move of horizontal splitter
+        (fs ts)←'F1.RIGHT' 'F1.RIGHT.TOP' eWG¨ 'Size' 'Size'
+        (bs bp)←'F1.RIGHT.BOT' eWG 'Size' 'Posn'
+        (ss sp)←'F1.RIGHT.SPLIT' eWG 'Size' 'Posn'
+        :If ts[1]≠sp[1]
+            txt,←' *** top height (',(⍕ts[1]),') ≠ split pos (',(⍕sp[1]),')'
+        :EndIf
+        :If bp[1]≠sp[1]+ss[1]
+            txt,←' *** bot pos (',(⍕bp[1]),') ≠ split pos+height (',(⍕sp[1]+ss[1]),')'
+        :EndIf
+        :If  bs[1]≠t←fs[1]-sp[1]+ss[1]
+            txt,←' *** right width (',(⍕bs[1]),') ≠ form-split pos (',(⍕t),')'
+        :EndIf
+
+     :EndSelect
+     label eWS 'Caption' txt
+
+:Else
+    ⎕←'Unexpected message: ',args
+:EndSelect

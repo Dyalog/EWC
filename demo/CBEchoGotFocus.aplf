@@ -1,0 +1,2 @@
+CBEchoGotFocus msg
+⎕←'GotFocus: ',(⊃msg),' coming from ',3⊃3↑msg

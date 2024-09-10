@@ -1,0 +1,144 @@
+ {R}←Name ∆WC Props;p;m;WC;msg;length;m2;m3;z;type;class;ref;propnames;temp;proplist;expr;caller;deprecatedprops;props;pn;f;tn;i;ns;okprops;⎕TRAP;depth;valid;values;lcp;pi;ix;PropList;allprops;AllProps;n;cp;v;conn;folder;form;WS;hr;modal
+ ⎕TRAP←0 'S'
+ R←⍬
+ deprecatedprops←,⊂'3D' ⍝ No longer appear in PropList
+ LogCalls Name 'WC' Props
+ caller←findCaller
+ Name←caller removeCaller Name
+
+ Props←,⊆Props
+ length←≢¨Props
+ depth←|≡¨Props
+ propnames←⎕C(depth>1)/¨⊃¨Props
+ type←(i←⌊/propnames⍳'' 'type')⊃Props
+ :If 2=i⊃depth ⋄ type←2⊃type ⋄ :EndIf
+ type←⎕C type
+ :If (⊂type)∊⎕C nativeClasses ⍝ Timers and other
+     →0⊣R←Name caller.⎕WC Props
+ :EndIf
+
+ :If 9≠classes.⎕NC type
+     Warning 'WC ',Name,' - unsupported class "',type,'"'
+     ⎕←⎕SE.UCMD 'disp ⍪Props'
+     Name caller.⎕NS''
+     (caller⍎Name).Type←type
+     →0
+ :EndIf
+
+ class←classes⍎type
+ proplist←⎕C PropList←class.PropList
+ valid←(lcp←⎕C propnames)∊allprops←⎕C AllProps←PropList,objProps,deprecatedprops
+ values←valid↓¨Props
+ ix←⍸valid∧length=2      ⍝ Prop name found, followed by 1 thing
+ values[ix]←⊃¨values[ix]
+ ix←⍸0=pi←(1+≢allprops)|allprops⍳lcp
+ i←propIndices pi
+ propnames[ix]←allprops[i[ix]]
+ ix←⍸(lcp←⎕C propnames)∊allprops
+ propnames[ix]←AllProps[allprops⍳lcp[ix]] ⍝ Properly cased names
+ valid[ix]←1
+
+ m←(propnames∊⊂'Event')∨{⌽(⍳≢⍵)=⍵⍳⍵}⌽propnames ⍝ Last occurrence of each name (except for Event)
+ (values propnames)←m∘/¨values propnames
+ values←propnames(type fixUpProps)values       ⍝ Regularise things for the poor JS code
+
+ WC←⎕NS''
+ WC.WC←⎕NS''
+ WC.WC.(ID Properties)←Name(⎕NS'')
+ ⍎'WC.WC.Properties',expr←'.(',(⍕propnames),')←',(1≠≢propnames)↓'⊃values'
+ values[propnames⍳⊂'Type']←⊂WC.WC.Properties.Type←class.ClassName ⍝ Correct Case
+
+ :If USEWIN32
+     :If 'ribbon'≢6↑type
+         values←(m←(type≢'imagelist')∨~propnames∊⍥⎕C⊂'files')/values
+         pn←m/propnames
+         :If (⊂type)∊'bitmap' 'icon'
+         :AndIf (≢pn)≥i←(⎕C pn)⍳⊂'file'
+         :AndIf ⎕NEXISTS folder←⊃⎕NPARTS⊃1↓,RESOURCES
+             (i⊃values)←folder,1↓i⊃values  ⍝ Adjust BitMap image file names
+         :EndIf
+         :If (≢pn)≥i←pn⍳⊂'Event'
+             (i⊃values)←{⍵[1],⊃⍵[2]}¨i⊃values
+         :EndIf
+         R←Name caller.⎕WC↓pn,⍪values
+         :If 'imagelist'≡type
+         :AndIf 2=⎕NC'WC.WC.Properties.Files' ⍝ Simulate the "Files" property in Win32
+             :For f :In WC.WC.Properties.Files
+                 :If ⎕NEXISTS folder←⊃⎕NPARTS⊃1↓,RESOURCES
+                     tn←(folder,1↓f)⎕NTIE 0
+                     (R,'.')(2032⌶)⎕NREAD tn 83(⎕NSIZE tn)0
+                     ⎕NUNTIE tn
+                 :EndIf
+             :EndFor
+         :EndIf
+     :EndIf
+ :Else
+     z←caller.⎕EX Name
+     R←Name caller.⎕NS''
+     okprops←PropList,objProps
+     :If ∨/m←((≢class.Supported)<i←class.Supported⍳propnames)∧~propnames∊'Event' 'Data'
+         Warning'Unsupported on ',type,': ',⍕m/propnames
+     :EndIf
+     m←~PropList∊propnames
+     v←values,m/class.Defaults
+     expr←'.(',(⍕propnames,m/PropList),')←',(1≠≢v)↓'⊃v'
+     ⍎(⍕caller),'.',Name,expr ⍝ Set properties in the "server-side DOM"
+     ⍝ (⍎R).⎕FX _trigger_ ⍝ Define trigger function
+ :EndIf
+
+ modal←(⊂type)∊⎕C modalClasses
+ :If USEHR∧(type≡'form')∨modal
+     :If 0≠≢z←MakeForm
+         z ⎕SIGNAL 11
+     :EndIf
+ :EndIf
+
+ :If type≡'menubar' ⍝ Move form to make room for new MenuBar
+     form←(-(⌽Name)⍳'.')↓Name
+     WS←⎕NS''
+     WS.WS←⎕NS''
+     WS.WS.(ID Properties)←form(⎕NS'')
+     WS.WS.Properties.Posn←(1+USEHR)⊃(caller⍎form,'.Posn') MENUOffset
+     sendObject WS form
+ :AndIf USEHR       ⍝ Need to adjust size of HTMLRenderer
+     hr←caller⍎form,'.HR'
+     hr.Size+←MENUOffset
+ :EndIf
+
+ :If (type≡'form')∨modal
+     :If 2=caller.⎕NC Name,'.Coord'
+     :AndIf ~(⊂caller⍎Name,'.Coord')∊'Pixel' 'ScaledPixel'
+         'Coord must be Pixel or ScaledPixel'⎕SIGNAL 11
+     :EndIf
+     SendSettings 2⊃getConnection caller Name
+ :EndIf
+
+ :If type≡'imagelist'
+     ⍎(⍕caller),'.',Name,'.(ImageCount←≢Files)' ⍝ Update read-only ImageCount
+ :EndIf
+
+ :If RECORD ⍝ Collecting lists
+     :If ~9=⎕NC class←'Classes.',type←WC.WC.Properties.Type
+         ref←⍎class ⎕NS''
+         ref.PropList←Name Caller.⎕WG'PropList'
+         (temp←Name,'_temp')Caller.⎕WC type
+         ref.Defaults←temp Caller.⎕WG ref.PropList
+         Caller.⎕EX temp
+     :EndIf
+     ref←⍎class
+     ref.Supported∪←propnames
+ :EndIf
+
+ WC.WC.ID←{(2×'#.'≡2↑⍵)↓⍵}WC.WC.ID
+ :If (⊂WC.WC.ID)∊⊆1⊃BREAK
+     ⎕←'BREAK on WC of ',WC.WC.ID
+     ∘∘∘
+ :EndIf
+
+ 'D' Log '*** CREATE ',WC.WC.Properties.Type,' ',WC.WC.ID,' at ',⍕3↑showCallStack
+ fixSendEvents WC.WC.(ID Properties)
+ sendObject WC WC.WC.ID
+
+ :If USEHR∧type≡'form'
+     AddFormResources caller
+ :EndIf

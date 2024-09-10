@@ -1,0 +1,10 @@
+ Demo_Issue201 connected;txt;size
+ EWC.CONNECTED←connected
+ :If ~connected
+     EWC.(CONNECTED USEWIN32 LOGMODES)←0 1 ⎕A  ⍝ /// While debugging
+ :EndIf
+ ⎕PW←1000
+
+ 'F1'eWC'Form' 'Test Defaults' ('Coord' 'Pixel')
+ 'F1.E1'eWC'Edit'
+ 'F1.E2'eWC'Edit'

@@ -1,0 +1,100 @@
+ Demo_Issue125 connected;inputs;scores;TBL;GRID;f;n
+ EWC.CONNECTED←connected
+ ⎕PW←1000
+ n←10
+
+ 'F1'eWC'Form' 'Virtual Grid'(50 50)(500 800)('Coord' 'Pixel')
+ (f←'F1.App') eWC 'SubForm'(0 0)(500 800)
+
+ (f,'.UPDOWN') eWC'Scroll'('Align' 'Right')('Event' 'Scroll' 'CBUpdateScroll')('Range' 1000)('Thumb' 1)
+ (f,'.LEFTRIGHT')eWC'Scroll'('Align' 'Bottom')('Event' 'Scroll' 'CBUpdateScroll')('Range' 1000)('Thumb' 1)
+ (f,'.VGRID')eWC'Grid'('Values'((⍕¨⍳n)∘.,'/',¨⍕¨⍳n))(150 100)(270 610)('CellWidths' 50)('RowTitles'('Row '∘,¨⍕¨⍳n))('ColTitles'(↓'ZI4'⎕FMT⍪⍳n))
+
+
+
+ ⍝  {"WC":{"ID":"F0000.App.⍙3S13","Properties":{"Attach":["Top","Left","Bottom","Right"],"BCol":[240,240,240],"Border":0,"Font":"sGrdFnt","Posn":[0,0],"Size":[715,984],"TipObj":"F0000.Tip","Type":"SubForm"}}}
+⍝SYNTAX ERROR
+⍝SMAKE[2] ∘∘∘
+⍝           ∧
+⍝ 01:41.148 T:  #3: {"WG":{"ID":"F0000.App.⍙3S13","Properties":["Size"],"WGID":"65"}}
+⍝ 01:41.169 R:  #3: {"WG":{"ID":"F0000.App.⍙3S13","Properties":{"Size":[715,984]},"WGID":"65"}}
+⍝ 02:32.835 W:   *** Warning: at  SMAKE[78]  CreateSubForm[60]  - Unsupported on scroll:  Posn  Size  HScroll  Attach
+⍝ 02:32.836 D:  *** CREATE Scroll F0000.App.⍙3S13.Y1 at  SMAKE[78]  CreateSubForm[60]  wprgini[33]
+⍝ 02:32.836 T:  #3: {"WC":{"ID":"F0000.App.⍙3S13.Y1","Properties":{"Align":"None","Attach":["Bottom","Left","Bottom","Right"],"Event":[["Scroll",""]],"HScroll":-1,"Posn":[699,0],"Range":[39],"Size":[16,968],"Type":"Scroll","Visible":1}}}
+⍝ 02:33.615 W:   *** Warning: at  SMAKE[79]  CreateSubForm[60]  - Unsupported on scroll:  Posn  Size  VScroll  Step  Attach
+⍝ 02:33.616 D:  *** CREATE Scroll F0000.App.⍙3S13.Y2 at  SMAKE[79]  CreateSubForm[60]  wprgini[33]
+⍝ 02:33.616 T:  #3: {"WC":{"ID":"F0000.App.⍙3S13.Y2","Properties":{"Align":"None","Attach":["Top","Right","Bottom","Right"],"Event":[["Scroll",""]],"Posn":[28,968],"Range":9749,"Size":[671,16],"Step":[1,37],"Type":"Scroll","VScroll":-1,"Visible":1}}}
+⍝                SBth
+⍝16
+⍝ 'F0000.App.⍙3S13.Y1' eWG 'Posn' 'Size'
+⍝VALUE ERROR: Undefined name: eWG
+⍝      'F0000.App.⍙3S13.Y1'eWG'Posn' 'Size'
+⍝                          ∧
+⍝      'F0000.App.⍙3S13.Y1'xWG'Posn' 'Size'
+⍝      +'F0000.App.⍙3S13.Y1'xWG'Posn' 'Size'
+⍝ 699 0  16 968
+⍝      +'F0000.App.⍙3S13.Y2'xWG'Posn' 'Size'
+⍝ 28 968  671 16
+⍝      +'F0000.App.⍙3S13'xWG'Posn' 'Size'
+⍝ 03:42.204 T:  #3: {"WG":{"ID":"F0000.App.⍙3S13","Properties":["Posn","Size"],"WGID":"73"}}
+⍝ 03:42.211 R:  #3: {"WG":{"ID":"F0000.App.⍙3S13","Properties":{"Posn":[0,0],"Size":[715,984]},"WGID":"73"}}
+⍝ 0 0  715 984
+⍝      +'F0000.App.⍙3S13.Y1'xWS'Posn' (500 0)
+⍝ 06:39.109 W:   *** Warning: at  SMAKE[80]  CreateSubForm[60]  - Unsupported properties for type Scroll:  Posn
+⍝VALUE ERROR: No result was provided when the context expected one
+⍝      +'F0000.App.⍙3S13.Y1'xWS'Posn'(500 0)
+⍝                           ∧
+⍝      'F0000.App.⍙3S13.Y1'xWS'Posn'(500 0)
+⍝ 06:46.892 W:   *** Warning: at  SMAKE[80]  CreateSubForm[60]  - Unsupported properties for type Scroll:  Posn
+⍝      'F0000.App.⍙3S13.Y1'xWS ('Posn'(500 0))('Size' (16 968)
+⍝SYNTAX ERROR: Unpaired parenthesis
+⍝      'F0000.App.⍙3S13.Y1'xWS('Posn'(500 0))('Size'(16 968)
+⍝                                            ∧
+⍝      'F0000.App.⍙3S13.Y1'xWS('Posn'(500 0))('Size'(16 968))
+⍝ 07:32.505 W:   *** Warning: at  SMAKE[80]  CreateSubForm[60]  - Unsupported properties for type Scroll:  Posn  Size
+⍝      'F0000.App.⍙3S13.Y1'xWS('Posn'(500 0))('Size'(16 968))
+⍝                   class.Supported
+⍝ Type  Align  Event  Range  Thumb  Visible
+⍝      class
+⍝#.EWC.classes.scroll
+⍝ 09:51.176 T:  #3: {"WS":{"ID":"F0000.App.⍙3S13.Y1","Properties":{"Posn":[500,0],"Size":[16,968]}}}
+⍝
+⍝      'F0000.App.⍙3S13.Y1'xWS('Posn'(50 0))('Size'(16 968))
+⍝ 10:12.722 T:  #3: {"WS":{"ID":"F0000.App.⍙3S13.Y1","Properties":{"Posn":[50,0],"Size":[16,968]}}}
+⍝ 10:12.722 T:  #3: {"WS":{"ID":"F0000.App.⍙3S13.Y2","Properties":{"Posn":[50,0],"Size":[16,968]}}}
+⍝SYNTAX ERROR: Invalid Keyword: ":"
+⍝      10 : 12.722 T : # 3 :{"WS ":{"ID ":"F0000.App.⍙3S13.Y2 ","Properties ":{"Posn ":[50,0],"Size ":[16,968]}}}
+⍝                          ∧
+⍝      'F0000.App.⍙3S13.Y2'xWS('Posn'(50 0))('Size'(16 968))
+⍝ 10:25.126 T:  #3: {"WS":{"ID":"F0000.App.⍙3S13.Y2","Properties":{"Posn":[50,0],"Size":[16,968]}}}
+⍝
+⍝      (⊃GridOwnerRef.Size-SBth),0
+⍝699 0
+⍝      GridOwnerRef
+⍝#.F0000.App.⍙3S13
+⍝      'GridOwnerRef' xWG 'Size'
+⍝ 11:19.759 T:  #6: {"WG":{"ID":"GridOwnerRef","Properties":["Size"],"WGID":"74"}}
+⍝ 11:22.746 W:  Client did not respond within 3 seconds.
+⍝ 11:22.752 W:  Request was: {"WG":{"ID":"GridOwnerRef","Properties":["Size"],"WGID":"74"}}
+⍝ 11:22.754 W:  Working around failed WG Size on Subform GridOwnerRef
+⍝      SBth
+⍝16
+⍝
+⍝      TBsize,2⊃GridOwnerRef.Size-SBth)
+⍝SYNTAX ERROR: Unpaired parenthesis
+⍝      TBsize,2⊃GridOwnerRef.Size-SBth)
+⍝                                     ∧
+⍝      TBsize,2⊃GridOwnerRef.Size-SBth
+⍝28 968
+⍝
+⍝      ('Visible'(~wsf≡mwvf))
+⍝ Visible  1
+⍝      (⊃GridOwnerRef.Size-SBth),0
+⍝699 0
+⍝      GridOwnerRef.Size
+⍝715 984
+⍝
+⍝      MName
+⍝#.F0000.App.⍙3S13
+⍝
+⍝⎕SE.NumEd.numed: #.F0000.App.⍙3S13 is not a valid variable

@@ -1,0 +1,2 @@
+Warning msg
+'W' Log ' *** Warning: at ',(⍕2↑showCallStack),' - ',msg

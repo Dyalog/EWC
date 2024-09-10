@@ -1,0 +1,34 @@
+ DemoFonts connected;size;italic;uline;weight;rotate;f;fonts;t;cols;fs;row;col;fontobj;p
+ EWC.CONNECTED←connected
+ ⎕PW←1000
+
+ fonts←'Noto Sans' 'Nimbus Mono' 'Merriweather' 'APL385 Unicode'
+
+ cols←40+100×¯1+⍳≢fonts
+ uline←0 1
+ weight←400 700
+ rotate←0 90 180 270
+
+ f←⊂¨↓(⊂'Size'),⍪15 10 20
+ f∘.,←⊂¨↓(⊂'Weight'),⍪400 700
+ f∘.,←⊂¨↓(⊂'Italic'),⍪0 1
+ f∘.,←⊂¨↓(⊂'Underline'),⍪0 1
+ f←(,f)∘.,⊂¨↓(⊂'PName'),⍪fonts
+
+ t←(⍕¨15 10 20),¨⊂'px '
+ t∘.,←'' 'B'
+ t∘.,←'' 'I'
+ t∘.,←'' 'U'
+ t←(,t)∘.,0/¨fonts
+
+ fs←'F1.FNT'∘,¨∊¨'ZI2'∘⎕FMT¨⍪⍳⍴f
+ 'F1' eWC'Form' 'Fonts'(50 50)(800 600)('Coord' 'Pixel')
+ fs  eWC¨ (⊂'Font')∘,¨f
+ p←fonts⍳¨' '
+ 'F1.FNTS' eWC 'Text' (p↑¨fonts) ('Points' (((≢fonts)/40)cols))('FontObj' (⊃fs[3;1])) ⍝ Italic
+ 'F1.FNTS2' eWC 'Text' (p↓¨fonts) ('Points' (((≢fonts)/60)cols))('FontObj' (⊃fs[3;1])) ⍝ Italic
+
+ :For (row col) :In ⍳⍴f
+      fontobj←⊃fs[row;col]
+      (fontobj,'LBL')  eWC 'Label' (⊃t[row;col]) ('Posn' ((70+25×row),cols[col])) ('FontObj' fontobj)
+ :EndFor

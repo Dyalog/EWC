@@ -1,0 +1,8 @@
+(
+ 'detach'
+ 'fileread'
+ 'filewrite'
+ 'makepng'
+ 'makegif'
+ 'gettextsize'
+)

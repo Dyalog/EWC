@@ -1,0 +1,5 @@
+r←larg foldCols names;rows;title;n
+(n title)←larg
+rows←⌈(≢names)÷n
+r←↓(⍕⍉'|',¨(n,rows)⍴(n×rows)↑names),'|'
+r←('| ',title,(1+3×n-1)⍴'|  ') ((1+3×n)⍴'|--'),r

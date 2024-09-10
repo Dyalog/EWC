@@ -1,0 +1,16 @@
+ CBUpdateLines args;rows;cols;size;posn;viz;obs;form;ctl;sf
+ (form ctl)←'.'(≠⊆⊢)⊃args
+
+ :Select ctl
+ :Case 'GO'
+     sf←form,(0≠⎕NC form,'.FLEX')/'.FLEX'
+     (rows cols)←(sf∘,¨'.ROWS' '.COLS')eWG¨⊂'Value'
+     (posn size)←(100 10)((form eWG'Size')-110 20)
+     demoDrawBoxes form posn size rows cols
+ :Case 'CLR'
+     eEX form,'.BX'
+ :Case 'HIDE'
+     viz←~(form,'.HIDE') eWG 'State'
+     obs←form∘,¨(0=⎕NC form,'.BX')↓'.BX' '.LOGO'
+     obs eWS¨⊂'Visible' viz
+ :EndSelect

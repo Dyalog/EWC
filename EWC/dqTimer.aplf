@@ -1,0 +1,16 @@
+dqTimer args;R;done;code;sns;token
+⍝ Handle one Timer event for interactive operation
+
+→(NOIDQ∨MODE=2)⍴0
+
+token←DQ_TOKENBASE+TOKENSTEP×1⌈⊃⊃SESSIONS
+:Hold 'EWC_DQTOKENS'
+    →(token∊DQTOKENS)⍴0
+:EndHold
+code←⍎sns←{(-(⌽⍵)⍳'.')↓⍵}⊃args
+
+'D' Log 'dqTimer TGET token ',(⍕token)
+:If 0≠≢R←5 ⎕TGET token
+    R.CodeLocation←{(-(⌽⍵)⍳'.')↓⍵}sns
+    done←processEvent&R
+:EndIf

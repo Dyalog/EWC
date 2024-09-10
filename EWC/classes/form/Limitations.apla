@@ -1,0 +1,7 @@
+(
+    'Coord defaults to Pixel, Size to 400 600 and Posn to 100 100.'
+
+    'The `Picture` property must refer to a file which resides in one of the folders'
+    'defined in the EWC.RESOURCES array. See [Images](../Usage/Configuration.md)'
+    'for more information.'
+)

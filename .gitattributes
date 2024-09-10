@@ -1,0 +1,3 @@
+# Normalise line endings
+* text=auto eol=lf
+*.apl? linguist-language=APL

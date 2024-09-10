@@ -1,0 +1,20 @@
+  closeConnection con;sock;z;m;i;code
+⍝ Close a session
+
+ sock←WSS.Conx[(⊃¨2⊃¨⎕VFI¨¯8↑¨WSS.Conx[;1])⍳con;1]
+ z←WSS.LDRC.Close⊃sock
+ WSS.Conx←(~WSS.Conx[;1]∊sock)⌿WSS.Conx
+ m←con≠2⊃SESSIONS
+ :For i :In ⍸~m
+      code←((2+i)⊃SESSIONS).code
+      :If 3=code.⎕NC 'onClose'
+          code.onClose ⍬
+      :EndIf
+      :If MODE=2 ⍝ Multi
+      :AndIf 2=⎕NC 'code._EWC.TID'
+          'C' Log 'Killed thread ',⍕code._EWC.TID
+          ⎕TKILL code._EWC.TID
+      :EndIf
+ :EndFor
+ SESSIONS←(m∘/¨2↑SESSIONS),m/2↓SESSIONS⊣m
+ 'C' Log 'Closed socket #',(⍕con)

@@ -1,0 +1,23 @@
+ Demo_Issue148 connected;txt;size;form
+ EWC.CONNECTED←connected
+ :If ~connected
+     EWC.(CONNECTED USEWIN32 LOGMODES)←0 1 ⎕A  ⍝ /// While debugging
+ :EndIf
+
+ ⎕PW←1000
+
+⍝ 15:19.378 D:  *** CREATE Form _wi.fmDraw at  QuadWC[2]  wi[237]  fmDraw_Make[5]
+ form←'fmDraw'
+ form eWC 'Form'('Posn'(0 0))('Visible' 0)
+ form eWS 'Visible' 1
+ form eWS 'Caption' 'DemoDraw'
+ form eWS 'Size' (320 400)
+ form eWS 'BCol' ¯16
+ form eWS 'Event' 'MouseUp' 'foo'
+
+ (form,'._wi_mb') eWC 'MenuBar'
+
+ (form,'._wi_mb.File') eWC 'Menu'
+ (form,'._wi_mb.File') eWC 'Menu' '&File'
+ (form,'._wi_mb.File.Open') eWC 'MenuItem'
+ (form,'._wi_mb.File.Open') eWC 'MenuItem' '&File'

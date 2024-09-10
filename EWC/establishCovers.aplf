@@ -1,0 +1,7 @@
+establishCovers (code prefix);fn
+⍝ Establish API in calling space unless prefix≡''
+ :If 0≠≢prefix
+     :For fn :In 'WC' 'WS' 'WG' 'WN' 'NQ' 'EX' 'DQ'
+         ⍎(⍕code),'.',prefix,fn,'←',(⍕⎕THIS),'.∆',fn
+     :EndFor
+ :EndIf

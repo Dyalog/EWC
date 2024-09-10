@@ -1,0 +1,42 @@
+(
+ 'MsgBox'
+ ''
+ ''
+ 'Msg'
+ 'OK'
+ 1
+ 0 0
+ ⍬
+ 'Plinth'
+ 0
+ (
+  'Detach'
+  'Wait'
+ )
+ (
+  'Timer'
+ )
+ (
+  'Close'
+  'Create'
+  'MsgBtn1'
+  'MsgBtn2'
+  'MsgBtn3'
+ )
+ (
+  'Type'
+  'Caption'
+  'Text'
+  'Style'
+  'Btns'
+  'Default'
+  'Event'
+  'Data'
+  'EdgeStyle'
+  'KeepOnClose'
+  'MethodList'
+  'ChildList'
+  'EventList'
+  'PropList'
+ )
+)

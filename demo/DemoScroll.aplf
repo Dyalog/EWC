@@ -1,0 +1,52 @@
+ DemoScroll connected;inputs;scores;TBL;GRID;z
+ EWC.CONNECTED←connected
+ ⎕PW←1000
+ n←10
+ max←1000
+
+ :If connected=0
+     eWC←⎕WC ⋄ eWG←⎕WG ⋄ eWS←⎕WS
+ :Else
+     eWC←EWC.∆WC ⋄ eWG←EWC.∆WG ⋄ eWS←EWC.∆WS
+ :EndIf
+
+ 'F1'eWC'Form' 'Virtual Grid'(50 50)(500 800)('Coord' 'Pixel')('Event' 'KeyPress' 'CBUpdateScroll')
+ 'F1.UPDOWN'eWC'Scroll'('Align' 'Right')('Event' 'Scroll' 'CBUpdateScroll')('Range' max)('Thumb' 1)('Size' (480 20))
+ 'F1.LEFTRIGHT'eWC'Scroll'('Align' 'Bottom')('Event' 'Scroll' 'CBUpdateScroll')('Range' max)('Thumb' 1)('Size' (20 780))
+ 'F1.VGRID'eWC'Grid' ('Values' ((⍕¨⍳n)∘.,'/',¨⍕¨⍳n))(150 100) (270 610)('CellWidths' 50)('Event' ('CellMove' 'CellChange') 'CBUpdateScroll')('RowTitles' ('Row '∘,¨⍕¨⍳n))('ColTitles' (↓'ZI4' ⎕FMT ⍪⍳n))
+ 'F1.VGRID.E1' eWC 'Edit' '' ('Event' 'KeyPress' 'CBUpdateScroll')
+ 'F1.VGRID.E2' eWC 'Edit' ''
+ 'F1.VGRID' eWS ('Input' ('F1.VGRID.E1' 'F1.VGRID.E2'))('CellTypes' (10 10⍴1 2))
+ 'F1.VGRID'eWS'CurCell' (1 1)
+ 'F1.GO500' eWC 'Button' 'Goto Row 500' (440 50)(23 100)('Event' 'Select' 'CBUpdateScroll')
+
+ z←'F1.UPDOWN' eWG 'Thumb' ⍝ Test WG
+  :If z≢1
+      ⎕←'*** Unexpected return value for F1.UPDOWN.Scroll'
+      ⎕←z
+  :EndIf
+⍝ Values from client application - delete me when done
+⍝  ⍪'#.F0000.App.⍙3S36.Y0' #.xWG 'Event'
+⍝  MouseWheel   #.MouseWheelCb
+⍝  CellMove   CellMove
+⍝  CellChange   CellChange
+⍝  AddRow  ¯1
+⍝  CellDown   CellDown
+⍝  CellDblClick   CellDblClick
+⍝  Configure   GridConfigure
+⍝ 1003   MoveRow
+⍝ 1004   SetValue
+⍝ 1006   SetGridValues
+⍝ 1007   SetGridValuesScroll
+⍝  GridPaste   GridPaste
+⍝  GridCopy  ¯1
+⍝  GridDelete  ¯1
+⍝  GridCut  ¯1
+⍝  CellError   CellError
+⍝ 195  ¯1
+⍝  SetColSize   SetColSize
+⍝  ContextMenu   onContextMenu
+
+⍝  KeyPress   KeyPress
+⍝  MouseWheel   #.MouseWheelCb
+⍝  ContextMenu   onContextMenu

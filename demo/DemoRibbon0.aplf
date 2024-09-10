@@ -1,0 +1,66 @@
+ DemoRibbon0 connected;inputs;scores;ribbon;captions;icons;sel
+ ⍝ Icons to be selected from https://react-icons.github.io/react-icons/
+
+ EWC.CONNECTED←connected
+ ⎕PW←1000
+
+ n←10
+ f←'×'
+ allf←'+-×÷'
+
+ sel←'Event' 'Select' 'CBUpdateRibbon'
+
+ 'F1'eWC'Form' 'Function Table'(50 50)(716 1190)('Coord' 'Pixel')
+ 'F1.Ribbon' eWC 'Ribbon'⍝ ('Size' (150 1190))
+ ⎕←'Ribbon Size: ',⍕'F1.Ribbon' eWG 'Size'
+
+ 'F1.Ribbon.Item1' eWC 'RibbonGroup' 'Locks'
+ 'F1.Ribbon.Item2' eWC 'RibbonGroup' 'Macros'
+ 'F1.Ribbon.Item3' eWC 'RibbonGroup' 'Dashboard'
+ 'F1.Ribbon.Item4' eWC 'RibbonGroup' 'Application' ('Size' 7)
+ 'F1.Ribbon.Item5' eWC 'RibbonGroup' 'Data Quality' ('Size' 2)
+
+ 'F1.Ribbon.Item1.GroupItem1' eWC 'RibbonGroupItem' 12
+ 'F1.Ribbon.Item1.GroupItem1.LockButton' eWC 'RibbonButton' 'Access' 'FcLock' 12 sel
+
+ 'F1.Ribbon.Item2.GroupItem1' eWC 'RibbonGroupItem' 12
+ 'F1.Ribbon.Item2.GroupItem1.MacrosButton' eWC 'RibbonButton' 'Macros' 'FcPlanner' 12 sel
+
+ 'F1.Ribbon.Item3.GroupItem1' eWC 'RibbonGroupItem' 12
+ 'F1.Ribbon.Item3.GroupItem1.DashboardButton' eWC 'RibbonButton' 'Macros' 'FcHome' 12 sel
+
+ 'F1.Ribbon.Item4.GroupItem1' eWC 'RibbonGroupItem' 1
+ 'F1.Ribbon.Item4.GroupItem2' eWC 'RibbonGroupItem' 1
+ 'F1.Ribbon.Item4.GroupItem3' eWC 'RibbonGroupItem' 1
+ 'F1.Ribbon.Item4.GroupItem4' eWC 'RibbonGroupItem' 3
+ 'F1.Ribbon.Item4.GroupItem5' eWC 'RibbonGroupItem' 6
+
+ 'F1.Ribbon.Item4.GroupItem1.ArchiveButton' eWC 'RibbonButton' 'Archive' 'FcKindle' 12 sel
+ 'F1.Ribbon.Item4.GroupItem2.DateButton' eWC 'RibbonButton' 'Date' 'FcCalendar' 12 sel
+ 'F1.Ribbon.Item4.GroupItem3.StockExchangeButton' eWC 'RibbonButton' 'Stock Exchange' 'FcLibrary' 12 sel
+ 'F1.Ribbon.Item4.GroupItem4.ButtonGroup1' eWC 'RibbonButtonGroup' ('Share/option' 'Cooperative Dynamics')('FcShare' 'FcTreeStructure') sel
+ captions←'Black and Scholes' 'Checking prices' 'VAR Analysis' 'Calculate Option Prices'
+ icons←'FcPodiumWithSpeaker' 'FcMoneyTransfer' 'FcSearch' 'FcTreeStructure'
+ 'F1.Ribbon.Item4.GroupItem5.ButtonGroup1' eWC 'RibbonButtonGroup' captions icons sel
+
+ 'F1.Ribbon.Item5.GroupItem1' eWC 'RibbonGroupItem' 12
+ 'F1.Ribbon.Item5.GroupItem1.ButtonGroup1' eWC 'RibbonButtonGroup' ('Local Data Quality' 'Overall Data Quality')('FcHighPriority' 'FcHighPriority') sel
+
+ 'F1.Players'eWC'Grid'('ColTitles'('Name' 'Gender' 'Score' 'Expert'))('Posn'(210 10))('Size'(100 480))('TitleWidth' 0)('ShowInput' 1)('Event' 'CellChanged' 'EWCUpdate')
+ 'F1.Players.Name'eWC'Edit'('Size'(23 100))
+ 'F1.Players.Gender'eWC'Combo'('Items'('Male' 'Female'))('Size'(10 100))
+ 'F1.Players.Score'eWC'Edit'('FieldType' 'Numeric')('Size'(23 50))
+ 'F1.Players.Expert'eWC'Button'('Style' 'Check')('Size'(23 25))
+ inputs←'F1.Players.'∘,¨'Name' 'Gender' 'Score' 'Expert'
+ scores←12 13
+ 'F1.Players'eWS('Values'('Jack' 'Jill','Male' 'Female',scores,⍪0 1))('CellTypes'(2 4⍴1 2 3 4))('Input'inputs)
+ 'F1.Average'eWC'Label'('Average Score:',1⍕+/scores÷≢scores)(315 180)(23 200)
+
+ 'F1.Months'eWC'TreeView'('Q1' 'Jan' 'Feb' 'Mar' 'Q2' 'Apr' 'May' 'Jun')(210 500)(150 200)('Depth'(8⍴0 1 1 1))
+
+ 'F1.TableSize'eWC'Edit' '10'(410 10)(23 100)('FieldType' 'Numeric')('Event' 'Change' 'EWCUpdate')
+ 'F1.Function'eWC'Combo'(,¨allf)f(410 120)(23 100)('SelItems'(allf=f))('Event' 'Select' 'EWCUpdate')
+ 'F1.CalcBtn'eWC'Button' 'Calc'(410 230)(23 100)('Event' 'Select' 'EWCUpdate')
+ 'F1.Table'eWC'Grid'(∘.×⍨⍳n)(440 10)(550 780)
+
+ 'F1.PasswordField'eWC'Edit' 'Password'(410 340)(23 100)('Password' '*')('Event' 'Change' 'EWCUpdate')

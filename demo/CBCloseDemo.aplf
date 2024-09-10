@@ -1,0 +1,5 @@
+ok←CBCloseDemo args
+⍝ Written to test whether Close events can be inhibited or not
+⍝   Called on close of demo form
+
+ok←1 ⍝ Allow close

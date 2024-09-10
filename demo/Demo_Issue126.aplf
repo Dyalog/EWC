@@ -1,0 +1,12 @@
+ Demo_Issue126 connected;n;size;wd;f
+ EWC.CONNECTED←connected
+ ⎕PW←1000
+ n←10
+
+ size←500 800
+ wd←16
+
+ (f←'F1')eWC'Form' 'Virtual Grid'(50 50)size('Coord' 'Pixel')
+ (f,'.UPDOWN')eWC'Scroll'('Attach' 'Top' 'Right' 'Bottom' 'Right')('Event' 'Scroll' 'CBUpdateScroll')('Range' 1000)('Thumb' 1)('Posn' (0,2⊃size-wd))('Size' ((1⊃size-wd),wd))('VScroll' ¯1)
+ (f,'.LEFTRIGHT')eWC'Scroll'('Attach' 'Bottom' 'Left' 'Bottom' 'Right')('Event' 'Scroll' 'CBUpdateScroll')('Range' 1000)('Thumb' 1)('Posn' ((1⊃size-wd),0))('Size' (wd,2⊃size-wd))('HScroll' ¯1)
+ (f,'.VGRID')eWC'Grid'('Values'((⍕¨⍳n)∘.,'/',¨⍕¨⍳n))(150 100)(270 610)('CellWidths' 50)('RowTitles'('Row '∘,¨⍕¨⍳n))('ColTitles'(↓'ZI4'⎕FMT⍪⍳n))

@@ -1,0 +1,99 @@
+ {R}←{Mode}∆NQ Event;caller;NQ;nq;msg;z;⎕TRAP;ID;conn;name;tkn;type;class;objref;event;i;fn;ok;hr;hdr;posn;size;methods;method;immediate;f;j;m
+⍝ Modes:
+⍝ 0: Add to event queue (default). Result = ''.
+⍝ 1: Invoke callback function immediately. Enqueue result if relevant. Result = Event (possibly modified).
+⍝ 2: Do not invoke callback function. Perform default processing immediately. Return 1.
+⍝     If argument is a Dyalog-supplied method on #, result comes from method.
+⍝ 3,4: Not supported (3=OLE Control, 4=ActiveX)
+
+ R←⍬
+ :If ⎕THIS≡caller←findCaller
+     caller←CALLER ⍝ // This is a hack to deal with ∆NQ from within Handler
+ :EndIf
+ name←⊃Event
+ (ID conn)←getConnection caller name
+
+ (⊃Event)←caller removeCaller name ⍝ (2×'#.'≡2↑⊃Event)↓⊃Event
+
+ :If 0=⎕NC'Mode' ⋄ Mode←0 ⋄ :EndIf
+ ⍝ :If Mode=1 ⋄ Mode←0 ⋄ :EndIf ⍝ /// As an experiment, pretend they are the same
+ :If (,¨1↑Event)∊,¨'.' '#' '⎕SE' ⍝ Pass NQ to system objects through
+     →0⊣R←Mode ⎕NQ Event
+ :EndIf
+
+ 'N' Log 'Mode ',(⍕Mode),', ',,⍕Event
+ (type class objref)←getObj name
+ ('Not a EWC object: ',(⍕caller),'.',name)⎕SIGNAL(0=≢type)/11
+ 'Only Modes 0 1 or 2 are supported' ⎕SIGNAL (Mode∊0 1 2)↓11
+
+ method←(⎕C Event[2])∊class.methodlist ⍝ Method rather than property
+
+ :If (Mode∊2)∧Event[2]∊supportedMethods ⍝ 2 ⎕NQ 'obj' 'Methodname' [args]
+    'N' Log 'Invoking client-side method: ',(⎕JSON⍠'HighRank' 'Split') Event
+    →0⊣R←dWX Event
+ :EndIf
+
+ event←objref.Event
+
+ :If (≢event)≥i←(⊃¨event)⍳Event[2] ⍝ Object has an event handler defined
+     fn←ok←1 ⍝ Action not prohibited
+     :If (Mode=1)∨m←(Mode≠2)∧(≢event)≥j←⌊/(⊃¨event)⍳hrEvents∩Event[2] ⍝ HTMLrenderer related events
+         fn←⊃(((1+m)⊃i j),2)⊃event
+         :If isChar fn
+         :AndIf 3=caller.⎕NC fn
+             :Trap 85
+                 f←(⍕caller),'.',fn
+                 'N' Log 'Invoking ',f
+                 ok←0(85⌶)f,'(⊂caller removeCaller ⊃Event),1↓Event'
+             :EndTrap
+         :EndIf
+     :EndIf
+
+     :If (Mode≠1)∧(¯1≡⊃fn)∨ok≡0 ⍝ Inhibited by property or refused by callback
+         →0
+     :EndIf
+ :EndIf
+
+ :If (MODE=0)∧type≡'Form' ⍝ Need special handling of some Form events when hosted in an HTMLRenderer
+     hr←objref.HR
+     :Select ⎕C 2⊃Event
+     :Case 'close'
+         'N' Log '    Expunging: ',name
+         ∆EX name
+         →0
+     :Case 'configure'
+         (hdr posn size)←1 0 1 0 1 0⊂6↑Event
+         objref.HR.(Posn Size)←0 (HRBorder)+posn size
+         'N' Log '    Configure HTMLRenderer → ',⍕objref.HR.(Posn Size)
+         Event[3 4]←MENUOffset ⍝ We always tell the client that Posn is (0,0) + Offset for Menu
+     :EndSelect
+ :EndIf
+
+ NQ←⎕NS''
+ nq←NQ.NQ←⎕NS''
+ nq.(ID Event Info NoCallback)←(2↑Event),(2↓Event) (Mode∊1 2)
+
+ :If USEWIN32
+     R←Mode caller.⎕NQ Event
+ :EndIf
+
+ :If (~isChar nq.Event)∨(⊂nq.Event)∊⊂'Close' ⍝ /// This needs to become a configurable list
+     nq.EventName←2⊃Event
+     nq.⎕EX'Event'
+     NQ.Event←nq
+     NQ.⎕EX'NQ'
+     tkn←DQ_TOKENBASE+TOKENSTEP×1⌈ID×MODE=2
+     :If 'N'∊LOGMODES
+         'N'Log'TPUT to token ',(⍕tkn),': ',msg←1 ⎕JSON⍠'HighRank' 'Split'⊢NQ
+     :EndIf
+     →0⊣NQ ⎕TPUT tkn
+ :EndIf
+
+ msg←⎕JSON⍠'HighRank' 'Split'⊢NQ
+
+ :If CONNECTED
+     'T' Log '#',(⍕conn),': ',msg
+     z←conn WSS.Send msg
+ :Else
+     ⎕←msg
+ :EndIf

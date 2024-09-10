@@ -1,0 +1,76 @@
+site_name: EWC User Guide
+repo_url: https://github.com/mkromberg/jswc
+repo_name: mkromberg/jswc
+nav:
+  - Overview:
+    - index.md
+    - Discussion/TechDetails.md
+    - Discussion/Differences.md
+    - Discussion/Images.md
+    
+  - Getting Started:
+    - Usage/Installation.md
+    - Usage/Initialisation.md
+    - Usage/Configuration.md
+
+  - Supported Features:
+    - ObjectRef/Classes.md
+    - ObjectRef/ApexChart.md
+    - ObjectRef/BitMap.md
+    - ObjectRef/Button.md
+    - ObjectRef/Circle.md
+    - ObjectRef/Combo.md
+    - ObjectRef/Edit.md
+    - ObjectRef/Ellipse.md
+    - ObjectRef/Font.md
+    - ObjectRef/Form.md
+    - ObjectRef/Grid.md
+    - ObjectRef/Group.md
+    - ObjectRef/Icon.md
+    - ObjectRef/Image.md
+    - ObjectRef/ImageList.md
+    - ObjectRef/Label.md
+    - ObjectRef/List.md
+    - ObjectRef/ListView.md
+    - ObjectRef/Menu.md
+    - ObjectRef/MenuBar.md
+    - ObjectRef/MenuItem.md
+    - ObjectRef/MsgBox.md
+    - ObjectRef/Poly.md
+    - ObjectRef/Rect.md
+    - ObjectRef/Ribbon.md
+    - ObjectRef/RibbonButton.md
+    - ObjectRef/RibbonButtonGroup.md
+    - ObjectRef/RibbonGroup.md
+    - ObjectRef/RibbonGroupItem.md
+    - ObjectRef/Scroll.md
+    - ObjectRef/Splitter.md
+    - ObjectRef/SubForm.md
+    - ObjectRef/TabButton.md
+    - ObjectRef/TabControl.md
+    - ObjectRef/Text.md
+    - ObjectRef/Timer.md
+    - ObjectRef/TreeView.md
+    
+theme:
+  favicon: 'img/favicon-32.png'
+  logo: 'img/dyalog-white.svg'
+  features:
+    - navigation.sections
+    - navigation.instant
+  name: material
+  
+extra:
+  version:
+    provider: mike
+
+extra_css:
+  - style/main.css
+  - style/admonition-ucmdhelp.css
+
+plugins:
+  - search
+
+markdown_extensions:
+  - admonition
+  - abbr

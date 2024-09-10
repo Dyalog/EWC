@@ -1,0 +1,17 @@
+ Demo_Issue116p connected;txt;size
+ EWC.CONNECTED←connected
+ :If ~connected
+     EWC.(CONNECTED USEWIN32 LOGMODES)←0 1 ⎕A  ⍝ /// While debugging
+ :EndIf
+ ⎕PW←1000
+
+ txt←↑'' 'Operation Cancelled' ''
+ 'FntSys'eWC'Font' 'Segue UI' 12 0 0 0 400
+ 'Info32Bmp'eWC'BitMap'('File' '/images/Information.png')('Size'(32,32))
+ 'F1'eWC'Form'('AutoConf' 0)('Border' 2)('Caption' 'GAMA Info')('Coord' 'Pixel')('Font' 'FntSys')('Moveable' 1)('Posn'(23 0))('Sizeable' 0)('SysMenu' 0)('Visible' 1)
+ 'F1'eWS'BCol'(240,240,240)
+ size←'F1'eWG⊂'TextSize'txt'FntSys'
+
+ 'F1'eWS'Size'(95,745)
+ 'F1.P'eWC'SubForm'('Picture'('Info32Bmp' 0))('Posn'(31,25))('Size'(32,32))
+ 'F1.TEXT1'eWC'Text'('Text'txt)('HAlign' 1)('Points'(⍉↑(10 25 40)(190 190 190)))

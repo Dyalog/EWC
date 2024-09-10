@@ -1,0 +1,18 @@
+(
+ 'Type'
+ 'Caption'
+ 'Posn'
+ 'Size'
+ 'State'
+ 'Event'
+ 'ImageIndex'
+ 'Data'
+ 'Tip'
+ 'TabObj'
+ 'Accelerator'
+ 'KeepOnClose'
+ 'MethodList'
+ 'ChildList'
+ 'EventList'
+ 'PropList'
+)

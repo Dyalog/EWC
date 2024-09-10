@@ -1,0 +1,8 @@
+make_EWC code;ns
+⍝ Create _EWC namespace with timer
+
+code.⎕EX'_EWC'
+ns←⍎'_EWC'code.⎕NS'' ⍝ Create Session State namespace
+ns.buffer←''         ⍝ Websocket receive buffer
+'TIMER' ns.⎕WC'Timer'('Event' 1001 '#.EWC.dqTimer')
+establishCovers code 'e'

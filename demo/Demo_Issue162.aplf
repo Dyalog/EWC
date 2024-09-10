@@ -1,0 +1,25 @@
+ Demo_Issue162 connected;folder;tn;cn;name;op;parms;ids;ix;heights
+ EWC.CONNECTED←connected
+
+ folder←⊃⎕NPARTS 4⊃5179⌶⊃⎕SI
+ tn←(folder,'/replay_logs/issue_162')⎕FSTIE 0
+
+ 'F1' eWC 'Form' 'Replay issue #162' ('Posn' 10 10)('Size' 700 1200)
+ 'F1.App' eWC 'SubForm' '' ('Posn' 0 0)('Size' 547 967)
+
+ :For cn :In ⍳--/2↑⎕FSIZE tn
+     (name op parms)←⎕FREAD tn cn
+     name←'F1.',(2⍳⍨+\'.'=name)↓name
+     :If name≢'F1.'
+         :If (≢parms)≥ix←(⊃¨parms)⍳⊂'Input' ⍝ Must remap recorded IDs
+             ids←ix 2⊃parms
+             ((ix 2)⊃parms)←('#.F0000.' ⎕R 'F1.') ids
+         :End
+         :If (≢parms)≥ix←(⊃¨parms)⍳⊂'CellHeights'
+             heights←ix 2⊃parms
+             ((ix 2)⊃parms)←20⍨¨heights
+         :End
+
+         name (⍎'e',op) parms
+     :EndIf
+ :EndFor

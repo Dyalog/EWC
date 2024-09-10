@@ -1,0 +1,37 @@
+ rc←newSession args;hdrs;event;obj;rc;msg;s;ns;code;CONN;conn;max;key;space
+ rc←1 ⍝ Fail
+ (rc obj event hdrs)←4↑args
+ hdrs←WSS.ParseHeaders hdrs
+
+ :Hold 'EWCSESSIONS'
+     SESSIONID←⊃(⍳1+≢s)~s←⊃SESSIONS
+     max←MAXSESSIONS
+     :If SESSIONID>max
+         'E' Log 'Unable to create more than ',(⍕max),' session',(max≠1)/'s'
+         →0
+     :EndIf
+     :If MODE=2 ⍝ Multi
+         code←⍎((⍕CODELOCATION),'_',⍕SESSIONID)⎕NS CODELOCATION ⍝ Clone the application namespace
+         make_EWC code
+     :Else
+         code←CODELOCATION      ⍝ If single user, just make a ref
+     :EndIf
+     (1⊃SESSIONS),←SESSIONID
+     (2⊃SESSIONS),←conn←⊃2⊃⎕VFI ¯8↑obj
+     SESSIONS,←space←⎕NS ''
+     space.code←code
+     rc←0
+ :EndHold
+
+ :If 0=⎕NC 'code._EWC'
+     'E' Log 'Handler: _EWC not found in ',(⍕code)
+     →0
+ :EndIf
+ ns←code._EWC
+ CONN←ns.ID←SESSIONID
+ ns.addr←WSS.LDRC.GetProp obj'PeerAddr'
+ ns.cert←WSS.LDRC.GetProp obj'PeerCert' ⍝ /// We'll use this later
+ ns.conn←conn
+
+ key←hdrs WSS.GetHeader'sec-websocket-key'
+ 'C' Log 'Session ',(⍕ns.ID),' created, socket ',(⍕ns.conn),', connected from ',(2 2⊃ns.addr), ', key: ',key

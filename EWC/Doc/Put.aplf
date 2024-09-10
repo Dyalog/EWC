@@ -1,0 +1,6 @@
+r Put file
+
+:If r≢⊃⎕NGET file 1
+    ⎕←'Updated ',file
+    (⊂r) ⎕NPUT file 1
+:EndIf

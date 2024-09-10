@@ -1,0 +1,6 @@
+r←type AddDocLink name;i
+⍝ Add link to Dyalog documentation
+
+i←'class' 'prop' 'event' ⍳⊂type
+'type must be ''class'', ''prop'' or ''event''' ⎕SIGNAL (4=i)/11
+r←'[',name,'](https://help.dyalog.com/19.0/index.htm#GUI/',(i⊃'Objects' 'Properties' 'MethodOrEvents'),'/',name,'.htm)'

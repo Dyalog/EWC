@@ -1,0 +1,86 @@
+(
+ 'Bitmap'
+ ''
+ ⍬
+ [
+    0   0   0
+  128   0   0
+    0 128   0
+  128 128   0
+    0   0 128
+  128   0 128
+    0 128 128
+  128 128 128
+  192 192 192
+  255   0   0
+    0 255   0
+  255 255   0
+    0   0 255
+  255   0 255
+    0 255 255
+  255 255 255
+ ]
+ 0
+ 32 32
+ 'Inherit'
+ 0 0
+ ''
+ 0 100
+ 0 100
+ ⍬
+ 0 0
+ 'Inherit'
+ 0 0
+ 0
+ ⍬
+ 0
+ (
+  'Detach'
+  'FileRead'
+  'FileWrite'
+  'MakePNG'
+  'MakeGIF'
+  'GetTextSize'
+ )
+ (
+  'Font'
+  'Poly'
+  'Ellipse'
+  'Circle'
+  'Text'
+  'Rect'
+  'Marker'
+  'Image'
+  'Timer'
+  'Metafile'
+ )
+ (
+  'Close'
+  'Create'
+  'Select'
+ )
+ (
+  'Type'
+  'File'
+  'Bits'
+  'CMap'
+  'KeepBits'
+  'Size'
+  'Coord'
+  'Event'
+  'FontObj'
+  'YRange'
+  'XRange'
+  'Data'
+  'TextSize'
+  'Translate'
+  'Accelerator'
+  'KeepOnClose'
+  'CBits'
+  'MaskCol'
+  'MethodList'
+  'ChildList'
+  'EventList'
+  'PropList'
+ )
+)

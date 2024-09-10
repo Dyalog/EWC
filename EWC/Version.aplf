@@ -1,0 +1,6 @@
+r←Version
+r←⎕NS ''
+r.Server←'0.1.0'
+r.Client←CLIENTVERSION
+
+r.(⎕DF 'EWC Server: ',Server,', Client: ',Client)

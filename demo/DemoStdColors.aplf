@@ -1,0 +1,13 @@
+ DemoStdColors connected;ixs;rc;i;cols;code;name;rgb
+ EWC.CONNECTED←connected
+ ⎕PW←1000
+
+ 'F1' eWC'Form' 'Standard Colours'(50 50)(400 600)('Coord' 'Pixel')
+
+ rc←50 50+⍤1⊣30 250×⍤1⌽⍉0 11⊤¯1+ixs←⍳≢cols←{(⍵[;1]<0)⌿⍵}#.EWC.settings.Colors.Standard
+
+ :For i :In ixs
+     (code name rgb)←cols[i;]
+     ('F1.COL',⍕i) eWC 'Label'((⍕code),' (',(⍕rgb),')')('Posn'(rc[i;]))('FCol' ¯9)('BCol' ¯6)
+     ('F1.COLX',⍕i) eWC 'Label' ('  ',name) ('Posn'(0 120+rc[i;]))('BCol' code)('FCol' (255 255 255×rgb≡0 0 0))
+ :EndFor

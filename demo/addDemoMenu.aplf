@@ -1,0 +1,35 @@
+addDemoMenu form;fns;size;posn;sf;e;topright;noflex;selitems
+form←⊃'Form' eWN ⍕⎕THIS
+:If 'demo'≡⎕C MODE
+    fns←DEMOS
+:Else
+    fns←4↓¨('D' ⎕NL ¯3)~'DemoMenu' 'DemoDefault'
+:EndIf
+
+fns←(⊂'Pick a Demo'),fns
+
+:Trap 6
+   size←form eWG 'Size'
+:Else
+   ⎕←'*** UNABLE TO WG Size ***'
+   size←F1.Size
+:EndTrap
+
+posn←0 (¯124+2⊃size)
+selitems←⍬ ⋄ topright←⍬
+
+:If noflex←0=⎕NC sf←form,'.INPUT.DEMO' ⍝ Use demo subform if Form has created a space for it
+     sf←form
+     topright←⊂'Attach'('Top' 'Right' 'Top' 'Right')
+:EndIf
+ :If 2=⎕NC'demo'
+ :AndIf (⊂4↓demo)∊fns
+     selitems←⊂'SelItems'(fns≡¨⊂4↓demo)  ⍝ current demo is default
+ :EndIf
+(sf,'.MENU') eWC 'Combo' fns '' ('Size'(23 114))('Event' 'Select' 'CBRunDemo'),topright,selitems,noflex/⊂'Posn' (posn+0 0)
+:If 0∧'Windows'≡7↑⊃'.' ⎕WG 'APLVersion'
+   (sf,'.USEWIN32') eWC 'Button' 'Win32' ('Size'(23 50))('State' EWC.USEWIN32)('Style' 'Check'),topright,noflex/⊂'Posn' (posn+25 0)
+:EndIf
+(sf,'.SCALE')eWC 'Button' 'Scale' ('Style' 'Check')('State' (COORD≡'ScaledPixel'))('Size'(18 35))('Event' 'Select' 'CBRunDemo'),topright,noflex/⊂'Posn' (posn+26 0)
+(sf,'.STOP')eWC 'Button' 'Stop' ('Size'(18 28))('Event' 'Select' 'CBRunDemo'),topright,noflex/⊂'Posn' (posn+26 89)
+(sf,'.DEVT')eWC 'Button' 'Inspect' ('Size'(18 42))('Event' 'Select' 'CBRunDemo'),topright,noflex/⊂'Posn' (posn+26 47)

@@ -1,0 +1,31 @@
+ {R}←dWX args;Name;Method;Info;caller;ID;conn;WX;wx;msg;z;⎕TRAP;txt
+ ⎕TRAP←0 'S'
+ (Name Method)←2↑args ⋄ Info←2↓args
+
+ :If 'gettextsize'≡⎕C Method
+ :AndIf 1=⍴⍴txt←⊃Info
+     (⊃Info)←,⊂txt ⍝ Make vector a 1-element list
+ :EndIf
+
+ caller←findCaller
+ Name←caller removeCaller Name
+
+ (ID conn)←getConnection caller Name
+ WX←⎕NS''
+ wx←WX.WX←⎕NS''
+ WGID+←1
+ wx.(ID Method Info WGID)←Name Method Info(⍕WGID)
+
+ msg←⎕JSON⍠'HighRank' 'Split'⊢WX
+ :If CONNECTED
+     'T'Log'#',(⍕conn),': ',msg
+     z←conn WSS.Send msg
+ :Else
+     'T'Log'(no connection): ',msg
+ :EndIf
+
+ :Trap 6 ⍝ If we get no response
+     R←msg WaitForWG 'WX' ID(⍕WGID)
+ :Else
+     ⎕DMX.EM ⎕SIGNAL ⎕DMX.EN
+ :EndTrap

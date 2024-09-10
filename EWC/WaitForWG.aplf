@@ -1,0 +1,46 @@
+ R←msg WaitForWG(Props ID WGID);j;⎕TRAP;p;seqok;nl;nlc;m;t;token;wx;z;ref;ok
+
+ wx←Props≡'WX' ⍝ A WX rather than a WG
+
+ token←WG_TOKENBASE+TOKENSTEP×1⌈ID×MODE=2
+AGAIN:
+ 'G' Log 'WaitForWG waiting on token ',(⍕token),' for ',,⍕Props
+ j←WG_TIMEOUT ⎕TGET token
+ :If 0=≢j
+     'W' Log 'Client did not respond within ',(⍕WG_TIMEOUT),' seconds.'
+     'W' Log 'Request was: ',msg
+     ⎕SIGNAL 6
+ :EndIf
+
+ nl←⍬
+
+ :If wx
+     →0⊣R←j.WX.Info
+ :EndIf
+
+ :If 9=⎕NC z←(1+wx)⊃'j.WG' 'f.WX'
+     ref←⍎z
+ :AndIf seqok←ref.{0=⎕NC'WGID':1 ⋄ WGID≡⍵}WGID
+
+    →wx/0⊣R←{⍵:ref.Info ⋄ ⍬}wx ⍝ Early exit if WX
+
+ :AndIf ∧/ok←(p←⎕C,⊆Props)∊nlc←⎕C nl←ref.Properties.⎕NL-2
+     p←nl[nlc⍳p] ⍝ /// Should go when everything is lowercase
+     R←j.WG.Properties⍎((1=≢p)/',⊂'),⍕p
+     R←j.WG.ID MixTables p R
+     :If 1=≡Props
+         R←⊃R ⍝ A single simple property
+     :EndIf
+ :Else
+     :If ~seqok
+         'E' Log 'Ignoring WGID ',j.WG.WGID,' while waiting for ',WGID
+         →AGAIN
+     :EndIf
+     :If 2=⎕NC 'j.WG.NotSupported'
+     :AndIf ∨/m←(t←Props~nl)∊j.WG.NotSupported
+         ('Property not supported by EWC: ',⍕m/t) ⎕SIGNAL 6
+     :EndIf
+     :If ~∧/ok
+         ('Not returned: ',,⍕(~ok)/,⊆Props) ⎕SIGNAL 11
+     :EndIf
+ :EndIf

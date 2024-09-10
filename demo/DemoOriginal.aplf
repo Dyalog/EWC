@@ -1,0 +1,34 @@
+ DemoOriginal connected;inputs;scores
+ EWC.CONNECTED←connected
+ ⎕PW←1000
+
+ n←10
+ f←'×'
+ allf←'+-×÷'
+
+ 'F1'eWC'Form' 'Function Table'(50 50)(800 800)('Coord' 'Pixel')
+ 'F1.MB'eWC'MenuBar'
+ 'F1.MB.File'eWC'Menu' '&File'
+ 'F1.MB.Col'eWC'Menu' '&Colours'
+ 'F1.MB.Col.Red'eWC'MenuItem' '&Red'('Event' 'Select' 'EWCUpdate')
+ 'F1.MB.Col.Blue'eWC'MenuItem' '&Blue'('Event' 'Select' 'EWCUpdate')
+ 'F1.MB.Col.Green'eWC'MenuItem' '&Green'('Event' 'Select' 'EWCUpdate')
+
+ 'F1.Players'eWC'Grid'('ColTitles'('Name' 'Gender' 'Score' 'Expert'))('Posn'(10 10))('Size'(100 480))('TitleWidth' 0)('ShowInput' 1)('Event' 'CellChanged' 'EWCUpdate')
+ 'F1.Players.Name'eWC'Edit'('Size'(23 100))
+ 'F1.Players.Gender'eWC'Combo'('Items'('Male' 'Female'))('Size'(10 100))
+ 'F1.Players.Score'eWC'Edit'('FieldType' 'Numeric')('Size'(23 50))
+ 'F1.Players.Expert'eWC'Button'('Style' 'Check')('Size'(23 25))
+ inputs←'F1.Players.'∘,¨'Name' 'Gender' 'Score' 'Expert'
+ scores←12 13
+ 'F1.Players'eWS('Values'('Amir' 'Fatima','Male' 'Female',scores,⍪0 1))('CellTypes'(2 4⍴1 2 3 4))('Input'inputs)
+ 'F1.Average'eWC'Label'('Average Score:',1⍕+/scores÷≢scores)(115 180)(23 100)
+
+ 'F1.Months'eWC'TreeView'('Q1' 'Jan' 'Feb' 'Mar' 'Q2' 'Apr' 'May' 'Jun')(10 500)(150 200)('Depth'(8⍴0 1 1 1))
+
+ 'F1.TableSize'eWC'Edit' '10'(210 10)(23 100)('FieldType' 'Numeric')('Event' 'Change' 'EWCUpdate')
+ 'F1.Function'eWC'Combo'(,¨allf)f(210 120)(23 100)('SelItems'(allf=f))('Event' 'Select' 'EWCUpdate')
+ 'F1.CalcBtn'eWC'Button' 'Calc'(210 230)(23 100)('Event' 'Select' 'EWCUpdate')
+ 'F1.Table'eWC'Grid'(∘.×⍨⍳n)(240 10)(550 780)
+
+ 'F1.PasswordField'eWC'Edit' 'Password'(210 340)(23 100)('Password' '*')('Event' 'Change' 'EWCUpdate')

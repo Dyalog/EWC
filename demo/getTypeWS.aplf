@@ -1,0 +1,8 @@
+r←getTypeWS (inputs inputix fmts fmtix fcols fcolix bcols bcolix fonts fontix);combs;uc;combi
+⍝ Generate WS data for 'Input', 'FormatString' and 'CellTypes'
+⍝ Input is
+
+ combs←⍉↑inputix fmtix fcolix bcolix fontix
+ uc←∪,[1 2] combs ⍝ ,[1 2] ←→ ⍉,⍤2⍉
+ r←⊂'CellTypes' (combi←⍉uc⍳combs)
+ r,←↓'Input' 'FormatString' 'FCol' 'BCol' 'CellFonts',⍪(⊂¨↓⍉uc)⌷¨inputs fmts fcols bcols fonts

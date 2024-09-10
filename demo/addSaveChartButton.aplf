@@ -1,0 +1,5 @@
+addSaveChartButton chart
+
+'F1.LABEL' eWC 'Label' 'File:' (10 10)(23 40)
+'F1.FILE' eWC 'Edit' '/tmp/ewc-chart.svg' (10 45)(23 300)
+'F1.SAVE' eWC 'Button' 'Save SVG' (10 360)(23 60)('Event' 'Select' 'CBSaveChart' ('F1.FILE' chart))

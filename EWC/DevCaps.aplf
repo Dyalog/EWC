@@ -1,0 +1,14 @@
+ R←DevCaps;m;z
+ :Select 3↑⊃'.'⎕WG'APLVersion'
+ :Case 'Win'
+     →0⊣R←Name ⎕WG Props
+ :Case 'Lin'
+     m←⎕D∊⍨z←⊃⎕SH'xdpyinfo | grep dimensions'
+     →0⊣R←(⌽¨1 0 1 0⊂2⊃⎕VFI m\m/z),¯1 100
+ :Case 'Mac'
+     ...
+     z←⊃⎕SH'ioreg -l | grep -w "DisplayAttributes"'
+     facts←'NativeFormatVerticalPixels' 'NativeFormatHorizontalPixels' 'MaxVerticalImageSize' 'MaxHorizontalImageSize'
+     r←1 10×1 0 1 0⊂2⊃⎕VFI⍕∩∘⎕D¨{i←⍵⍳¨'=' ⋄ (i↓¨⍵)[(i↑¨⍵)⍳'"',¨facts,¨⊂'"=']}','(≠⊆⊢)z~'{}'
+     r←r,¯1 100
+ :EndSelect

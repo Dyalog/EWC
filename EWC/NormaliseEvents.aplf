@@ -1,0 +1,17 @@
+ r←normaliseEvents events;i;num;n
+ :If events≡,⊂0 0 ⍝ Reset
+     →0 ⊣ r←events
+ :EndIf
+ :If 1=n←≢events
+ :AndIf ∧/eventOK ⊃¨⊃events ⍝ Single element with multiple events
+     r←,/normaliseEvents¨⊃events
+  :ElseIf (4≥≢events)∧∧/eventOK 1⊃events ⍝ Multiple event names - but not one of the numeric event codes
+     r←↓(⍪⊆1⊃events),⊂1↓events
+ :ElseIf ∧/eventOK ⊃¨events
+     r←⊃,/normaliseEvents¨events
+     r←((¯1+≢events)⍴⊂⍬),⊂r
+ :Else
+     'U' Log 'Unsupported event setting at ',showCallStack
+     'U' Log '    'events
+     r←⍬
+ :EndIf

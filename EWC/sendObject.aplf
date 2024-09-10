@@ -1,0 +1,12 @@
+ sendObject (obj name);msg;z;conn;ID
+
+ msg←⎕JSON⍠'HighRank' 'Split'⊢obj
+ (ID conn)←getConnection caller name
+ :If conn≠0
+     'T' Log '#',(⍕conn),': ',((MAXLOG⌊≢msg)↑msg),(MAXLOG<≢msg)/'...'
+     z←conn WSS.Send msg
+ :EndIf
+
+ :If 2=⎕NC'SENDLOG'
+     SENDLOG,←⊂conn msg
+ :EndIf

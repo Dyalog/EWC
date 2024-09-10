@@ -1,0 +1,15 @@
+ Demo_Issue53 connected;e
+ EWC.CONNECTED←connected
+ ⎕PW←1000
+
+ e←'Event' 'Select' 'CBEcho'
+ 'F1'eWC'Form' 'Issue 53'(50 50)(800 800)('Coord' 'Pixel')
+ 'F1.MB'eWC'MenuBar'
+ 'F1.MB.File'eWC'Menu' '&File' e
+ 'F1.MB.Col'eWC'Menu' '&Colours' e
+ 'F1.MB.Col.Red'eWC'MenuItem' '&Red' e
+ 'F1.MB.Col.Blue'eWC'MenuItem' '&Blue' e
+ 'F1.MB.Col.Green'eWC'MenuItem' '&Green' e
+
+ 'F1.OK'eWC'Button' '&OK'(10 10)(23 100) e
+ 'F1.CAN'eWC'Button' '&Quit'(30 10)(23 100) e

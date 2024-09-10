@@ -1,0 +1,3 @@
+EWC/server/*
+# mkdocs output
+/site/

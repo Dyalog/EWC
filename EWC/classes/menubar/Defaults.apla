@@ -1,0 +1,42 @@
+(
+ 'MenuBar'
+ 1
+ 0 0
+ ''
+ ⍬
+ 'None'
+ ''
+ 341058523
+ 'Inherit'
+ 0
+ (
+  'Detach'
+ )
+ (
+  'Menu'
+  'MenuItem'
+  'Separator'
+  'Bitmap'
+  'Timer'
+ )
+ (
+  'Close'
+  'Create'
+ )
+ (
+  'Type'
+  'Visible'
+  'Event'
+  'FontObj'
+  'Data'
+  'EdgeStyle'
+  'MDIMenu'
+  'Handle'
+  'Translate'
+  'KeepOnClose'
+  'MethodList'
+  'ChildList'
+  'EventList'
+  'PropList'
+ )
+)

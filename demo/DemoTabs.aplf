@@ -1,0 +1,14 @@
+ DemoTabs connected;f;i;tb;sf
+ EWC.CONNECTED←connected
+ ⎕PW←1000
+
+ fonts←'Courier New' 'Times New Roman' 'Arial' 'APL385 Unicode'
+ 'F1'eWC'Form' 'Tabs and Fonts'(50 50)(600 600)('Coord' 'Pixel')
+ 'F1.L1'eWC 'Label' ('Selected: ',⊃⌽fonts) (10 10)(50 200)('Font' ((⊃fonts) 15))('Attach' ('Top' 'Left' 'Top' 'Left'))
+ 'F1.TC'eWC'TABCONTROL'('Posn'(100 0))('Size' (500 600))('Attach' ('Top' 'Left' 'Bottom' 'Right'))('MultiLine' 1)
+ :For i :In ⍳≢fonts
+     f←i⊃fonts
+     (tb←'F1.TC.T',⍕i)eWC'TABBUTTON' ('Caption' f)('Event' 'Select' 'CBUpdateTabs')
+     (sf←'F1.TC.SF',⍕i) eWC 'SubForm' ('TabObj' tb)
+     (sf,'.TEXT') eWC 'Edit' ('Style' 'Multi') ('Text' (1000⍴'Lorem ipsum dolor sit amet, consectetur adipiscing elit. ')) ('Posn' (10 10))('Size' (450 580))('Font' (f 16))('Attach' ('Top' 'Left' 'Bottom' 'Right'))
+ :EndFor

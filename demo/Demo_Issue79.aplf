@@ -1,0 +1,23 @@
+ Demo_Issue79 connected;BY;BX;RY;RX;P;formsize;cols;rows;points;sizes;radii;colours;uAppW;GetColor;z
+ EWC.CONNECTED←connected
+ ⎕PW←1000
+
+ formsize←600 400
+ (rows cols)←3 2
+ 'F1'eWC'Form' 'Issue 79'(50 50)(120 500)('Coord' 'Pixel')
+ uAppW←'F1.'
+ GetColor←{(0 0 0)(0 0 0)}
+
+ (uAppW,'∆3P51')eWC('Type' 'SubForm')('Border' 0)('Visible' 1)('BCol' 0)('AutoConf' 1)('EdgeStyle' 'Groove')
+ z←uAppW,'∆3P51.'
+ (z,'X1')eWC('Type' 'Group')('Caption' 'Trade Date')('Posn' 9 9)('Size' 72 170)('Border' 0)('FontObj' 'FntSys')('FCol' 0)('BCol' 0)('AutoConf' 0)('Tip' 'TrD')
+ (z,'X1.E31001')eWC('Type' 'Edit')('Posn' 18 64)('Size' 16 56)('Border' 0)('FontObj' 'FntSys')('FCol' 0)('Tip' 'E31001')('MaxLength' 8)('EdgeStyle' 'Ridge')
+ (z,'X1.Z31001')eWC('Type' 'Text')('Text' (,⊂'Start:'))('Points'(20 64-1 33))('FCol' 0)('FontObj' 'FntSys')
+ (z,'X1.E31003')eWC('Type' 'Edit')('Posn' 44 64)('Size' 16 56)('Border' 0)('FontObj' 'FntSys')('FCol'(2⊃GetColor'Edit'))('Tip' 'E31003')('MaxLength' 8)('EdgeStyle' 'Ridge')
+ (z,'X1.Z31003')eWC('Type' 'Text')('Text' (,⊂'End:'))('Points'(46 64-1 29))('FCol'(2⊃GetColor'Label'))('FontObj' 'FntSys')
+ (z,'I99')eWC'Button'('Caption' '&OK')('FCol'(2⊃GetColor'Button'))('BCol'(⊃GetColor'Button'))('Posn' 95 8)('Size' 20 96)('Accelerator' 79 4)
+ (z,'I1')eWC'Button'('Caption' '&Help')('FCol'(2⊃GetColor'Button'))('BCol'(⊃GetColor'Button'))('Posn' 95 320)('Size' 20 96)('Accelerator' 72 4)
+ (z,'I999')eWC'Button'('Caption' '&Tools...')('FCol'(2⊃GetColor'Button'))('BCol'(⊃GetColor'Button'))('Posn' 95 216)('Size' 20 96)('Accelerator' 84 4)
+ (z,'I0')eWC'Button'('Caption' '&Cancel')('FCol'(2⊃GetColor'Button'))('BCol'(⊃GetColor'Button'))('Posn' 95 112)('Size' 20 96)('Cancel' 1)('Accelerator' 67 4)
+ (z,'X1.E31001')(z,'X1.E31003')eWS¨⊂('Event' 'Change' 'onChange')('Event' 'BadValue' 'onBadValue')('Event' 'KeyPress' 'onKeyPress')('Event' 'LostFocus' 'onLostFocus')('Event' 'GotFocus' 'onGotFocus')('Event' 'MouseDown' 'onMouseDown' 1)('Event' 'ContextMenu' 'FixFormPopupMenu' 'E')
+ (z,'I99')(z,'I1')(z,'I999')(z,'I0')eWS¨⊂('Event' 'Select' 'onISelect')('Event' 'KeyPress' 'onKeyPress')('Event' 'MouseUp' 'LastMouseClick' 4)

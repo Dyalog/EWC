@@ -1,0 +1,6 @@
+ DemoRect connected;BY;BX;RY;RX;P
+ EWC.CONNECTED←connected
+ ⎕PW←1000
+
+ 'F1'eWC'Form' 'Rect'(50 50)(320 220)('Coord' 'Pixel')
+ 'F1.R1'eWC'Rect'('FStyle' 0)('FillCol'(,⊂124 130 252))('Points'(75.08 18.39))('Size'(100 150.8))

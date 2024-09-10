@@ -1,0 +1,8 @@
+﻿ params←ParseQueryString query
+ params←0 2⍴⊂''
+ →0⍴⍨0∊⍴query
+ :If '='∊query ⍝ contains name=value?
+     params←URLDecode¨2↑[2]↑'='(≠⊆⊢)¨'&'(≠⊆⊢)query
+ :Else
+     params←URLDecode query
+ :EndIf

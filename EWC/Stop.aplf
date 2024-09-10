@@ -1,0 +1,7 @@
+ Stop
+
+ :If 9=⎕NC'WSS'
+     WSS.Stop
+     ⎕DL 1
+     ⎕EX'WSS'
+ :EndIf

@@ -1,0 +1,14 @@
+ CBUpdateButtons args;obj;fruit;optstate;opts;txt
+
+ obj←1⊃args
+
+ fruit←('F1.FRUIT.C'∘,¨'123')eWG¨⊂'State'
+ optstate←(opts←'F1.'∘,¨'ICE' 'CHOKO')eWG¨⊂'State'
+
+ txt←'You selected ',('F1.FRUIT.C',⍕fruit⍳1)eWG'Caption'
+ :If ∨/optstate
+     txt,←' with ',{5↓∊' and '∘,¨⍵}(optstate/opts)eWG¨⊂'Caption'
+ :EndIf
+
+ 'F1.STATUS'eWS'Caption'txt
+ ⍝ F1.STATUS.Caption←txt

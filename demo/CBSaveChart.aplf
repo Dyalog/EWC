@@ -1,0 +1,22 @@
+ctls CBSaveChart args;file;svg;MB1;msg;z;size;tmp
+→(' '∨.≠⊃ctls)↓0
+tmp←EWC.LOGMODES
+EWC.LOGMODES~←'R' ⍝ Suppress display of incoming data
+file←(1⊃ctls) eWG 'Text'
+EWC.LOGMODES←tmp
+:If ⎕NEXISTS file
+    msg←'File "',file,'" already exists. Overwrite?'
+    'MB1' eWC 'MsgBox' 'Save Chart' msg 'Warn' ('OK' 'CANCEL') ('Event' ('MsgBtn1' 'MsgBtn2') 1)
+    z←eDQ 'MB1'
+    eEX 'MB1'
+    →('MsgBtn1'≢2⊃z)⍴0 ⍝ If not OK, exit
+:EndIf
+
+svg←(2⊃ctls) eWG 'SVG'
+(⊂svg) ⎕NPUT file 1
+size←2 ⎕NINFO file
+msg←'Size of "',file,'" is ',(1⍕size÷1024),'KB.'
+
+'MB1' eWC 'MsgBox' 'Chart saved' msg 'Warn' 'OK' ('Event' 'MsgBtn1' 1)
+z←eDQ 'MB1'
+eEX 'MB1'

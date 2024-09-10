@@ -1,0 +1,25 @@
+ DemoFlexLogin connected;formsize;rows;menucss;purple
+
+ formsize←350 300
+
+ USERID←'' ⍝ Global state
+
+ rows←'flex-direction: row, flex-wrap: wrap, justify-content: space-between, gap: 5px, align-items: end'
+
+ 'F1'eWC'Form' 'Please Login'(50 50)formsize('Coord' 'Pixel')('Flex' 'fill')('CSS' rows)
+
+ 'F1.INPUT'eWC'SubForm'('Size'(100,1↓formsize))('Border' 1)('Flex' 'row')
+
+ 'F1.INPUT.CREDS' eWC 'SubForm' ('Flex' 'column')                        ⍝ Credentials box - UserID above Password
+ 'F1.INPUT.CREDS.USERID' 'User ID'  LabelAbove 'Edit' ''
+ 'F1.INPUT.CREDS.PWD'    'Password' LabelAbove 'Edit' '' ('Password' '*')
+
+ purple←193 153 190
+ menucss←'padding: 5px, gap: 5px'
+ 'F1.INPUT.DEMO' eWC 'SubForm' ('Flex' 'column')('BCol' purple) ('CSS' menucss)  ⍝ Make container for Demo Menu
+
+ 'F1.INPUT.DATA'         'Data'     LabelAbove 'Edit' (⍕?12⍴100) ('Size' (23 200))
+
+ 'F1.INPUT.BTNS' eWC 'SubForm' ('Flex' 'column')                        ⍝ Buttons also together
+ 'F1.INPUT.BTNS.LOGIN'eWC'Button' 'Login'('Size'(23 80))('Event' 'Select' 'CBLogin')
+ 'F1.INPUT.BTNS.CHART'eWC'Button' 'Chart'('Size'(23 80))('Event' 'Select' 'CBLogin')

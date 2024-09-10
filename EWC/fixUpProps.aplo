@@ -1,0 +1,63 @@
+ values←names(type fixUpProps)values;special;i;ixs;ns;n;ix;val;c;v;m;txt;data;series
+⍝ Massage properties that can have multiple formats into regular structures for JS
+
+ special←'Event' 'Points' 'Radius' 'LWidth' 'LStyle' 'FStyle' 'Visible' 'Active' 'Interval' 'File' 'FileNames' 'Picture'  'TitleHeight' 'TitleWidth' 'Values' 'Input' 'Text' 'Start' 'End' 'Options' 'Series' 'Font' 'PName'
+ :If (⊂type)∊'rect' 'circle' 'ellipse' 'poly' 'font'
+     special,←'FCol' 'BCol' 'FillCol' 'ArcMode' 'Start' 'End' 'Size'
+ :EndIf
+ i←⍸names∊special
+ (ns ixs)←↓⍉names[i]{⍺ ⍵}⌸i
+
+ :For (n ix) :InEach (ns ixs)
+     :Select ⊃n
+     :Case 'Event'
+         values[ix]←normaliseEvents values[ix]
+     :Case 'Input'
+         n←≢c←(⍕caller),'.'
+         (ix⊃values)←{(n×(n↑¨⍵)∊⊂c)↓¨⍵},⊆ix⊃values
+     :CaseList 'Points' 'Radius' 'Size'
+         :If type≡'font'
+             (ix⊃values)←⌊0.5+ix⊃values ⍝ Adjust font size down
+         :ElseIf 2=⍴⍴val←ix⊃values
+             (ix⊃values)←,⊂↓[1]val
+         :Else
+             val←ix⊃values
+             :If (type≡'poly')∧2=≡val←,¨val
+                 val←,⊂val
+             :EndIf
+             (ix⊃values)←val
+         :EndIf
+     :Case 'Text'
+         :If type≡'text'
+         :AndIf 2≠≡txt←ix⊃values ⍝ Not already nested
+            (ix⊃values)←↓(¯2↑1 1,⍴txt)⍴txt
+         :EndIf
+     :Case 'PName'
+         values[ix]←(FONTMAP[;2],values[ix])[FONTMAP[;1]⍳values[ix]]
+     :CaseList 'BCol' 'FCol' 'FillCol'
+         (ix⊃values)←,⊆ix⊃values
+     :CaseList 'LStyle' 'FStyle' 'LWidth' 'Start' 'End'
+         (ix⊃values)←,ix⊃values ⍝ Always make a list
+     :CaseList 'Visible' 'Active' 'Interval' 'TitleHeight' 'TitleWidth'
+         (ix⊃values)←⊃ix⊃values ⍝ Must be scalar
+     :Case 'Options' ⍝ ApexChart
+         :If 80=⎕DR data←ix⊃values ⍝ If text
+             (ix⊃values)←0 ⎕JSON⍠'Dialect' 'JSON5'⊣data
+         :EndIf
+     :Case 'Series'  ⍝ ApexChart
+         (ix⊃values)←apexChartSeries ix⊃values
+
+     :Case 'Picture'
+         (ix⊃values)←2↑(,⊆ix⊃values),3 ⍝ Default to Center
+         n←≢c←(⍕caller),'.'
+         (ix 1⊃values)←{(n×c≡n↑⍵)↓⍵}ix 1⊃values
+     :Case 'Values'
+         :If 1∊m←(10|⎕DR¨v←ix⊃values)∊1 3 5 7 9 ⍝ Numeric?
+         :AndIf 1∊m←m∧(,1)∘≡¨⍴¨v
+            ((,m)/,v)←⊃¨(,m)/,v
+            (ix⊃values)←v
+         :EndIf
+     :CaseList 'File' 'FileNames'
+         (ix⊃values)←(' ' ⎕R '_')ix⊃values
+     :EndSelect
+ :EndFor

@@ -1,0 +1,3 @@
+ r←showCallStack;i;si
+ i←(⊃¨si←⎕SI)⍳'∆'
+ r←(i↓si),¨'[',¨(⍕¨i↓⎕LC),¨']'

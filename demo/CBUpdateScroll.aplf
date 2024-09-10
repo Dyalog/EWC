@@ -1,0 +1,87 @@
+ r←CBUpdateScroll args;e;scores;cols;fcol;pass;top;left;cc;t;i;scrolls;d
+ ⎕←'CBUpdateScroll:'args
+ r←1 ⍝ By default OK
+ Event←⎕NS''
+ e←Event.Event←⎕NS''
+ e.(ID EventName Info)←(2↑args),⊂2↓args
+
+ scrolls←'F1.UPDOWN' 'F1.LEFTRIGHT'
+
+ top←¯1+'F1.UPDOWN'eWG'THUMB'
+ left←¯1+'F1.LEFTRIGHT'eWG'THUMB'
+ cc←'F1.VGRID'eWG'CurCell'
+
+ :Select 1⊃args
+ :CaseList scrolls ⍝ Scroll
+     d←scrolls⍳args[1]      ⍝ 1=updown, 2=leftright
+     :If args[3]∊1 ¯1           ⍝ Small movement
+         :If (cc[d]+args[3])∊⍳n ⍝ Staying within the grid?
+             cc[d]+←args[3]
+             1 eNQ'F1.VGRID' 'CellMove',cc,1 ⍝ Move within the grid
+             eNQ'F1.VGRID' 'GotFocus'(1⊃args)
+             →0 ⍝ Do not update
+         :EndIf
+     :Else                  ⍝ Window needs to move
+         :If d=1            ⍝ up/down
+             top←args[4]
+         :Else              ⍝ left/right
+             left←args[4]
+         :EndIf
+     :EndIf
+
+     eNQ'F1.VGRID' 'GotFocus'(1⊃args)
+     →UPDATE
+
+ :CaseList 'F1.VGRID' 'F1.VGRID.E1'
+     :Select 2⊃args
+     :Case 'KeyPress'
+         ⎕←'CurCell:  ',⍕cc
+         ⎕←'KeyPress: ',⍕args
+
+         :If 1 'UC'≡t←cc[1](3⊃args)     ⍝ Up    in row 1
+             top←0⌈top-1
+         :ElseIf n'DC'≡t                ⍝ Down  in row n
+             top←max⌊top+1
+         :ElseIf 1 'LC'≡t←cc[2](3⊃args) ⍝ Left  in col 1
+             left←0⌈left-1
+         :ElseIf n'RC'≡t                ⍝ Right in col n
+             left←max⌊left+1
+         :ElseIf 'DS'≡3⊃args            ⍝ Page down
+             :If cc[1]=n                ⍝ On bottom row
+                 top←max⌊top+n          ⍝ Move a page
+             :Else
+                 eNQ'F1.VGRID' 'CellMove',n,cc[2],1 ⍝ Move to bottom row
+                 →0 ⍝ We'll be back
+                 cc[1]←n
+             :EndIf
+         :ElseIf 'US'≡3⊃args            ⍝ Page down
+             :If cc[1]=1                ⍝ On top row
+                 top←1⌈top-n            ⍝ Move a page
+             :Else
+                 eNQ'F1.VGRID' 'CellMove',1,cc[2],1 ⍝ Move to top row
+                 →0 ⍝ We'll be back
+                 cc[1]←1
+             :EndIf
+
+         :Else
+             →0
+         :EndIf
+
+         'F1.UPDOWN'eWS'THUMB'(top+1)
+         'F1.LEFTRIGHT'eWS'THUMB'(left+1)
+         →UPDATE
+
+     :Case 'CellMove'
+         ⎕←'CellMove: ',⍕args
+         →0
+     :EndSelect
+ :Case 'F1.GO500'
+     eNQ'F1.UPDOWN' 'Scroll' 0 500
+     →0
+ :Else
+     ⎕←'Unexpected message: ',args
+     →0
+ :EndSelect
+
+UPDATE:
+ 'F1.VGRID'eWS('Values'((⍕¨top+⍳n)∘.,'/',¨⍕¨left+⍳n))('RowTitles'('Row '∘,¨⍕¨top+⍳n))('ColTitles'((↓'ZI4'⎕FMT⍪left+⍳n)))('CurCell'cc)

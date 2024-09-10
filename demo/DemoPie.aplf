@@ -1,0 +1,23 @@
+ DemoPie connected;Data;ANGLES;COLS;PATS;ps
+ EWC.CONNECTED←connected
+ ⎕PW←1000
+
+ 'F1'eWC'Form' 'Pies'(50 50)(480 620)('Coord' 'Pixel')('BCol' 255 255 255)
+
+ Data←12 27 21 40
+ ANGLES←0,¯1↓((○2)÷+/Data)×+\Data
+ COLS←(255 0 0)(0 255 0)(255 255 0)(0 0 255)
+ PATS←0×1 2 3 4
+
+ 'F1.P1'eWC'Ellipse'(10 10)(200 280)('Start'ANGLES)('ArcMode' 2)('FCol'(⊂0 0 0))('FStyle'PATS)('FillCol'COLS)
+ 'F1.P2'eWC'Circle'(250 450)120('Start'ANGLES)('ArcMode' 2)('FCol' COLS)('FStyle' ¯1)
+
+ ps←('Points' 250 10)('Size' 200 280)('FCol' (0,0,0))('FStyle' 0)
+ 'F1.E1'eWC 'Ellipse' ('ArcMode' 2)('DrawMode' 13)('Start' 0)    ('End' 1.167)('FillCol' (173,190,133)),ps
+ 'F1.E2'eWC 'Ellipse' ('ArcMode' 2)('DrawMode' 13)('Start' 1.167)('End' 1.613)('FillCol' (205,136,135)),ps
+ 'F1.E3'eWC 'Ellipse' ('ArcMode' 2)('DrawMode' 13)('Start' 1.613)('End' 2.492)('FillCol' ( 69, 89,187)),ps
+ 'F1.E4'eWC 'Ellipse' ('ArcMode' 2)('DrawMode' 13)('Start' 2.492)('End' 3.108)('FillCol' (222,201,  6)),ps
+ 'F1.E5'eWC 'Ellipse' ('ArcMode' 2)('DrawMode' 13)('Start' 3.108)('End' 3.476)('FillCol' (  5, 59,174)),ps
+ 'F1.E6'eWC 'Ellipse' ('ArcMode' 2)('DrawMode' 13)('Start' 3.476)('End' 4.289)('FillCol' (121, 80,164)),ps
+ 'F1.E7'eWC 'Ellipse' ('ArcMode' 2)('DrawMode' 13)('Start' 4.289)('End' 5.378)('FillCol' ( 95,134,219)),ps
+ 'F1.E8'eWC 'Ellipse' ('ArcMode' 2)('DrawMode' 13)('Start' 5.378)('End' (○2)) ('FillCol' (174,189,220)),ps

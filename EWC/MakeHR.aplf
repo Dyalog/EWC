@@ -1,0 +1,33 @@
+err←MakeHR (home name modal);ns;count;maxtries;ok;cb;dpr;conn
+ns←home⍎name
+home.⎕EX '_EWC.conn'
+cb←(⍕⎕THIS),'.HRCallbacks'
+dpr←DPR
+defaultPosnSize ns
+'HR' ns.⎕WC 'HTMLRenderer' ('Caption' ns.Caption) ('URL' ('localhost:',⍕PORT)) ('Size' (dpr×ns.Size+HRBorder))('Coord' ns.Coord)('Posn' (dpr×ns.Posn))('Event' ('Close' 'Configure') cb)('Visible' (~modal))
+'D' Log 'Created HTMLRenderer ',(⍕ns),'.HR'
+
+:If SHOWDEVTOOLS
+    ns.HR.ShowDevTools 1
+:EndIf
+
+:If 2=home.⎕NC '_EWC_CODELOCATION'
+     home←home⍎'⍎_EWC_CODELOCATION'
+:Else
+
+:EndIf
+count←ok←0 ⋄ maxtries←200
+:Repeat
+    count+←1
+    :If (~ok)∧count=100 ⍝ /// After 3 seconds, try reloading the page
+         ns.HR.ExecuteJavaScript 'window.location.reload()'
+    :EndIf
+    ⎕Dl 0.1 ⍝ Allow Handler to process connection
+:Until (count>maxtries)∨ok←2=home.⎕NC '_EWC.conn'
+err←(~ok)/'Unable to initialise HTMLRenderer'
+:If ~ok ⋄ ∘∘∘ ⋄ :EndIf
+
+ns.HR.Caption←ns.Caption,(~modal∨{0::0 ⋄ ⍵.Visible}ns)/' [Invisible]'
+
+ns.HR.ExecuteJavaScript 'document.body.style.overflow = "hidden"'
+'ns.HR._EWC' ⎕NS home._EWC ⍝ Give HR it's own copy

@@ -1,0 +1,37 @@
+ Replay;rc;msg;tn;log;z;form;sendlog;stream;s
+ ⍝ Replace log file using browser
+
+ form←2 ⎕NQ '.' 'GetEnvironment' 'Form'
+ sendlog←2 ⎕NQ '.' 'GetEnvironment' 'SendLog'
+ s←⊃2⊃⎕VFI 2 ⎕NQ '.' 'GetEnvironment' 'Stream'
+
+ EWC←##.EWC
+ EWC.PORT←22322
+ EWC.USEHR←0
+ EWC.RESOURCES←1 2⍴'images' 'c:\devt\jswc\demo\images'
+ 'e'EWC.Init 'Browser'
+
+ IMAGEFOLDER←EWC.EWCFolder,'server/images'
+ EWC.IGNORE1Init←1 ⍝ Make Handler ignore the next Initialise call
+
+ ⍝ form eWC 'Form' ('Size' (768 1200))
+ ⎕←'Please connect browser...'
+
+ :Repeat
+   ⎕DL 1
+ :Until 0≠⎕NC '_EWC.conn'
+ eEX 'F1'
+
+ tn←sendlog ⎕FSTIE 0
+ log←⎕FREAD tn 1
+ ⎕FUNTIE 1
+
+ :For (stream msg) :In log
+     ⍝ ⍞←'Hit enter to send next message...'
+     ⍝ z←⍞
+     :If stream=s
+     :AndIf ~∨/'"F0000.T"'⍷msg
+        z←_EWC.conn EWC.WSS.Send ⎕←msg
+        ⎕DL 1
+     :EndIf
+ :EndFor

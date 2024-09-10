@@ -1,0 +1,19 @@
+allocateTokens;z;t
+
+t←'EWC Synchronisation'
+
+:Trap 2 ⍝ SYNTAX ERROR in v18.2
+     z←↑⎕TALLOC 0
+     :If (≢z)≥i←z[;2]⍳⊂t
+         TOKENRANGE←z[i;1]
+     :Else
+         TOKENRANGE←⎕TALLOC 1 t
+     :EndIf
+     TOKENSTEP←10*-⌈10⍟MAXSESSIONS+1
+     (WG_TOKENBASE DQ_TOKENBASE)←TOKENRANGE+0.1 0.2
+ :Else
+     TOKENSTEP←1
+     (WG_TOKENBASE DQ_TOKENBASE)←(0 1×1+MAXSESSIONS)+30⊥⎕A⍳'EWC' ⍝ Think of a number
+ :EndTrap
+
+DEQUEUEING←⍬

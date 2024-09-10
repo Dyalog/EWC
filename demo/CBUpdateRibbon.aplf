@@ -1,0 +1,19 @@
+ CBUpdateRibbon args;cap;info;type
+
+ :Select (⊃args) eWG 'Type'
+ :Case 'RibbonButton'
+     cap←(⊃args) eWG 'Caption'
+ :Case 'RibbonButtonGroup'
+     cap←(⊃3⊃args)⊃(⊃args) eWG 'Captions'
+ :Else
+     ∘∘∘
+ :EndSelect
+
+ type←(⊃args) eWG 'Type'
+ :If type≡'RibbonButtonGroup'
+     cap←(3⊃args)⊃(⊃args) eWG 'Captions'
+ :Else
+     cap←(⊃args) eWG 'Caption'
+ :EndIf
+
+ 'F1.Average' eWS 'Caption' ('You selected "',cap,'"')

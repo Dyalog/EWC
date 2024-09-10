@@ -1,0 +1,18 @@
+ DemoTimerLines connected;BY;BX;RY;RX;P
+ EWC.CONNECTED←connected
+ ⎕PW←1000
+
+ 'F1'eWC'Form' 'PolyRect'(50 50)(320 220)('Coord' 'Pixel')
+
+ BY←10 10 50 10
+ BX←15 65 40 15
+ RY←15 15 40 15
+ RX←25 55 40 25
+
+ P←'Poly'((BY BX)(RY RX))((0 0 255)(255 0 0))
+ 'F1.L1'eWC P,('LWidth' (3 6))('FStyle' (¯1 0))('FillCol'(2⍴⊂0 255 0))
+ 'F1.R1'eWC'Rect'((0 50)(0 100))((320 30)(220 50))(5 10)((255 0 0)(0 255 0))
+ 'F1.T1'eWC'Text' ('RED' 'GREEN' 'BLUE')((120 140 160)(20 30 40))('FCol' (255 0 0)(0 255 0)(0 0 255))
+ 'F1.TM'eWC'Timer' 1000 ('Active' 1)('Event' 'Timer' 'CBTimer' 'Timer Larg')('FireOnce' 0)
+ 'F1.F1'eWC'Button' 'Once' (210 10)(23 100)('Event' 'Select' 'CBTimer')('Style' 'Check')
+ 'F1.AC'eWC'Button' 'Active' (210 80)(23 120)('Event' 'Select' 'CBTimer')('Style' 'Check')('State' 1)

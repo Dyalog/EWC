@@ -1,0 +1,6 @@
+sendCBResponse (EventID Proceed conn);ns;msg;z
+'EC' ⎕NS 'EventID' 'Proceed'
+'ns' ⎕NS 'EC'
+ msg←⎕JSON⍠'HighRank' 'Split'⊢ns
+ 'T' Log '#',(⍕conn),': ',((MAXLOG⌊≢msg)↑msg),(MAXLOG<≢msg)/'...'
+ z←conn WSS.Send msg

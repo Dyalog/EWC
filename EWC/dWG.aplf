@@ -1,0 +1,104 @@
+ {R}←Name ∆WG Props;msg;WG;wg;z;caller;p;class;remote;dynamic;r;d;i;⎕TRAP;proplist;PropList;m;ix;ID;conn;n;cp;size;lp;m
+ ⎕TRAP←0 'S'
+
+ Name←⍕∊Name
+
+ caller←findCaller
+ Name←caller removeCaller Name
+
+ (ID conn)←getConnection caller Name
+ :If (⊂,Name)∊,¨'⎕SE' '#' '.' ⍝ Pass WG of System properties through
+     :If (⊃Name)≠'⎕'
+     :AndIf (⎕C Props)≡'devcaps'
+        :If (MODE>0)∨'Mac'≡3↑⊃'.' ⎕WG 'APLVersion'
+        :AndIf 0<≢⊃SESSIONS
+           z←((2+ID⍳⍨⊃SESSIONS)⊃SESSIONS).devCaps
+           size←⊂(1+MODE≠0)⊃z.(ScreenSize ViewPort) ⍝ Browser Size or Screen Size
+           →0⊣R←(⌊0.5+size÷1(z.PPI÷25.4)),¯1 100
+        :Else ⍝ No relevant browser session
+           →0⊣R←DevCaps
+        :EndIf
+     :Else
+         →0⊣R←Name ⎕WG Props
+     :EndIf
+ :EndIf
+
+ WG←⎕NS''
+ wg←WG.WG←⎕NS''
+ WGID+←1
+ p←,⊆Props
+ :Trap 2 6
+     class←GetClass caller Name
+ :Else
+     (⊃⎕DMX.DM)⎕SIGNAL ⎕DMX.EN
+ :EndTrap
+
+ :If 'textsize'≡⊃⊃lp←⎕C p
+     Warning'TextSize invoked'
+     →0⊣R←15 20×⍴⎕FMT 2⊃⊃p
+ :EndIf
+
+ proplist←⎕C PropList←class.PropList,objProps
+ :If ∨/m←(≢proplist)<i←proplist⍳lp
+     Warning'Unsupported on ',class,': ',⍕m/p
+ :EndIf
+ p[ix]←PropList[i[ix←⍸~m]]
+
+ :If remote←∨/,dynamic←p∊⍥⎕C class.Dynamic,⊂'NoSuchProperty' ⍝ Any reason to ask remote client for values?
+     wg.(WGID ID Properties)←(⍕WGID)((2×'#.'≡2↑Name)↓Name)(d←dynamic/p)
+     msg←⎕JSON WG
+     :If CONNECTED
+         'T'Log'#',(⍕conn),': ',msg
+         z←conn WSS.Send msg
+     :Else
+         'T'Log'(no connection): ',msg
+     :EndIf
+ :EndIf
+
+ :If USEWIN32
+     R←Name caller.⎕WG p
+ :Else
+     R←(≢p)⍴⊂⍬
+     :If 0≠≢i←⍸~dynamic
+         :Trap 6
+             R[i]←caller⍎((1=≢i)/'⊂'),Name,'.(',(⍕p[i]),')'
+         :Else
+             ⎕DMX.Message ⎕SIGNAL 6
+         :EndTrap
+     :EndIf
+ :EndIf
+
+ :If remote∧USEWIN32∧~CONNECTED
+     wg.Properties←⎕NS''
+     r←dynamic/R
+     ⍎'wg.Properties.(',(⍕d),')←',(1≠≢r)↓'⊃r'
+     msg←⎕JSON⍠'HighRank' 'Split'⊢WG
+     (⎕JSON msg)⎕TPUT WG_TOKENBASE+TOKENSTEP×1⌈ID×MODE=2
+ :EndIf
+
+ :If remote∧CONNECTED
+     :Trap 6 ⍝ Request for unsupported property
+         r←msg WaitForWG d ID(⍕WGID)
+         R[p⍳d]←r
+         :If (≢p)≥i←p⍳⊂'Size'
+         :AndIf USEHR
+         :AndIf 'Form'≡class.ClassName
+            ⍝ (i⊃R)-←HRBorder
+         :EndIf
+     :Else
+         :Select (caller⍎Name,'.Type')Props
+         :Case 'SubForm' 'Size'
+             'W'Log'Working around failed WG Size on Subform ',Name
+             R←,⊂caller⍎Name,'.Size'
+         :Case 'Grid' 'CurCell'
+             'W'Log'Working around failed WG CurCell on grid ',Name
+             R←,⊂1 1
+         :Else
+             ⎕DMX.EM ⎕SIGNAL ⎕DMX.EN
+         :EndSelect
+     :EndTrap
+ :EndIf
+
+ :If 1=≡Props
+     R←⊃R
+ :EndIf

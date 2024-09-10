@@ -1,0 +1,21 @@
+[
+ 'JSName'     ''    'Shift' 'Ctl'
+ 'ArrowDown'  'DC'   'Dc'   ''
+ 'ArrowUp'    'UC'   'Uc'   ''
+ 'ArrowRight' 'RC'   'Rc'   'RW'
+ 'ArrowLeft'  'LC'   'Lc'   'LW'
+ 'Home'       'LL'   'Ll'   'UL'
+ 'End'        'RL'   'Rl'   'DL'
+ 'PageUp'     'US'   'Us'   ''
+ 'PageDown'   'DS'   'Ds'   ''
+ 'Insert'     'IN'   'PT'   'CP'
+ 'Delete'     'DI'   'CT'   'DK'
+ 'Enter'      'ER'   ''     ''
+ 'Backspace'  'DB'   'DB'   ''
+ 'Process'      0     0     ''
+ 'Tab'        'HT'   ''     'TB'
+ 'Control'      0     0     0
+ 'Shift'        0     0     0
+ 'Alt'          0     0     0 
+ 'AltGraph'     0     0     0
+]

@@ -1,0 +1,7 @@
+ ShowDevTools
+
+ :If 9=⎕NC'F1.HR'
+     F1.HR.ShowDevTools 1
+ :Else
+     ⎕←'No HTMLRenderer defined'
+ :EndIf

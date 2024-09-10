@@ -1,0 +1,13 @@
+ DemoApexCandleStick connected;cd;time;series;options;svg
+
+ cd←demodata.candledata
+ time←1 12 ⎕DT (1 ⎕DT⊂4↑⎕TS)++\0,(¯1+≢cd)⍴÷96 ⍝ Every 15 minutes from last hour
+ series←(⍉cd) time ⍝ (Matrix of Open High Low Close values) (X values)
+
+ options←'{title: { text: "CandleStick Chart", align: "left"},'
+ options,←'xaxis: { type: "datetime"},'
+ options,←'yaxis: { tooltip: { enabled: true}}}'
+
+ 'F1'eWC'Form' 'Charts'(50 50)(600 800)('Coord' 'Pixel')
+ addSaveChartButton 'F1.CHART'
+ 'F1.CHART'eWC'ApexChart'(50 10)(540 780) ('Series' series) 'candlestick' ('Options' options)

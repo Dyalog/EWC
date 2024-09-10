@@ -1,0 +1,44 @@
+ Demo_Issue67 connected;size;sp;sF_Main;Sz;sub
+ EWC.CONNECTED←connected
+ ⎕PW←1000
+
+ sF_Main←'F1'
+ size←300 600
+ sp←('Size'size)('Posn'(0 0))
+
+ eEX'LOGO'
+ sF_Main eWC'Form' 'Issue 64'('Coord' 'Pixel'),sp
+ (sF_Main,'.Tree')eWC'SubForm'('Posn'(0 0))('Size'(300 197))
+ (sF_Main,'.Tree.T')eWC'TreeView'('Posn'(10 10))('Size'(280 150))('Items'(⍕¨⍳12))('Depth'(12⍴1+0 1 1 1))
+ (sF_Main,'.G1')eWC'Group'('Posn'(0 197))('Size'(300 3))
+ sp←('Size'(size-0 200))('Posn'(0 200))
+ (sF_Main,'.Tit')eWC'SubForm'('Visible' 1),sp
+ sub←sF_Main,'.Tits'
+ (sF_Main,'.Tits')eWC'SubForm'('Visible' 0),sp
+ (sub,'.Lbl')eWC'Label' 'Hello'(1 1)('Size' 26 200)
+ (sub,'.List')eWC'ListView'('View' 'Icon')('Border' 0)('Items' 'One' 'Two' 'Three')('Posn'(50 0))('Size'(200 400))
+ Sz←¯28 ¯2+(sF_Main,'.Tits')eWG'Size'
+ (sub,'.List')eWS('Size'Sz)('Posn' 28 1)
+ (sF_Main,'.Tits')eWS'Visible' 0
+ (sF_Main,'.Tits')eWS'Visible' 1
+ →0
+
+⍝ Original app code follows
+
+    ⍝ (sF_Main,'.Tits')#.xWC'SubForm'('Bcol'(SetBCol ¯5))('Coord' 'Pixel')('Visible' 0)('Size' 500 500)
+ (sF_Main,'.Tits')#.xWC'SubForm'('Bcol'(SetBCol ¯5))('Coord' 'Pixel')('Visible' 1)('Size' 500 500)('Posn' 200 200) ⍝ /// EWC
+
+ :If 2=⎕NC'sXPstyle'
+ :AndIf sXPstyle=1
+     (sF_Main,'.Tits.Lbl')#.xWC'Label' ''(1 1)('Size' 26 2000)('Fcol'(2⊃GetColor'Header'))('Bcol'(1⊃GetColor'Header'))('Attach' 'Top' 'Left' 'Top' 'Right')('Font'sHeaderFontName 20 0 0 0 800)('Border' 0)
+ :Else
+     (sF_Main,'.Tits.Lbl')#.xWC'Label' ''(1 1)('Size' 26 2000)('Fcol' 255 255 255)('Bcol' 128 128 128)('Attach' 'Top' 'Left' 'Top' 'Right')('Font'sHeaderFontName 20 0 0 0 800)('3D' 'Shadow')('Border' 1)
+ :EndIf
+
+ (sF_Main,'.Tits.List')#.xWC'ListView'('Attach' 'Top' 'Left' 'Bottom' 'Right')('View' 'Icon')('Border' 0)('Fcol'(2⊃GetColor'TreeView'))('Bcol'(1⊃GetColor'TreeView'))
+
+ (sF_Main,'.Tits.List')#.xWS('ImageListObj'(1⊃ImageLists32)(1⊃ImageLists))⍝('ImageIndex' 1)
+
+     ⍝ Sz←¯28 ¯2+(sF_Main,'.Tits')#.xWG'Size' ⍝ /// EWC failing to WG Size here
+ Sz←¯28 ¯2+⍎sF_Main,'.Tits.Size'
+ (sF_Main,'.Tits.List')#.xWS('Size'Sz)('Posn' 28 1)

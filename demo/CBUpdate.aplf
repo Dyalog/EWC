@@ -1,0 +1,128 @@
+ EWCUpdate args;e;scores;cols;fcol;pass;ii;ids;target;row;col;scroll;sel;mouse;changed;newval;txt;ns;split;z;ct;in;input;seltext;move;curcell;values
+ Event←⎕NS''
+ e←Event.Event←⎕NS''
+ e.(ID EventName Info)←(2↑args),⊂2↓args
+
+ :If 'KeyPress'≡2⊃args
+     :If (10↑1⊃args)≡'F1.Players' ⍝
+         ⎕←'KEYPRESS:'args
+         →0
+     :ElseIf (12↑1⊃args)≡'F1.Holdings.' ⍝ An input within the grid
+         move←('UC' 'DC' 'LC' 'RC'⍳args[3])⊃(¯1 0)(1 0)(0 ¯1)(0 1)(0 0)
+         (curcell values)←'F1.Holdings'eWG'CurCell' 'Values'
+         curcell←1⌈(⍴values)⌊curcell+move
+         eNQ'F1.Holdings' 'CellMove',curcell
+         →0
+     :EndIf
+ :EndIf
+
+ :Select 1⊃args
+ :Case 'F1.Holdings'
+     :If ~#.EWC.CONNECTED
+     :AndIf 'CellChanged'≡2⊃args
+         ns←⎕NS''
+         ns.FormatCell←⎕NS''
+         ns.FormatCell.(ID Cell Value)←(1⊃args)(args[3 4])(5⊃args)
+         ⎕←'Testing formatCell:'
+         ⎕←'  In:  ',⎕JSON ns
+         ⎕←'  Out: ',⎕THIS #.EWC.formatCell ns
+     :EndIf
+
+     :If 'CellMove'≡2⊃args
+         ⎕←'EWCUpdate: CellMove to ',⍕2↓args
+     :EndIf
+
+ :Case 'F1.Home'
+     :If 9=⎕NC'F1.Players'
+         1 eNQ'F1.Players' 'CellMove' 1 1 1
+     :Else
+         1 eNQ'F1.Holdings' 'CellMove' 1 1 1
+         1 eNQ'F1.Holdings' 'GotFocus' 'F1.Home'
+     :EndIf
+
+ :Case 'F1.Where'
+     z←'F1.Holdings'eWG'CurCell'
+     'F1.Average'eWS'Caption'('Current cell is ',⍕z)
+
+ :Case 'F1.SelText'
+     z←'F1.Holdings'eWG'CurCell'
+     (ct in)←'F1.Holdings'eWG'CellTypes' 'Input'
+     input←⊃in[ct[⊂z]]
+     :If (⊂'SelText')∊input eWG'PropList'
+         seltext←input eWG'SelText'
+         :If seltext≡⊂'null'
+             ⎕←'*** WG of SelText not supported - setting to (1 2)'
+             seltext←1 2
+         :EndIf
+         input eWS'SelText'(1+seltext)
+         'F1.Average'eWS'Caption'('SelText is ',(⍕seltext),' - set to ',(⍕1+seltext))
+     :Else
+         'F1.Average'eWS'Caption' 'Input field does not support SelText'
+     :EndIf
+
+ :Case 'F1.PasswordField' ⍝ Edit
+     pass←'F1.PasswordField'eWG'Value'
+     'F1.Average'eWS'Caption'('Password is ',pass)
+ :Case 'F1.Function' ⍝ Dropdown
+     f←allf[1⍳⍨'F1.Function'eWG'SelItems']
+ :Case 'F1.TableSize' ⍝ Edit
+     f←allf[1⍳⍨'F1.Function'eWG'SelItems']
+     n←⊃'F1.TableSize'eWG'Value'
+     :If 'KeyPress'≡2⊃args
+         ⎕←args
+     :EndIf
+ :Case 'F1.Players'
+     :Select 2⊃args
+     :Case 'CellMove'
+         (row col scroll sel mouse changed newval)←7↑2↓args
+         'F1.Average'eWS'Caption'('CellMove to Row: ',(⍕row),' Col: ',(⍕col))
+         →0
+     :EndSelect
+     scores←('F1.Players'eWG'Values')[;F1.Players.ColTitles⍳⊂'Score']
+     'F1.Average'eWS'Caption'('Average score:',1⍕+/scores÷≢scores)
+     →0
+ :Case 'F1.Players.Name' ⍝ KeyPress
+     :If 'KeyPress'≡2⊃args
+         'F1.Average'eWS'Caption'('KeyPress: ''',(3⊃args),''', code: ',(⍕4⊃args),', shift: ',(⍕6⊃args))
+     :EndIf
+ :Case 'F1.CalcBtn'
+     f←allf[1⍳⍨'F1.Function'eWG'SelItems']
+     n←'F1.TableSize'eWG'Value'
+ :CaseList 'F1.Months' 'F1.LEFT.Months' ⍝ Treeview
+     txt←(2⊃args),' on'
+     :Select 2⊃args
+     :CaseList 'ItemDown' 'ItemDblClick'
+         :Trap 6
+             sel←(1⊃args)eWG'SelItems'
+             txt,←' (WG SelItems OK)'
+         :Else
+             txt,←' (WG SelItems FAILED)'
+         :EndTrap
+
+         txt,←' node #',(⍕3⊃args),' ',((4⊃args)⊃'left' 'right' '' 'center'),' button ',((1 2 4⍳5⊃args)⊃'shift' 'ctrl' 'alt' 'no'),' key '
+     :Case 'MouseUp'
+         txt,←,' ',⍕2↓args
+     :CaseList 'Expanding' 'Retracting'
+         txt,←' node #',⍕3⊃args
+         ii←(1⊃args)eWG'ImageIndex'
+         ii[3⊃args]←1+'Expanding'≡2⊃args ⍝ Set Image Index to open or closed
+         (1⊃args)eWS'ImageIndex'ii
+     :EndSelect
+     split←'F1.LEFT.Months'≡1⊃args ⍝ Demo Splitters
+     ('F1.',(split/'RIGHT.TOP.'),'Average')eWS'Caption'txt
+     →split⍴0
+ :CaseList cols←'F1.MB.Col.'∘,¨'Red' 'Blue' 'Green'
+     fcol←(cols⍳args[1])⊃(255 0 0)(0 0 255)(0 255 0)
+     'F1.Average'eWS'FCol'fcol
+     →0
+ :CaseList cols←'F1.MB.Focus.'∘,¨'TableSize' 'Function' 'CalcBtn' 'Players'
+     target←'F1',{(-(⌽⍵)⍳'.')↑⍵}1⊃args
+     eNQ target'GotFocus'
+     →0
+ :Else
+     ⎕←'Unexpected message: ',args
+ :EndSelect
+
+ :If 0∧.≠⎕NC'F1.Table' 'f' 'n'
+     'F1.Table'eWS'Values'(∘.(⍎f)⍨⍳n)
+ :EndIf

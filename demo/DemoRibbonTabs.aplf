@@ -1,0 +1,72 @@
+ DemoRibbonTabs connected;tb;sf;rb;captions;icons;sel;bcol;fcol;titlebcol;bordercol;activebcol;passivebcol;imagefiles
+ EWC.CONNECTED←connected
+ ⎕PW←1000
+ ⎕EX'fonts' ⍝ In case left over by DemoTabs
+
+ sel←'Event' 'Select' 'CBUpdateRibbon'
+ (fcol bcol titlebcol)←('FCol'(255 255 255))('BCol'(134 171 220))('TitleBCol'(0 0 0)) ⍝ For Ribbon
+ bordercol←'BorderCol'(192 192 192) ⍝ For borders between Ribbon Groups
+ activebcol←'ActiveBCol'(134 171 220) ⍝ For the active Tab
+ passivebcol←'BCol'(⌊0.5×134 171 220)
+
+ imagefiles←'/images/logos/'∘,¨'GAMA_R.ICO' 'GAMA_G.ICO' 'GAMA_B.ICO'
+ 'IL'eWC'ImageList'('Size'(32 32))('Masked' 2)('Files'imagefiles)
+ imagefiles←'/images/flags32/'∘,¨'dk.png' 'uk.png' 'us.png'
+ 'IL32'eWC'ImageList'('Size'(32 32))('Masked' 2)('Files'imagefiles)
+
+ 'F1'eWC'Form' 'Tabbed Ribbon'(50 50)(600 800)('Coord' 'Pixel')
+ 'F1.Average'eWC'Label' 'Click on something!'(210 10)(50 400)
+ 'F1.TC'eWC'TabControl'('Posn'(0 0))('Size'(200 800))('Attach'('Top' 'Left' 'Bottom' 'Right'))('MultiLine' 1)activebcol passivebcol fcol
+
+ (tb←'F1.TC.T1')eWC'TabButton'('Caption' 'Locks and Macros')('Event' 'Select' 'CBUpdateTabs')
+ (sf←'F1.TC.SF1')eWC'SubForm'('TabObj'tb),⊂bcol
+
+ (rb←sf,'.Ribbon')eWC'Ribbon'fcol bcol titlebcol
+
+ (rb,'.Item1')eWC'RibbonGroup' 'Locks'('Size' 2)bordercol
+ (rb,'.Item1.GroupItem1')eWC'RibbonGroupItem' 12
+ (rb,'.Item1.GroupItem1.LockButton')eWC'RibbonButton' 'Access' 'FcLock' 12 sel
+
+ (rb,'.Item2')eWC'RibbonGroup' 'Macros'('Size' 2)bordercol
+ (rb,'.Item2.GroupItem1')eWC'RibbonGroupItem' 12
+ (rb,'.Item2.GroupItem1.MacrosButton')eWC'RibbonButton' 'Macros' 'FcPlanner' 12 sel
+
+ (tb←'F1.TC.T2')eWC'TabButton'('Caption' 'Dashboard and Quality')('Event' 'Select' 'CBUpdateTabs')
+ (sf←'F1.TC.SF2')eWC'SubForm'('TabObj'tb),⊂bcol
+ (rb←sf,'.Ribbon')eWC'Ribbon'fcol bcol
+
+ (rb,'.Item3')eWC'RibbonGroup' 'Dashboard'('Size' 2)bordercol
+ (rb,'.Item3.GroupItem1')eWC'RibbonGroupItem' 12
+ (rb,'.Item3.GroupItem1.DashboardButton')eWC'RibbonButton' 'Macros' 'FcHome' 12 sel
+
+ (rb,'.Item5')eWC'RibbonGroup' 'Data Quality'('Size' 3)bordercol
+ (rb,'.Item5.GroupItem1')eWC'RibbonGroupItem' 12
+ (rb,'.Item5.GroupItem1.ButtonGroup1')eWC'RibbonButtonGroup'('Local Data Quality' 'Overall Data Quality')('FcHighPriority' 'FcHighPriority')sel
+
+ (tb←'F1.TC.T3')eWC'TabButton'('Caption' 'Application')('Event' 'Select' 'CBUpdateTabs')
+ (sf←'F1.TC.SF3')eWC'SubForm'('TabObj'tb),⊂bcol
+ (rb←sf,'.Ribbon')eWC'Ribbon'fcol bcol('ImageListObj' 'IL')
+
+ (rb,'.Item1')eWC'RibbonGroup' 'Archive'('Size' 1)bordercol
+ (rb,'.Item1.GroupItem1')eWC'RibbonGroupItem' 12
+ (rb,'.Item1.GroupItem1.ArchiveButton')eWC'RibbonButton' 'Archive' 'FcKindle' 12 sel
+
+ (rb,'.Item2')eWC'RibbonGroup' 'Date'('Size' 1)bordercol
+ (rb,'.Item2.GroupItem1')eWC'RibbonGroupItem' 12
+ (rb,'.Item2.GroupItem1.DateButton')eWC'RibbonButton' 'Red'('Size' 12)sel('ImageIndex' 1)
+
+ (rb,'.Item3')eWC'RibbonGroup' 'Exchange'('Size' 1)bordercol
+ (rb,'.Item3.GroupItem1')eWC'RibbonGroupItem' 12
+ (rb,'.Item3.GroupItem1.StockExchangeButton')eWC'RibbonButton' 'UK'('Size' 12)sel('ImageListObj' 'IL32')('ImageIndex' 2)
+
+ (rb,'.Item4')eWC'RibbonGroup' 'Shares'('Size' 3)bordercol
+ (rb,'.Item4.GroupItem1')eWC'RibbonGroupItem' 12
+ (rb,'.Item4.GroupItem1.ButtonGroup1')eWC'RibbonButtonGroup'('Denmark' 'Blue')('ImageListObj' ('IL32' 'IL'))('ImageIndex'(1 3))sel
+
+ (rb,'.Item5')eWC'RibbonGroup' 'Analysis'('Size' 6)bordercol
+ (rb,'.Item5.GroupItem1')eWC'RibbonGroupItem' 12
+ captions←'Black and Scholes' 'Checking prices' 'VAR Analysis' 'Calculate Option Prices'
+ icons←'FcPodiumWithSpeaker' 'FcMoneyTransfer' 'FcSearch' 'FcTreeStructure'
+ (rb,'.Item5.GroupItem1.ButtonGroup1')eWC'RibbonButtonGroup'('Red' 'Green' 'Blue')('ImageIndex'(1 2 3))sel
+
+ eNQ'F1.TC.T1' 'Select'

@@ -1,0 +1,23 @@
+ r←getConnection(caller names);name;top;n;p
+ name←,⊃⊆names
+ n←≢p←(⍕caller),'.'
+ name←(n×p≡n↑name)↓name ⍝ drop caller prefix
+ top←(¯1+name⍳'.')↑name
+
+ :If 9=caller.⎕NC n←top,'.HR._EWC'
+     r←(caller⍎n).(ID conn)
+
+ :ElseIf MODE=2 ⍝ Multi
+     :If 9=caller.⎕NC'_EWC'
+         r←caller._EWC.(ID conn)
+     :Else
+         ∘∘∘ ⍝ Unable to locate app session
+     :EndIf
+
+ :Else
+     :Trap 0
+         r←CODELOCATION._EWC.(ID conn)
+     :Else
+         r←0 0
+     :EndTrap
+ :EndIf

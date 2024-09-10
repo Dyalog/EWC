@@ -1,0 +1,24 @@
+ r←BreakOn what;m
+
+ :If 2=≢what
+     :If (⎕C 1↑what)∊'id' 'ids' 'event' 'events'
+     :AndIf 80∧.=⎕DR¨⊆2⊃what
+         BREAK['ie'⍳⎕C ⊃⊃what]←what[2]
+     :Else
+         →error
+     :EndIf
+ :ElseIf 0=≢what
+ :Else
+     →error
+ :EndIf
+
+ report:
+ :If ~∨/m←×≢¨BREAK
+     r←'No breaks set'
+ :Else
+     r←'Breaks set on',1↓∊m⌿', IDs: ' ', Events: ',⍪BREAK
+ :EndIf
+ →0
+
+ error:
+    r←'Correct format is BreakOn ''ids''|''events'' names'

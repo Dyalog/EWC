@@ -1,0 +1,6 @@
+LogCalls (name op props)
+→(0=⎕NC 'OPLOG')⍴0
+:If ~OPLOG∊⎕FNUMS
+    OPLOGNAME ⎕FSTIE OPLOG
+:EndIf
+(name op props) ⎕FAPPEND OPLOG

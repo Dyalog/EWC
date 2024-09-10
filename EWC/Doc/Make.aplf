@@ -1,0 +1,23 @@
+Make;folder;r;classes;class;root;yml;p;f;t;i;e
+⍝ Generate Class documentation
+
+folder←(root←{⊃⎕NPARTS ¯1↓⍵}⍣3⊢4⊃5179⌶⊃⎕SI),'docs/ObjectRef'
+r←'# Classes' '',,Classes
+r Put folder,'/Classes.md'
+
+classes←##.classes.(⍎¨⎕NL -9).ClassName
+
+:For class :In classes
+   r←('# ',class) '',,Details class
+   r Put folder,'/',class,'.md'
+:EndFor
+
+yml←⊃⎕NGET (f←root,'mkdocs.yml') 1
+:If (≢yml)≥p←yml⍳⊂'  - Supported Features:'
+    t←p↑yml
+    i←((↑p↓yml)∧.=' ')⍳1
+    e←(¯1+p+i)↓yml
+    (t,('    - ObjectRef/'∘,¨(⊂'Classes.md'),classes,¨⊂'.md'),e) Put f
+:Else
+    ⎕←'Unable to update ',f,': Supported Features section not found'
+:EndIf

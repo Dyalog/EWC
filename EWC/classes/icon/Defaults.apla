@@ -1,0 +1,57 @@
+(
+ 'Icon'
+ ''
+ 0⌿[
+  ⍬
+ ]
+ 0⌿[
+  0 0 0
+ ]
+ [
+  0
+ ]
+ 'Large'
+ 0
+ 32 32
+ 0 0
+ ⍬
+ 1657934979
+ 0 0
+ 0
+ [
+  0
+ ]
+ (
+  'Detach'
+  'FileRead'
+  'FileWrite'
+ )
+ (
+  'Timer'
+ )
+ (
+  'Close'
+  'Create'
+  'Select'
+ )
+ (
+  'Type'
+  'File'
+  'Bits'
+  'CMap'
+  'Mask'
+  'Style'
+  'KeepBits'
+  'Size'
+  'Event'
+  'Data'
+  'Handle'
+  'Accelerator'
+  'KeepOnClose'
+  'CBits'
+  'MethodList'
+  'ChildList'
+  'EventList'
+  'PropList'
+ )
+)

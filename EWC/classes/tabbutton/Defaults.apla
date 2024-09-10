@@ -1,0 +1,48 @@
+(
+ 'TabButton'
+ 'APL385 Unicode'
+ 2 2
+ 94 19
+ 1
+ (
+  (
+   'Select'
+   'EWCUpdateTabs'
+  )
+ )
+ ''
+ ⍬
+ ''
+ ''
+ 0 0
+ 0
+ (
+  'Detach'
+ )
+ (
+  'Timer'
+ )
+ (
+  'Close'
+  'Create'
+  'Select'
+ )
+ (
+  'Type'
+  'Caption'
+  'Posn'
+  'Size'
+  'State'
+  'Event'
+  'ImageIndex'
+  'Data'
+  'Tip'
+  'TabObj'
+  'Accelerator'
+  'KeepOnClose'
+  'MethodList'
+  'ChildList'
+  'EventList'
+  'PropList'
+ )
+)

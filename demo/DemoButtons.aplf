@@ -1,0 +1,16 @@
+ DemoButtons connected;F
+ EWC.CONNECTED←connected
+ ⎕PW←1000
+
+ F←'F1'
+ F eWC'Form' 'Buttons'(50 50)(200 300)('Coord' 'Pixel')
+
+ (F,'.FRUIT')eWC'Group' 'Pick a Fruit'('Posn'(10 10))('Size'(80 280))
+ (F,'.FRUIT.C1')eWC'Button' 'Apple'(13 10)(23 100)('Style' 'Radio')('Event' 'Select' 'CBUpdateButtons')('State' 1)
+ (F,'.FRUIT.C2')eWC'Button' 'Banana'(33 10)(23 100)('Style' 'Radio')('Event' 'Select' 'CBUpdateButtons')
+ (F,'.FRUIT.C3')eWC'Button' 'Pear'(53 10)(23 100)('Style' 'Radio')('Event' 'Select' 'CBUpdateButtons')
+
+ (F,'.ICE')eWC'Button' 'Ice Cream'(100 10)(23 100)('Style' 'Check')('Event' 'Select' 'CBUpdateButtons')('Align' 'Right')
+ (F,'.CHOKO')eWC'Button' 'Chocolate'(125 10)(23 100)('Style' 'Check')('Event' 'Select' 'CBUpdateButtons')('Align' 'Left')
+
+ (F,'.STATUS')eWC'Label' 'Click on something!'(175 10)(23 300)

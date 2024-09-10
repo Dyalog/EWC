@@ -1,0 +1,6 @@
+ z←MakeForm;ns
+
+ ns←caller⍎Name
+ ⍝ IGNORE1Init←1 ⍝ Make Handler ignore the next Initialise call
+ z←MakeHR caller Name modal
+ WC.WC.Properties.Posn←0 0 ⍝ Form will be at posn 0 0 within the HTLRenderer

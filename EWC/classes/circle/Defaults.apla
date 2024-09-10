@@ -1,0 +1,78 @@
+(
+ 'Circle'
+ 450 210
+ 120
+ (
+  255 0 0
+  0 255 0
+  255 255 0
+  0 0 255
+ )
+ 0
+ 0 0.7539822368615504 2.450442269800039 3.769911184307752
+ 0
+ 2
+ 0
+ 1
+ ¯1
+ 0
+ 'Inherit'
+ 1
+ 0 0
+ 0
+ 2
+ ''
+ 3
+ ⍬
+ 0 0
+ 0
+ 13
+ 0
+ (
+  'Detach'
+ )
+ (
+  'Timer'
+ )
+ (
+  'Close'
+  'Create'
+  'DragDrop'
+  'MouseDown'
+  'MouseUp'
+  'MouseMove'
+  'MouseDblClick'
+  'Help'
+  'Select'
+ )
+ (
+  'Type'
+  'Points'
+  'Radius'
+  'FCol'
+  'BCol'
+  'Start'
+  'End'
+  'ArcMode'
+  'LStyle'
+  'LWidth'
+  'FStyle'
+  'FillCol'
+  'Coord'
+  'Visible'
+  'Event'
+  'Dragable'
+  'OnTop'
+  'CursorObj'
+  'AutoConf'
+  'Data'
+  'Accelerator'
+  'KeepOnClose'
+  'DrawMode'
+  'RadiusMode'
+  'MethodList'
+  'ChildList'
+  'EventList'
+  'PropList'
+ )
+)

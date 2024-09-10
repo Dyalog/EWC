@@ -1,0 +1,12 @@
+(
+ 'Type'
+ 'Points'
+ 'Radius'
+ 'Start'
+ 'End'
+ 'ArcMode'
+ 'FCol'
+ 'FStyle'
+ 'FillCol'
+ 'Visible'
+)

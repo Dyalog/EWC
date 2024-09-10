@@ -1,0 +1,80 @@
+(
+ 'TabControl'
+ 100 0
+ 50 400
+ 'Tabs'
+ 1
+ 0 0
+ ''
+ ''
+ ⍬
+ (
+  'Top'
+  'Left'
+  'Top'
+  'Right'
+ )
+ 791818
+ ''
+ 0
+ 0
+ ¯1 ¯1
+ 'Right'
+ 'Centre'
+ 'Left'
+ 0
+ 'Normal'
+ 0
+ 0
+ 0
+ (
+  'Detach'
+  'GetTextSize'
+  'Animate'
+  'GetFocus'
+  'ShowSIP'
+  'GetFocusObj'
+ )
+ (
+  'Timer'
+  'SubForm'
+  'ImageList'
+  'TabButton'
+ )
+ (
+  'Close'
+  'Create'
+ )
+ (
+  'Type'
+  'Posn'
+  'Size'
+  'Style'
+  'Visible'
+  'Event'
+  'ImageListObj'
+  'FontObj'
+  'Data'
+  'Attach'
+  'Handle'
+  'TabObj'
+  'KeepOnClose'
+  'MultiLine'
+  'TabSize'
+  'Justify'
+  'TabJustify'
+  'Align'
+  'MultiSelect'
+  'TabFocus'
+  'HotTrack'
+  'ScrollOpposite'
+  'FlatSeparators'
+  'MethodList'
+  'ChildList'
+  'EventList'
+  'PropList'
+ )
+ 255 255 255
+ 192 192 192
+ 214 214 214
+)

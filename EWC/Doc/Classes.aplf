@@ -1,0 +1,9 @@
+r←Classes;names;n;m;links
+r←'EWC has some degree of support for the following `⎕WC` classes:' ''
+names←##.classes.(⍎¨⎕NL -9).ClassName
+m←(6↑¨names)∊'Ribbon' 'ApexCh'
+links←'[',¨names,¨']('∘,¨names,¨⊂'.md)'
+r,←4 '`⎕WC` Classes' foldCols '   '∘,¨(~m)/links
+r,←'' 'EWC adds the following classes not supported by `⎕WC`:' ''
+r,←4 'Additional' foldCols '   '∘,¨m/links
+r←⍪r

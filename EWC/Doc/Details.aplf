@@ -1,0 +1,34 @@
+r←Details classname;class;n;m;nonWC;t;c;WC
+:If 9≠##.classes.⎕NC (⎕c classname)
+  →0 ⊣ r←(⍪('Not a supported EWC class: ',classname)'')⍪Classes
+:EndIf
+
+class←##.classes⍎⎕C classname
+nonWC←(⊂6↑classname)∊'Ribbon' 'ApexCh'
+t←(1+nonWC)⊃'has some degree of support for' 'supports'
+
+c←class.ClassName
+:If WC←~nonWC
+   c←'[`⎕WC` class ',1↓'class' (AddDocLink⍣WC) class.ClassName
+:EndIf
+
+r←('The EWC implementation of ',c,' ',t,':') ''
+n←{⍵[⍋⍵]}class.Supported~⊂'Type'
+⍝ n←' *'[1+m←n∊class.Dynamic],¨n
+r,←4 'Properties' foldCols '  '∘,¨('prop'∘(AddDocLink⍣WC)¨n)
+⍝ r,←(∨/m)/'' '* indicates that the property can change after it has been set.'
+
+:If 2=⎕NC 'class.SupportedEvents'
+    n←{⍵[⍋⍵]}class.SupportedEvents
+    r,←'' '', 4 'Events' foldCols '  '∘,¨('event'∘(AddDocLink⍣WC)¨n)
+:EndIf
+
+:If WC
+    r,←'' 'NB: Links above are to the complete `⎕WC` documentation'
+:EndIf
+
+:If 2=⎕NC 'class.Limitations'
+    r,←'' '## Known Limitations' '',class.Limitations
+:EndIf
+
+r←⍪r

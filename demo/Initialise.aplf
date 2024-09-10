@@ -1,0 +1,15 @@
+ Initialise connected;r;m;demo
+
+ →(EWC.MODE=0)⍴0 ⍝ Only in webby modes
+
+ :If (≢_EWC.QUERY)≥i←_EWC.QUERY[;1]⍳⊂'Demo'
+     demo←'Demo',⊃_EWC.QUERY[i;2]
+ :AndIf 3=⎕NC demo
+     demo CBRunDemo ''
+ :Else
+     DemoMenu connected
+ :EndIf
+
+ :If EWC.MODE=2
+     eDQ 'F1'
+ :EndIf

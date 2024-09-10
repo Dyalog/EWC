@@ -1,0 +1,87 @@
+ {R}←∆DQ names;⎕TRAP;caller;class;type;HR;timers;event;done;interrupt;tkn;m;i;types;z;modal;ID;conn;e;n
+
+ ⎕TRAP←0 'S'
+ names←,⊆names
+ caller←findCaller
+ 'N' Log 'findCaller returned ',⍕caller
+ names←caller removeCaller¨names
+ modal←0
+
+ :If ~∧/names∊'.' '#'
+     ⎕SIGNAL(∨/~(caller.⎕NC z←names,¨⊂'.Type')∊2.1 ¯2.6)/11
+     types←caller⍎¨z
+     :If modal←∧/types∊modalClasses
+        'Only one modal object at a time' ⎕SIGNAL (1≠≢names)/11
+        R←,⊆dWX (⊃names) 'OnlyDQ' (⊃names)
+        :If (1↑⊃R)≢1↑names ⍝ Validate echo-back
+            ∘∘∘ ⍝ Internal error
+        :EndIf
+        :If USEHR
+           ((⊃names),'.HR') caller.⎕WS ('Visible' 1)('Size' (HRBorder+1↓⊃R))
+        :EndIf
+
+     :EndIf
+     :If ∨/m←types∊nativeClasses ⍝ TCPSocket or other things(?)
+         'Max not mix DQ of native and EWC classes' ⎕SIGNAL (0∊m)/11
+        →0⊣R←caller.⎕DQ names
+     :EndIf
+ :EndIf
+
+ done←interrupt←0
+ (ID conn)←getConnection caller (⊃names)
+ tkn←DQ_TOKENBASE+TOKENSTEP×1⌈ID×MODE=2
+ :Hold 'EWC_DQTOKENS'
+     DQTOKENS,←tkn
+ :EndHold
+
+ :Trap 1000
+     'N'Log'DQ: ',(⍕names),' - token ',(⍕tkn),'-  at ',⍕showCallStack
+     ⍝ ⎕TRAP←0 'S' ⋄ ∘∘∘
+     :Repeat
+         :If 0=≢QUEUEIDS
+         :OrIf ~∨/m←QUEUEIDS∊names
+             :If 0≠≢R←2 ⎕TGET tkn
+                 :If 'N'∊LOGMODES
+                     'N'Log 'DQ of token ',(⍕tkn),': ',1 ⎕JSON⍠'HighRank' 'Split'⊢R
+                 :EndIf
+                 :If MODE=2
+                     R.CodeLocation←⍕caller
+                 :EndIf
+                 :If 0=caller.⎕NC R.Event.ID
+                     'W'Log'Ignoring event on non-existent object ',R.Event.ID
+                 :Else
+                     QUEUEIDS,←⊂{(¯1+⍵⍳'.')↑⍵}R.Event.ID ⋄ QUEUEDATA,←R
+                 :EndIf
+             :EndIf
+         :EndIf
+
+         :If (≢QUEUEIDS)≥i⊣n←(QUEUEIDS,⊂⍬)[i]⊣e←(QUEUEDATA,⊂⍬)[i]⊣i←⌊/QUEUEIDS⍳names
+             (QUEUEIDS QUEUEDATA)←(m←(⍳≢QUEUEIDS)≠QUEUEIDS⍳n)∘/¨QUEUEIDS QUEUEDATA
+             done←processEvent e
+         :EndIf
+         done∨←0∊caller.⎕NC names
+     :Until done
+ :Else
+     interrupt←1
+ :EndTrap
+
+ :Hold 'EWC_DQTOKENS'
+     DQTOKENS~←tkn
+ :EndHold
+
+ :If 0≠≢R
+     z←⊢/R
+     :If 9=⎕NC 'z.Event'
+         R←z.Event.((ID EventName),{6::⍵ ⋄ Info}⍬) ⍝ /// Need a proper queue
+     :Else
+         ∘∘∘
+     :EndIf ⍝ Else return R as is
+ :EndIf
+
+ :If modal ⍝ Exit from Modal mode
+     :If USEHR
+         ((⊃names),'.HR') caller.⎕WS 'Visible' 0
+     :EndIf
+     z←dWX (⊃names) 'OnlyDQ'
+ :EndIf
+ 'INTERRUPT'⎕SIGNAL interrupt/999

@@ -1,0 +1,2 @@
+r←isChar x
+r←(10|⎕DR x)∊0 2

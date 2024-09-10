@@ -1,0 +1,18 @@
+(
+ 'Type'
+ 'Size'
+ 'Event'
+ 'Coord'
+ 'Data'
+ 'Handle'
+ 'Translate'
+ 'ImageCount'
+ 'Masked'
+ 'MapCols'
+ 'KeepOnClose'
+ 'MethodList'
+ 'ChildList'
+ 'EventList'
+ 'PropList'
+ 'Files'
+)

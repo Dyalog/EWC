@@ -1,0 +1,14 @@
+ {r}←HRCallbacks args;form;ref;event;i;fn;ok;CALLER
+⍝ Handle close of HR created to host a EWC Form
+
+ r←0
+ :If 9=⎕NC form←¯3↓⊃args
+     ref←⍎form
+     CALLER←ref.##
+ :AndIf 2=ref.⎕NC'Type'
+ :AndIf 'Form'≡ref.Type
+     event←ref.Event
+     ∆NQ(⊂form),1↓args ⍝ Pass it on
+ :Else
+     'W'Log'Attempt to close ',,⍕args
+ :EndIf

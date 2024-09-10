@@ -1,0 +1,21 @@
+ CBSimpleBar args;config;txt;si;di
+
+ :Select ⎕C txt←2⊃args
+ :Case 'click'
+     config←⎕JSON 3⊃args
+     :If 0∊(si di)←1+config.(seriesIndex dataPointIndex)
+         txt,←' indices are ',⍕si di
+     :Else
+         txt,←' on series ',(⍕si),', datapoint ',(⍕di),', the value is ',⍕(si di⊃config.series.data)
+     :EndIf
+
+ :Case 'legendclick'
+     txt,←' - you clicked on the legend'
+
+ :Case 'select' ⍝ Generate new data
+     'F1.BAR' eWS 'Series' (?2 10⍴5+?1000)
+     txt←'new data values generated'
+
+ :EndSelect
+
+ 'F1.OUT'eWS'Caption'txt

@@ -1,0 +1,58 @@
+(
+ 'Image'
+ 10 10
+ 'Inherit'
+ 1
+ 0 0
+ 0
+ ''
+ 2
+ 3
+ ⍬
+ 'None'
+ (
+  ⍬
+  ⍬
+ )
+ 0 0
+ 0
+ 0
+ (
+  'Detach'
+ )
+ (
+  'Timer'
+ )
+ (
+  'Close'
+  'Create'
+  'DragDrop'
+  'MouseDown'
+  'MouseUp'
+  'MouseMove'
+  'MouseDblClick'
+  'Help'
+  'Select'
+ )
+ (
+  'Type'
+  'Points'
+  'Coord'
+  'Visible'
+  'Event'
+  'Dragable'
+  'Picture'
+  'OnTop'
+  'AutoConf'
+  'Data'
+  'EdgeStyle'
+  'Size'
+  'Accelerator'
+  'AcceptFiles'
+  'KeepOnClose'
+  'MethodList'
+  'ChildList'
+  'EventList'
+  'PropList'
+ )
+)

@@ -1,0 +1,4 @@
+r←eventOK events;nodups
+⍝ Do these look like a list of usable event ids?
+nodups←(1=≡events)∨events≡∪events ⍝ No duplicates, e.g. 'KeyPress' 'KeyPress'
+r←∧/((~events∊¯1 0 1)∧(10|⎕DR¨events)∊1 3)∨nodups∧(⎕C ⊆⊃⍣(3=≡events)⊢events)∊eventNames

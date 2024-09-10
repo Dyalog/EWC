@@ -1,0 +1,17 @@
+ DemoMsgBox connected;sf;styles;btns
+ EWC.CONNECTED←connected
+ ⎕PW←1000
+
+ styles←'Msg' 'Info' 'Query' 'Warn' 'Error'
+ btns←'OK' 'OK/CANCEL' 'RETRY/CANCEL' 'YES/NO' 'YES/NO/CANCEL' 'ABORT/RETRY/IGNORE'
+
+ (sf←'F1')eWC'Form' 'MsgBox Test'(30 30)(130 350)('Coord' 'Pixel')
+
+ (sf,'.LS')eWC'Label' 'Style:'(10 10)
+ (sf,'.STYLE')eWC'Combo'styles'Msg'('Posn'(8 70))('Size'(23 90))('SelItems' (1↑⍨≢styles))
+ (sf,'.LB')eWC'Label' 'Buttons:'(40 10)
+ (sf,'.BTNS')eWC'Combo' btns 'OK'('Posn'(38 70))('Size'(23 150))('SelItems' (1↑⍨≢btns))
+ (sf,'.LT')eWC'Label' 'Message:'(70 10)
+ (sf,'.TXT')eWC'Edit' 'This is the MsgBox text'('Posn'(68 70))('Size'(23 150))
+
+ (sf,'.GO') eWC 'Button' 'Show MsgBox!' (100 10) (23 100) ('Event' 'Select' 'CBMsgBox')

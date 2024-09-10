@@ -1,0 +1,34 @@
+(
+ 'Timer'
+ 1000
+ 1
+ 0 0
+ ⍬
+ 0
+ 0
+ (
+  'Detach'
+  'Wait'
+ )
+ (
+  'Timer'
+ )
+ (
+  'Close'
+  'Create'
+  'Timer'
+ )
+ (
+  'Type'
+  'Interval'
+  'Active'
+  'Event'
+  'Data'
+  'KeepOnClose'
+  'FireOnce'
+  'MethodList'
+  'ChildList'
+  'EventList'
+  'PropList'
+ )
+)

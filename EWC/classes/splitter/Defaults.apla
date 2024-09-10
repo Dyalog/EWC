@@ -1,0 +1,51 @@
+(
+ 'Splitter'
+ ''
+ ''
+ 0 500
+ 800 3
+ 'Vert'
+ 'Inherit'
+ 'None'
+ 1
+ 1
+ 0 0
+ 0
+ ''
+ ⍬
+ 0
+ (
+  'Detach'
+ )
+ (
+  'Timer'
+ )
+ (
+  'Close'
+  'Create'
+  'StartSplit'
+  'Splitting'
+  'EndSplit'
+ )
+ (
+  'Type'
+  'SplitObj1'
+  'SplitObj2'
+  'Posn'
+  'Size'
+  'Style'
+  'Coord'
+  'Align'
+  'Active'
+  'Visible'
+  'Event'
+  'BCol'
+  'CursorObj'
+  'Data'
+  'KeepOnClose'
+  'MethodList'
+  'ChildList'
+  'EventList'
+  'PropList'
+ )
+)

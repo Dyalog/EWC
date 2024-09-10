@@ -1,0 +1,6 @@
+r←Help
+r←'For documentation on EWC:' ''
+r,←⊂'     EWC.Doc.Differences    ⍝ for a general list of differences to the original implementation'
+r,←⊂'     EWC.Doc.Classes        ⍝ for a list of supported classes'
+r,←⊂'     EWC.Doc.Details ''Edit'' ⍝ for details of support for one class (in this case Edit)'
+r←⍪r

@@ -1,0 +1,11 @@
+r←StopOn args;type;name;ix
+⍝ StopOn (ID|Event) (names)
+
+args←,⊆args
+:If 3=ix←'id' 'event'⍳⎕C ''⍴args
+    'Syntax is StopOn ''ID''|''Event'' [names]' ⎕SIGNAL 11
+:EndIf
+
+(ix⊃BREAK)←⊆1↓args
+
+r←'Will stop on ',(ix⊃'ID' 'Event'),' ∊ ',⍕ix⊃BREAK

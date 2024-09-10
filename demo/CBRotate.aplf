@@ -1,0 +1,13 @@
+ CBRotate args;item;rot;fonts;angles
+⍝ Rotate the colours
+
+ :Select 2⊃args
+ :CaseList 'MouseUp' 'MouseDown'
+     'F1.Status' eWS 'Text' (⍕1↓args)
+ :Case 'Select'
+     item←{(1-(⌽⍵)⍳'.')↑⍵}1⊃args
+     rot←(○5÷180)×¯1*item≡'LEFT'
+     fonts←'Font' eWN 'F1'
+     angles←fonts eWG¨⊂'Rotate'
+     fonts eWS¨ ↓(⊂'Rotate'),⍪angles+rot
+ :EndSelect

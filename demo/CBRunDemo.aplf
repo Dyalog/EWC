@@ -1,0 +1,36 @@
+ {presel} CBRunDemo args;e;scores;cols;fcol;pass;ii;ids;target;demo;sf;f;name
+ :If 2=⎕NC 'presel'
+     →RUN ⊣ demo←presel
+ :EndIf
+
+ Event←⎕NS''
+ e←Event.Event←⎕NS''
+ e.(ID EventName Info)←(2↑args),⊂2↓args
+ sf←{(1-(⌽⍵)⍳'.')↓⍵}⊃args
+ f←{(¯1+⍵⍳'.')↑⍵}⊃args
+ EWC.USEWIN32←0 ⍝ ×(sf,'USEWIN32') eWG 'State'
+
+ :Select ¯4↑1⊃args
+ :Case 'CALE' ⍝ SCALE
+    COORD←(1+(1⊃args)eWG 'State')⊃'Pixel' 'ScaledPixel'
+    →0
+
+ :Case  'STOP'
+     eEX f
+     →0
+ :Case 'DEVT'
+     :If 9=⎕NC name←f,'.HR'
+         ⍎name,'.ShowDevTools 1'
+     :EndIf
+     →0
+ :EndSelect
+
+ demo←'Demo',(3⊃args)⊃(⊃args)eWG'Items'
+
+RUN:
+ :If 3=⎕NC demo
+     ⎕←''
+     ⎕←'Running "',demo,'" with',((~EWC.USEWIN32)/'out'),' Win32'
+     (⍎demo)EWC.CONNECTED
+     addDemoMenu f
+ :EndIf

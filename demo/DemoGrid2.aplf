@@ -1,0 +1,18 @@
+ DemoGrid2 connected;cols
+ EWC.CONNECTED←connected
+ ⎕PW←1000
+
+ 'F1'eWC'Form' 'Grid Movement'(50 50)(450 600)('Coord' 'Pixel')
+
+ cols←(⊂⊂'Column'),¨⊂∘⍕¨⍳10
+ 'F1.G'eWC'Grid'(10 10⍴5/¨⎕A)(70 10)(370 580)('TitleHeight' 50)('TitleWidth' 30)('CellWidths' 50)('CellHeights' (10⍴20 40))('ColTitles' cols)
+ 'F1.G.E'eWC'Edit'('BCol' 200 200 200)
+ 'F1.G'eWS ('Input' 'F1.G.E') ('Event' 'KeyPress' 'CBGrid2')
+
+ 'F1.L1'eWC'Label' 'Start'(5 10)
+ 'F1.L2'eWC'Label' 'End'(5 70)
+
+ 'F1.SEL1'eWC'Edit' '1'(30 10)(23 50)('FieldType' 'Numeric')('Event' 'KeyPress' 'CBGrid2')
+ 'F1.SEL2'eWC'Edit' '1'(30 70)(23 50)('FieldType' 'Numeric')('Event' 'KeyPress' 'CBGrid2')
+
+ CBGrid2 ⍬

@@ -1,0 +1,5 @@
+TestWCGrid
+'F' ⎕WC 'Form' 'Test Grid' (10 10)(600 800)('Coord' 'Pixel')
+'F.G' ⎕WC 'Grid' (10 10⍴⍳100) (10 10)(580 780)
+'F.G.E' ⎕WC 'Edit' ('BCol' 200 200 200)
+'F.G' ⎕WS 'Input' 'F.G.E'

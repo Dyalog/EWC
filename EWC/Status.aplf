@@ -1,0 +1,9 @@
+r←Status
+r←'EWC Status:' ''
+r,←⊂'Mode: ',(1+MODE)⊃'Desktop' 'Browser' 'Multi'
+r,←⊂'Sessions:'
+:If 3≤⍴SESSIONS
+   r,←↓⍕'NS' 'TID' 'Address'⍪↑(2↓SESSIONS).((⊂⍕code),(code._EWC.(TID (2 2⊃addr))))
+:EndIf
+
+r←⍪r

@@ -1,0 +1,27 @@
+(
+ 'Debugging Tools'
+ ''
+ 'LOGGING is controlled by setting EWC.LOGMODES to a subset of the letters documented in the '
+ 'function EWC.Log:'
+ ''
+ '  D: Debug'
+ '  E: Error'
+ '  F: Format Request'
+ '  W: Warning'
+ '  T: Transmit on WebSocket'
+ '  R: Receive on WebSocket'
+ '  C: Connect or Disconnect'
+ '  U: Unsupported feature'
+ '  N: NQ'
+ '  P: ProcessEvent'
+ '  '
+ ' Set LOGMODES←'''' to suppress all logging or to ⎕A to enable full logging.'
+ (' '⋄)
+ ' BREAKPOINTS can be set using the function BreakOn. For example:'
+ (' '⋄)
+ '     BreakOn ''ID'' ''F1.E1''       ⍝ Stop WC/WS or event processing for object ''F1.E1'''
+ '     BreakOn ''event'' ''KeyPress'' ⍝ Stop on KeyPress event handling'
+ '     BreakOn ''ID'' ⍬             ⍝ Clear all breakpoints on IDs'
+ '     '
+ ''
+)

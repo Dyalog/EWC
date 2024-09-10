@@ -1,0 +1,2 @@
+ onHTTPHeader arg
+ (⊃⎕SI)(3↑arg)(3↑4⊃arg)

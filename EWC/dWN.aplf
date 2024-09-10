@@ -1,0 +1,19 @@
+r←{X} ∆WN Y;⎕TRAP;caller
+caller←findCaller
+
+:If Y∧.=' '
+    →0 ⊣ r←⍬
+:EndIf
+
+:If 2=⎕NC 'Y'
+:AndIf (9=caller.⎕NC Y)∨(⊂Y)∊,¨'#' '⎕SE'
+    Y←caller.⍎Y
+:EndIf
+
+:If 0≠≢r←Y.⎕NL -9
+:AndIf 0≠≢r←(2=⌊Y.⎕NC r,¨⊂'.Type')/r
+:AndIf 2=⎕NC 'X'
+   r←((Y.⍎¨r,¨⊂'.Type')∊⊆X)/r
+:EndIf
+
+r←((⍕Y),'.')∘,¨r

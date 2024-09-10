@@ -1,0 +1,11 @@
+ DemoApexSimpleBar connected;series
+
+ series←+\?2 10⍴2
+
+ 'F1'eWC'Form' 'Charts'(50 50)(600 800)('Coord' 'Pixel')
+ 'F1.OUT'eWC'Label' 'Click on a bar' (33 100)(23 300)
+ 'F1.NEW'eWC'Button' 'New Data' (30 10)(23 80)('Event' 'Select' 'CBSimpleBar')
+
+ addSaveChartButton 'F1.BAR'
+
+ 'F1.BAR'eWC'ApexChart'(50 10)(540 780)series'bar'('Event' ('click' 'legendclick') 'CBSimpleBar')

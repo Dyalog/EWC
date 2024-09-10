@@ -1,0 +1,10 @@
+Trigger args;⎕TRAP;rsi;obj
+⎕TRAP←0 'S'
+
+:If 3≤≢rsi←⎕RSI
+:AndIf #.EWC∊rsi
+   →0 ⍝ Avoid infinite loop
+:EndIf
+
+obj←⊃⎕RSI
+(⍕obj) ∆WS args.Name (obj⍎args.Name)

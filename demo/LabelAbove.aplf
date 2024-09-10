@@ -1,0 +1,5 @@
+left LabelAbove props;parts;label;sf
+(sf label)←left
+sf eWC 'SubForm' ('Flex' 'column')
+(sf,'.L') eWC'Label' label
+(sf,'.C') eWC props

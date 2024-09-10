@@ -1,0 +1,9 @@
+ DemoMenu connected;fns;size
+ EWC.CONNECTED←connected
+ ⎕PW←1000
+ size←300 400 ⍝ ⊃'.' eWG 'DevCaps'
+ 'LOGO'eWC'BitMap'('File' '/images/dyalog-logo.jpg')
+ 'F1'eWC'Form' 'EWC Demos'('BCol'(255 255 255))('Coord' 'Pixel')('Size' size)('Picture'('LOGO' 3))('Event' 'Close' ¯1)
+ 'F1.L1' eWC 'Label' ('Welcome to EWC, Session #',⍕_EWC.ID) (6 5)('Size' (23 200))
+
+ addDemoMenu ''

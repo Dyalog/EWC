@@ -1,0 +1,10 @@
+ Demo_Issue151 connected;inputs;scores;TBL;GRID;z;colors
+ EWC.CONNECTED←connected
+ ⎕PW←1000
+
+ 'F1'eWC'Form'('BCol'(255 255 255))('Coord' 'Pixel')('Size'(500 900))
+ 'F1.DUCKBMP1'eWC'BitMap'('File' '/images/rubberduck.png')
+ 'F1.DUCKBMP2'eWC'BitMap'('File' '/images/rubberduck.png')
+
+ 'F1.DUCKIMG1'eWC'Image'('Picture' 'F1.DUCKBMP1')('Points'(10 10))
+ 'F1.DUCKIMG2'eWC'Image'('Picture' 'F1.DUCKBMP2')('Points'(10 200))

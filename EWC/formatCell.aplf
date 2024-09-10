@@ -1,0 +1,18 @@
+ r←caller formatCell ns;id;obj;val;fmts;cts;cell
+ ⍝ From:    {"FormatCell":{"ID":"F1.Holdings","Cell":[3,4],"Value":12345}}
+ ⍝ Produce: {"FormatCell":{"ID":"F1.Holdings","Cell":[3,4],"Value":12345,"FormattedValue":" 12,345"}}
+
+ r←''
+ :If 9=ns.⎕NC'FormatCell'
+     :If 9=caller.⎕NC id←ns.FormatCell.ID
+         obj←caller⍎id
+     :AndIf ∧/2=⌊|obj.⎕NC'Values' 'FormatString' 'CellTypes'
+         (val fmts cts)←obj.(Values FormatString CellTypes)
+     :AndIf (cell←ns.FormatCell.Cell)∧.≤⍴fmts
+     :AndIf ns.FormatCell.Value≢⊂'null'
+         ns.FormatCell.FormattedValue←,(fmts⊃⍨cell⌷cts)⎕FMT⍉⍪ns.FormatCell.Value
+         r←1 ⎕JSON ns
+     :Else
+         'W'Log'Unable to process FormatCell on ',id,'.'
+     :EndIf
+ :EndIf

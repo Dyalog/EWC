@@ -1,0 +1,18 @@
+r←fmt format1Cell value
+
+:Trap 0
+  r←,fmt ⎕FMT ⍉⍪value
+:Else
+
+:If 0=≢fmt
+  r←⍕value
+:Else
+  :If ~∨/'A1'⍷fmt ⍝ Numeric
+  :AndIf isChar value
+    :Trap 0
+        r←,fmt ⎕FMT 1 1⍴⊃2⊃⎕VFI value
+    :End
+  :EndIf
+:EndIf
+
+:EndTrap

@@ -1,0 +1,3 @@
+ onClose arg
+
+ ⎕←'demo onClose was called for session ',(⍕⎕THIS),' in thread ',⎕TID

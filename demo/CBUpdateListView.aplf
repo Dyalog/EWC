@@ -1,0 +1,22 @@
+ CBUpdateListView args;e;view;sel;item;selok
+ Event←⎕NS''
+ e←Event.Event←⎕NS''
+ e.(ID EventName Info)←(2↑args),⊂2↓args
+
+ :Select 1⊃args
+ :Case 'F1.LEFT.VIEW'
+     view←(1⊃args)eWG'Text'
+     'F1.LEFT.LV'eWS'View'view
+ :Case 'F1.LEFT.LV'
+     item←3⊃args
+     selok←'SelItems not OK'
+     :Trap 6
+         sel←'F1.LEFT.LV'eWG'SelItems'
+         :If item≡sel⍳1
+             selok←'SelItems OK'
+         :EndIf
+     :EndTrap
+     'F1.RIGHT.TOP.Average'eWS'Caption'((2⊃args),' on item #',(⍕item),' (',selok,')')
+ :Else
+     ⎕←'Unexpected message: ',args
+ :EndSelect

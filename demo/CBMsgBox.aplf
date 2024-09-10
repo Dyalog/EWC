@@ -1,0 +1,17 @@
+CBMsgBox args;style;btns;btn;R;txt
+
+style←'F1.STYLE' eWG 'Text'
+btns←'/'(≠⊆⊢)'F1.BTNS' eWG 'Text'
+txt←'F1.TXT' eWG 'Text'
+
+'MB1' eWC 'MsgBox' 'MsgBox Caption' txt style btns ('Event' ('MsgBtn1' 'MsgBtn2' 'MsgBtn3') 1)
+R←eDQ 'MB1'
+:If 0=≢R
+   btn←'*NONE*'
+:Else
+   btn←('123'⍳¯1↑2⊃R)⊃btns
+:EndIf
+
+'MB2' eWC 'MsgBox' 'MsgBox Confirmation' ('You selected ',btn) 'Msg' 'OK' ('Event' ('MsgBtn1' 'MsgBtn2' 'MsgBtn3') 1)
+R←eDQ 'MB2'
+eEX 'MB1' 'MB2'

@@ -1,0 +1,3 @@
+ CBSineWave args
+ series←1⌽series
+ 'F1.BAR'eWS'Series'series

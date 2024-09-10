@@ -1,0 +1,31 @@
+ DemoListView connected;inputs;scores;TBL;GRID;z;colors;imagefiles;periods
+ EWC.CONNECTED←connected
+ ⎕PW←1000
+
+ 'F1'eWC'Form' 'ListView'(50 50)(800 800)('Coord' 'Pixel')
+
+ imagefiles←'/images/flags16/'∘,¨'dk.png' 'uk.png' 'us.png'
+ 'IL16'eWC'ImageList'('Size'(16 16))('Masked' 2)('Files'imagefiles)
+ imagefiles←'/images/flags32/'∘,¨'dk.png' 'uk.png' 'us.png'
+ 'IL32'eWC'ImageList'('Size'(32 32))('Masked' 2)('Files'imagefiles)
+
+ 'F1.LEFT'eWC'SubForm'('Posn'(0 0))('Size'(800 400))
+ 'F1.LEFT.VIEW'eWC'Combo'('Items'('Icon' 'SmallIcon' 'List' 'Report'))('Size'(23 100))('Posn'(170 20))('Event' 'Select' 'CBUpdateListView')('SelItems' (1 0 0 0))
+ 'F1.LEFT.LV'eWC'ListView'('View' 'Icon')('Border' 1)('Size' (200 360))('Posn' 200 20)
+ 'F1.LEFT.LV'eWS 'Items'(,⍉'DK ' 'UK ' 'USA '∘.,⍕¨⍳10)
+ 'F1.LEFT.LV'eWS ('ImageListObj' 'IL32' 'IL16') ('ImageIndex' (30⍴1 2 3))
+ 'F1.LEFT.LV'eWS ('ColTitles'('Flag' 'Country' 'Index'))('ReportInfo'(((30⍴'Denmark' 'United Kingdom' 'USA')),⍪⍳30))
+ 'F1.LEFT.LV'eWS 'Event' ('Select' 'ItemDown' 'ItemDblClick' 'KeyPress' 'GotFocus') 'CBUpdateListView'
+
+ 'F1.RIGHT'eWC'SubForm'('Visible' 1)('Posn'(0 400))('Size'(800 400))('Attach'('Top' 'Left' 'Bottom' 'Right'))('BCol'(240 240 240))('EdgeStyle' 'None')
+
+ 'F1.SPLIT'eWC'Splitter' 'F1.LEFT' 'F1.RIGHT'('Posn'(0 400))('Event' 'EndSplit' 'CBUpdateSplit')
+ 'F1.RIGHT.TOP'eWC'SubForm'
+ 'F1.RIGHT.TOP.Average' eWC 'Label' (⍕'F1.SPLIT' eWG 'Posn') (115 20)(23 400)
+
+ 'F1.RIGHT.BOT'eWC'SubForm'
+ 'F1.RIGHT.SPLIT'eWC'Splitter'('SplitObj1' 'F1.RIGHT.TOP')('SplitObj2' 'F1.RIGHT.BOT')('Style' 'Horz')('Posn'(300 0))('Event' 'EndSplit' 'CBUpdateSplit')
+ (TBL←'F1.RIGHT.BOT.TABLE')eWC'Group' 'An Empty Group'('Posn'(10 10))('Size'(450 550))
+
+ eNQ 'F1.LEFT.LV' 'GotFocus' 'F1'
+ eNQ 'F1.LEFT.LV' 'ItemDown' 1 1 0 4

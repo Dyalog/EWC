@@ -1,0 +1,18 @@
+ DemoRotate connected;formsize;fnt;angle;rad
+ EWC.CONNECTED←connected
+ ⎕PW←1000
+
+ 'F1'eWC'Form' 'Rotating Fonts'(50 50)(400 400)('Coord' 'Pixel')('Event' ('MouseUp' 'MouseDown') 'CBRotate')
+ 'F1.MB' eWC 'MenuBar'
+ 'F1.MB.ROT' eWC 'Menu' 'Rotate'
+ 'F1.MB.ROT.RIGHT' eWC 'MenuItem' 'Right' ('Event' 'Select' 'CBRotate')
+ 'F1.MB.ROT.LEFT' eWC 'MenuItem'
+ 'F1.MB.ROT.LEFT' eWC 'MenuItem' 'Left' ('Event' 'Select' 'CBRotate')
+
+ :For angle :In 45×¯1+⍳8
+     rad←○angle÷¯180
+     (fnt←'F1.FNT',⍕angle)eWC'Font' 'Segoe UI'('Size' 20)('Rotate' rad)
+     ('F1.TXT',⍕angle)eWC'Text'('     Rotated ',⍕angle)(200 200)('FontObj'fnt) ⍝ ('FCol' (255 255 255))('BCol'(255 0 0))
+ :EndFor
+
+ 'F1.Status' eWC 'Text' 'Click with the mouse...' (370 20)('FontObj' 'F1.FNT0')
