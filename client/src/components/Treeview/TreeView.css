@@ -1,0 +1,6 @@
+.rc-tree .rc-tree-treenode {
+  line-height: 10px !important;
+}
+.rc-tree .rc-tree-treenode .rc-tree-node-content-wrapper {
+  height: 0px !important;
+}

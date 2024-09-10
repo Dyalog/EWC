@@ -1,0 +1,19 @@
+/* Title styles override */
+.ribbon-group-title {
+  font-size: 10px;
+}
+.btn {
+  padding: 0px !important;
+}
+
+.row > * {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.row {
+  margin: 0;
+}
+.d-md-flex {
+  justify-content: center;
+}
