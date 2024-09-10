@@ -10,7 +10,7 @@ The supported subset is [documented in the object reference](ObjectRef/Classes.m
 
 !!!Note
      At this time, EWC is work in progress, and not supported via 
-     normal channels. A supported release of EWC is expected in mid-2025.
+     normal channels. A supported release of EWC is expected in 2025.
 
 EWC can run in "Desktop" mode using an HTMLRenderer. In this mode, EWC supports multiple forms in the same way as `⎕WC`, creating one HTMLRenderer for each form.
 
