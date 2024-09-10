@@ -1,4 +1,4 @@
- {mode} Run web;rc;msg;r;root;seps
+ {mode} Run web;rc;msg;r;root;seps;images
  ⍝ Initialise the Demo application
  ⍝ web: 'Desktop' (0), 'Browser' (1) or 'Multi' (2)
 
@@ -6,8 +6,17 @@
  EWC←##.EWC
  EWC.PORT←22322
  EWC.SHOWDEVTOOLS←0
- root←{⊃⎕NPARTS ¯1↓⍵}⊃⎕NPARTS 4⊃5179⌶⊃⎕SI
- EWC.RESOURCES←1 2⍴'images'(root,'/demo/images')
+
+ :If 0=≢root←{⊃⎕NPARTS ¯1↓⍵}⊃⎕NPARTS 4⊃5179⌶⊃⎕SI
+ :AndIf 0=≢root←{6::'' ⋄ EWC.FOLDER}⍬
+     'Please set EWC.FOLDER to point to the EWC installation folder' ⎕SIGNAL 11
+ :EndIf
+
+ :If ~⎕NEXISTS images←∊1 ⎕NPARTS root,'/demo/images'
+     ('image folder "',images,'" not found') ⎕SIGNAL 11
+ :EndIf
+
+ EWC.RESOURCES←1 2⍴'images' images
 
  :If 2=⎕NC 'mode'
      MODE←mode

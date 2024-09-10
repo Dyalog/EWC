@@ -21,11 +21,22 @@ This will pop up a form with a Dyalog logo and a dropdown on the right which all
 you to select a variety of simple test applications that have been used to test
 EWC during development.
 
+Note that, if you use `]link.import` instead of `]link.create`, or you do not have
+.NET and a File System Watcher available, you will also need to set the variable
+`EWC.FOLDER` to point to the location of the EWC repository. For example:
+
+```
+EWC.FOLDER←'/tmp/ewc'
+```
+
 ## The Demo Application
 
 The [demo application](Demo.md) provides several examples that illustrate the use of
 EWC. It supports Desktop, Browser and Multi modes - and will run in the mode that you
 select using the right argument.
+
+For each example in the drop-down menu, you will find the corresponding source code
+in a function called `demo.DemoXXX`, where `XXX` is the name selected in the drop-down.
 
 ## Building your Own Application
 

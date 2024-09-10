@@ -4,6 +4,19 @@
  ⎕TRAP←0 'S'
  CLIENTVERSION←'0.0.0' ⍝ Until we know better
 
+ :If 0=⎕NC 'FOLDER' ⋄ FOLDER←'' ⋄ :EndIf
+
+ :If 0=≢folder←⊃⎕NPARTS ¯1↓⊃⎕NPARTS 4⊃5179⌶⊃⎕SI
+ :AndIf 0=≢folder←FOLDER
+     'Please set EWC.FOLDER to identify the EWC source folder' ⎕SIGNAL 11
+ :EndIf
+
+ FOLDER←∊1 ⎕NPARTS folder
+
+ :If ~⎕NEXISTS FOLDER
+     ('EWC source folder "',FOLDER,' not found') ⎕SIGNAL 11
+ :EndIf
+
  :If 80=⎕DR args ⋄ args←⊆args ⋄ :EndIf
  :Select ≢args←,args
  :Case 1 ⋄ mode←⊃args ⋄ CODELOCATION←⊃⎕RSI
@@ -43,13 +56,10 @@
      :EndIf
  :EndIf
 
-
- EWCFolder←⊃⎕NPARTS 4⊃5179⌶⊃⎕SI
-
  :If 0=⎕NC'JSClientFolder'
-     :If ⎕NEXISTS folder←'jswc-client/dist/',⍨{⊃⎕NPARTS ¯1↓⍵}⍣2⊢EWCFolder ⍝ Is there a separate checkout of client?
+     :If ⎕NEXISTS folder←'ewc-client/dist/',⍨⊃⎕NPARTS ¯1↓FOLDER ⍝ Is there a separate checkout of client?
          JSClientFolder←folder
-     :ElseIf ⎕NEXISTS folder←(⊃⎕NPARTS ¯1↓EWCFolder),'/client/dist/'
+     :ElseIf ⎕NEXISTS folder←FOLDER,'client/dist/'
          JSClientFolder←folder
      :Else
          'Unable to locate EWC Client'⎕SIGNAL 11

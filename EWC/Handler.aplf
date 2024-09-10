@@ -7,6 +7,7 @@
      →0
  :EndIf
  code←(sessionspace←(2+i)⊃SESSIONS).code
+ reqfn←''
 
  :If (⊂10↑payload)∊'Initialise' 'Initialize' '{"Initiali'
      :If 2=⎕NC'IGNORE1Init'
@@ -25,8 +26,10 @@
      :EndIf
      fn,←(0=≢fn)/'Initialise'
      app←code
-     app._EWC.URL←URL
-     app._EWC.QUERY←ParseQueryString (URL⍳'?')↓URL
+     :If 2=⎕NC 'URL'
+         app._EWC.URL←URL
+         app._EWC.QUERY←ParseQueryString (URL⍳'?')↓URL
+     :EndIf
      app._EWC.HDRS←⊃WSS.Conx[(¯8↑¨WSS.Conx[;1])⍳⊂,'ZI8' ⎕FMT con;2]
      :If 0≠app.⎕NC 'workNamespace' ⍝ /// change this name in DWI
         app←app.workNamespace

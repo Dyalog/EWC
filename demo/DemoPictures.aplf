@@ -3,6 +3,8 @@
  ⎕PW←1000
 
  'F1'eWC'Form'('BCol'(255 255 255))('Coord' 'Pixel')('Size'(500 900))('Picture'('LOGO' 0))
+ 'F1.L' eWC 'Label' 'Top Left' (27 37)
+
  'LOGO'eWC'BitMap'('File' '/images/dyalog-logo.jpg')
  'ICON'eWC'Icon'('File' '/images/dyalog-logo.ico')
  'YES'eWC'BitMap'('File' '/images/yes.bmp')
@@ -10,10 +12,13 @@
  'UK'eWC'BitMap'('File' '/images/flags32/uk.png')
  'DK'eWC'BitMap'('File' '/images/flags32/dk.png')
 
- 'F1.TILE'eWC'SubForm'('Picture'('LOGO' 1))('Size'(250 500))('Posn'(0 400))
- 'F1.SCALE'eWC'SubForm'('Picture'('LOGO' 2))('Size'(250 400))('Posn'(250 0))
+ 'F1.TILE'    eWC 'SubForm'('Picture'('LOGO' 1))('Size'(250 500))('Posn'(0 400))
+ 'F1.TILE.L'   eWC 'Label' 'Tiled' (27 37)
+ 'F1.SCALED'  eWC 'SubForm'('Picture'('LOGO' 2))('Size'(250 400))('Posn'(250 0))
+ 'F1.SCALED.L' eWC 'Label' 'Scaled' (27 56)
  'F1.CENTER'eWC'SubForm'('Size'(250 500))('Posn'(250 400))
  'F1.CENTER'eWS 'Picture'('LOGO' 3)
+ 'F1.CENTER.L' eWC 'Label' 'Centered' (27 170)
 
  'F1.YES'eWC'Button'('Picture' ('YES' 3))('Size'(40 40))('Posn'(10 250))
  'F1.NO'eWC'Button'('Picture' 'NO')('Size'(40 40))('Posn'(50 250))
