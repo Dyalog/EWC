@@ -88,7 +88,7 @@ const ListView = ({ data }) => {
               {Images.length > 0 ? (
                 <img
                   style={{ width: imageWidth, height: imageHeight }}
-                  src={`http://localhost:${PORT}${Images[ImageIndex[index] - 1]}`}
+                  src={`${window.location.protocol}//${window.location.hostname}:${PORT}${Images[ImageIndex[index] - 1]}`}
                 />
               ) : null}
               <span style={{ fontSize: '12px' }}>{item}</span>
@@ -190,7 +190,7 @@ const ListView = ({ data }) => {
                 >
                   <div className='d-flex align-items-center'>
                     {report?.image ? (
-                      <img src={`http://localhost:${PORT}${report?.image}`} />
+                      <img src={`${window.location.protocol}//${window.location.hostname}:${PORT}${report?.image}`} />
                     ) : null}
                     <span style={{ fontSize: '12px' }}>{report?.title}</span>
                   </div>

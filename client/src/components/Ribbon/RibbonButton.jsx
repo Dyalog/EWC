@@ -69,7 +69,7 @@ const CustomRibbonButton = ({ data }) => {
                 width: ImageData.imageSize[1],
                 height: ImageData.imageSize[0],
               }}
-              src={`http://localhost:${PORT}/${ImageData.imageUrl}`}
+              src={`${window.location.protocol}//${window.location.hostname}:${PORT}/${ImageData.imageUrl}`}
               alt="Image"
             />
           ) : ImageIndex ? (
@@ -80,7 +80,7 @@ const CustomRibbonButton = ({ data }) => {
                 height:
                   ImageList?.Properties?.Size && ImageList?.Properties?.Size[0],
               }}
-              src={`http://localhost:${PORT}/${
+              src={`${window.location.protocol}//${window.location.hostname}:${PORT}/${
                 ImageList?.Properties?.Files[ImageIndex - 1]
               }`}
               alt="Image"

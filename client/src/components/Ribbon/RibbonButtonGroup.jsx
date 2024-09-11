@@ -126,7 +126,7 @@ const CustomRibbonButtonGroup = ({ data }) => {
                   width: result.imgSize[0],
                   height: result.imgSize[1],
                 }}
-                src={`http://localhost:${PORT}/${result.imgUrl}`}
+                src={`${window.location.protocol}//${window.location.hostname}:${PORT}/${result.imgUrl}`}
                 alt={title}
                 />
               ) : image ? (
@@ -135,7 +135,7 @@ const CustomRibbonButtonGroup = ({ data }) => {
                   width: ImageList?.Properties?.Size?.[1],
                   height: ImageList?.Properties?.Size?.[0],
                 }}
-                src={`http://localhost:${PORT}/${image?.Properties?.Files?.[imageIndex]}`}
+                src={`${window.location.protocol}//${window.location.hostname}:${PORT}/${image?.Properties?.Files?.[imageIndex]}`}
                 alt={title}
               />
             ) : (

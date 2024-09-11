@@ -84,7 +84,7 @@ const Treeview = ({ data }) => {
 
     return (
       <div style={{ display: 'flex', alignItems: 'center' }}>
-        <img src={`http://localhost:${PORT}/${ImageList?.Properties?.Files[index - 1]}`} />
+        <img src={`${window.location.protocol}//${window.location.hostname}:${PORT}/${ImageList?.Properties?.Files[index - 1]}`} />
         <div>{title}</div>
       </div>
     );

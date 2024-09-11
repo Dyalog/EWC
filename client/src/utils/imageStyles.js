@@ -4,7 +4,7 @@ export const getImageStyles = (decideImageStyle, PORT, ImageData, ImageSize) => 
 
   if (decideImageStyle == 0) {
     imageStyles = {
-      backgroundImage: `url(http://localhost:${PORT}${ImageData?.Properties?.File})`,
+      backgroundImage: `url(${window.location.protocol}//${window.location.hostname}:${PORT}${ImageData?.Properties?.File})`,
       position: 'absolute',
       top: ImageSize && ImageSize.Posn && ImageSize.Posn.length ? ImageSize.Posn[0]: 0,
       left: ImageSize && ImageSize.Posn && ImageSize.Posn.length ? ImageSize.Posn[1]: 0,
@@ -16,14 +16,14 @@ export const getImageStyles = (decideImageStyle, PORT, ImageData, ImageSize) => 
 
   if (decideImageStyle == 1) {
     imageStyles = {
-      backgroundImage: `url(http://localhost:${PORT}${ImageData?.Properties?.File})`,
+      backgroundImage: `url(${window.location.protocol}//${window.location.hostname}:${PORT}${ImageData?.Properties?.File})`,
       backgroundRepeat: 'repeat',
     };
   }
 
   if (decideImageStyle == 2) {
     imageStyles = {
-      backgroundImage: `url(http://localhost:${PORT}${ImageData?.Properties?.File})`,
+      backgroundImage: `url(${window.location.protocol}//${window.location.hostname}:${PORT}${ImageData?.Properties?.File})`,
       backgroundSize: '100% 100%',
       backgroundRepeat: 'no-repeat',
       backgroundPosition: 'center center',
@@ -35,7 +35,7 @@ export const getImageStyles = (decideImageStyle, PORT, ImageData, ImageSize) => 
 
   if (decideImageStyle == 3) {
     imageStyles = {
-      backgroundImage: `url(http://localhost:${PORT}${ImageData?.Properties?.File})`,
+      backgroundImage: `url(${window.location.protocol}//${window.location.hostname}:${PORT}${ImageData?.Properties?.File})`,
       backgroundPosition:
         'center center' /* Center the background image horizontally and vertically */,
       display: 'flex',
@@ -61,7 +61,7 @@ export const getImageStyles = (decideImageStyle, PORT, ImageData, ImageSize) => 
 // if (Picture && Picture[1] == 1) {
 //   updatedStyles = {
 //     ...styles,
-//     backgroundImage: `url(http://localhost:${PORT}${ImageData?.Properties?.File})`,
+//     backgroundImage: `url(${window.location.protocol}//${window.location.hostname}:${PORT}${ImageData?.Properties?.File})`,
 //     backgroundRepeat: 'repeat',
 //   };
 // }
@@ -71,7 +71,7 @@ export const getImageStyles = (decideImageStyle, PORT, ImageData, ImageSize) => 
 // if (Picture && Picture[1] == 0) {
 //   updatedStyles = {
 //     ...styles,
-//     backgroundImage: `url(http://localhost:${PORT}${ImageData?.Properties?.File})`,
+//     backgroundImage: `url(${window.location.protocol}//${window.location.hostname}:${PORT}${ImageData?.Properties?.File})`,
 //     position: 'absolute',
 //     top: 0,
 //     left: 0,
@@ -83,7 +83,7 @@ export const getImageStyles = (decideImageStyle, PORT, ImageData, ImageSize) => 
 // if (Picture && Picture[1] == 3) {
 //   updatedStyles = {
 //     ...styles,
-//     backgroundImage: `url(http://localhost:${PORT}${ImageData?.Properties?.File})`,
+//     backgroundImage: `url(${window.location.protocol}//${window.location.hostname}:${PORT}${ImageData?.Properties?.File})`,
 //     backgroundPosition:
 //       'center center' /* Center the background image horizontally and vertically */,
 //     display: 'flex',
@@ -98,7 +98,7 @@ export const getImageStyles = (decideImageStyle, PORT, ImageData, ImageSize) => 
 // if (Picture && Picture[1] == 2) {
 //   updatedStyles = {
 //     ...styles,
-//     backgroundImage: `url(http://localhost:${PORT}${ImageData?.Properties?.File})`,
+//     backgroundImage: `url(${window.location.protocol}//${window.location.hostname}:${PORT}${ImageData?.Properties?.File})`,
 //     backgroundSize: '100% 100%',
 //     backgroundRepeat: 'no-repeat',
 //     backgroundPosition: 'center center',
@@ -109,5 +109,5 @@ export const getImageStyles = (decideImageStyle, PORT, ImageData, ImageSize) => 
 // }
 
 export const renderImage = (PORT, ImageData) => {
-  return `http://localhost:${PORT}${ImageData?.Properties?.File}`;
+  return `${window.location.protocol}//${window.location.hostname}:${PORT}${ImageData?.Properties?.File}`;
 };
