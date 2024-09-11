@@ -7,6 +7,15 @@ configure the system.
 
 Sets the port number to be used by the server. Defaults to 22322.
                          
+## FOLDER
+
+If EWC was loaded using `]Link.Create` on a machine with a file system watcher, EWC will be
+able to determine the folder that it was loaded from. In other situations, you need
+to set this variable so that EWC can locate the the demo application images, 
+and the javascript client code. For example:
+
+`EWC.FOLDER←'/git/ewc'`
+
 ## RESOURCES
 
 Sets up virtual folders that contain images and other resources that your 
