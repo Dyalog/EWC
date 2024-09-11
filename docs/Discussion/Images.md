@@ -19,4 +19,4 @@ ImageList by creating child icons and bitmap objects, as in `⎕WC`.
 The `File` property of an Icon, and the `Picture` property of a `Button`, `Form`
 and several other properties, are also affected by this.
 
-See the [Configuration] for more details.
+See [Configuration](../Usage/Initialisation.md) for more details.
