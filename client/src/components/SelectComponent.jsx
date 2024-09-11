@@ -35,7 +35,7 @@ import { useAppData } from '../hooks';
 import Chart from './Chart';
 import MessageBox from './MessageBox';
 
-# Kendo UI
+// Kendo UI
 import KendoChart from './KendoChart';
 import KendoGrid from './KendoGrid';
 

@@ -1,3 +1,6 @@
 EWC/server/*
 # mkdocs output
 /site/
+
+# Editor fragments
+*.swp

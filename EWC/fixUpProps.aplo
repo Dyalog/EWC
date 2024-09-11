@@ -40,7 +40,7 @@
          (ix⊃values)←,ix⊃values ⍝ Always make a list
      :CaseList 'Visible' 'Active' 'Interval' 'TitleHeight' 'TitleWidth'
          (ix⊃values)←⊃ix⊃values ⍝ Must be scalar
-     :Case 'Options' ⍝ ApexChart
+     :Case 'Options' ⍝ ApexChart and Kendo Grid
          :If 80=⎕DR data←ix⊃values ⍝ If text
              (ix⊃values)←0 ⎕JSON⍠'Dialect' 'JSON5'⊣data
          :EndIf

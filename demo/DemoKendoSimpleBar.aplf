@@ -1,0 +1,8 @@
+ DemoKendoSimpleBar connected;series
+
+ series←+\?2 10⍴2
+
+ 'F1'eWC'Form' 'Charts'(50 50)(600 800)('Coord' 'Pixel')
+ 'F1.OUT'eWC'Label' 'Click on a bar' (13 100)(23 300)
+ 'F1.NEW'eWC'Button' 'New Data' (10 10)(23 80)('Event' 'Select' 'CBSimpleBar')
+ 'F1.BAR'eWC'KendoChart'(50 10)(540 780)series'bar'('Event' ('click' 'legendclick') 'CBSimpleBar')
