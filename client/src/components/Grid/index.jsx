@@ -1074,7 +1074,7 @@ const Grid = ({ data }) => {
                       handleCellClick(rowi, columni);
                       // handleCellMove(rowi, columni + 1, '');
                     }}
-                    id={`${gridId}.r${rowi + 1}.c${columni + 1}-cell2`}
+                    id={`${gridId}.r${rowi + 1}.c${columni + 1}-cell2-${data.type}`}
                     style={{
                       borderRight: isFocused
                         ? "1px solid blue"
@@ -1097,6 +1097,7 @@ const Grid = ({ data }) => {
                       textAlign: data.type == "header" ? "center" : "end",
                       overflow: "hidden",
                       lineHeight: `${data?.height}px`,
+                      // padding: "0px 5px"
                     }}
                   >
                     <Component
