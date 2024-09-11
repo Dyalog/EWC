@@ -98,7 +98,7 @@ const GridButton = ({ data }) => {
           ref={buttonRef}
           tabIndex={'1'}
           // onDoubleClick={() => setShowInput(true)}
-          style={{ backgroundColor: data?.backgroundColor, ...fontStyles, outline: 0 }}
+          style={{ backgroundColor: data?.backgroundColor, ...fontStyles, outline: 0, paddingRight: "5px"}}
         >
           {!data?.formattedValue ? (
             <input

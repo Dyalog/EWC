@@ -344,7 +344,7 @@ const GridEdit = ({ data }) => {
             onDoubleClick={() => {
               setIsEditable(true);
             }}
-            style={{ backgroundColor: data?.backgroundColor, outline: 0, paddingLeft: '5px' }}
+            style={{ backgroundColor: data?.backgroundColor, outline: 0, paddingLeft: '5px',paddingRight: '5px' }}
           >
             {!data?.formattedValue ? inputValue : data?.formattedValue}
           </div>
@@ -359,7 +359,7 @@ const GridEdit = ({ data }) => {
                 outline: 0,
                 width: '100%',
                 height: '100%',
-                paddingLeft: '5px',
+                paddingLeft: '5px',paddingRight: '5px'
               }}
               value={inputValue}
               onChange={handleInputChange}
@@ -418,6 +418,7 @@ const GridEdit = ({ data }) => {
               outline: 0,
               textAlign: 'right',
               paddingRight: '5px',
+              paddingRight: '5px'
             }}
           >
             {!data?.formattedValue ? (
@@ -432,6 +433,7 @@ const GridEdit = ({ data }) => {
                   backgroundColor: data?.backgroundColor,
                   textAlign: 'right',
                   paddingRight: '5px',
+                  paddingLeft: '5px'
                 }}
                 readOnly
                 decimalScale={Decimal}  
@@ -456,6 +458,7 @@ const GridEdit = ({ data }) => {
               backgroundColor: data?.backgroundColor,
               textAlign: 'right',
               paddingRight: '5px',
+              paddingLeft: '5px'
             }}
             onValueChange={(value) => {
               if (!value.value) return setInputValue(0);
@@ -498,6 +501,7 @@ const GridEdit = ({ data }) => {
             height: '100%',
             width: '100%',
             paddingLeft: '5px',
+            paddingRight: '5px'
           }}
         >
           {!data?.formattedValue ? data?.value : data?.formattedValue}
@@ -514,6 +518,7 @@ const GridEdit = ({ data }) => {
             height: '100%',
             backgroundColor: data?.backgroundColor,
             paddingLeft: '5px',
+            paddingRight: '5px'
           }}
           onSelect={handleSelect}
           onDoubleClick={(e) => {
