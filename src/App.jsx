@@ -269,7 +269,11 @@ const App = () => {
   const fetchData = (port) => {
     const runningPort = port == '5173' ? '22322' : port;
     let zoom = Math.round(window.devicePixelRatio * 100);
-    webSocketRef.current = new WebSocket(`ws://localhost:${runningPort}/`);
+    console.log("Socket",{socket: window.location})
+    webSocketRef.current = new WebSocket(`ws://${window.location.hostname}:${runningPort}/`);
+
+
+
 
     const webSocket = webSocketRef.current;
     setSocket(webSocket);
