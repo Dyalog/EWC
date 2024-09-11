@@ -1,6 +1,6 @@
 site_name: EWC User Guide
-repo_url: https://github.com/mkromberg/jswc
-repo_name: mkromberg/jswc
+repo_url: https://github.com/dyalog/ewc
+repo_name: dyalog/ewc
 nav:
   - Overview:
     - index.md
