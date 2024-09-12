@@ -1345,9 +1345,13 @@ enable: </p>
 namespace from which Init was called. These are intended to be used
 as replacements for the system functions <code>⎕WC</code>, <code>⎕WS</code>, etc.</p>
 <p>If you would like to use a different prefix letter for these functions, you can 
-provide a left argument to change the names. For example,</p>
+provide a left argument to change the names. For example:</p>
 <p><code>'x' EWC.Init 'Browser'</code></p>
 <p>Will create functions <code>xWC</code>, <code>xWS</code> etc, and start EWC in Browser mode.</p>
+<h2 id="ewcnoidq">EWC.NOIDQ</h2>
+<p>If you want to experiment interactively, rather than call <code>eDQ</code>, you must set
+<code>EWC.NOIDQ←0</code> to allow "Interactive DQ" (apologies for the negative switch name) before creating objects.
+This will probably change soon.</p>
 <h1 id="multi-mode">'Multi' Mode</h1>
 <p>In Desktop and Browser mode, your application can call EWC.Init and then immediately
 continue to create GUI components using <code>eWC</code>. In browser mode, EWC.Init will not
