@@ -47,6 +47,6 @@
          series[i].type←4⊃¨data[i]
      :EndIf
 
- :ElseIf
+ :Else
      'Invalid series format'⎕SIGNAL 501
  :EndIf
