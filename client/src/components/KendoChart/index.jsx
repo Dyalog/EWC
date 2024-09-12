@@ -1,11 +1,8 @@
-import { useAppData } from '../../hooks';
-
 import '@progress/kendo-theme-default/dist/all.css';
-import { Chart, ChartCategoryAxis, ChartCategoryAxisItem, ChartLegend, ChartLegendItem, ChartSeries, ChartSeriesItem, ChartValueAxis, ChartValueAxisItem } from '@progress/kendo-react-charts';
+import { Chart, ChartLegend, ChartLegendItem, ChartSeries, ChartSeriesItem } from '@progress/kendo-react-charts';
 
 const KendoChart = ({ data }) => {
-  const { Options, Posn, Series, Size, ChartType, Event } = data?.Properties;
-  const { socket } = useAppData(); // TODO! callbacks to APL on interaction
+  const { Posn, Series, Size } = data?.Properties;
 
   const chartDefaultV4Colors = [
     "#ff6358",
