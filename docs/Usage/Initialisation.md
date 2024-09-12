@@ -24,11 +24,17 @@ namespace from which Init was called. These are intended to be used
 as replacements for the system functions `⎕WC`, `⎕WS`, etc.
 
 If you would like to use a different prefix letter for these functions, you can 
-provide a left argument to change the names. For example,
+provide a left argument to change the names. For example:
 
 `'x' EWC.Init 'Browser'`
 
 Will create functions `xWC`, `xWS` etc, and start EWC in Browser mode.
+
+## EWC.NOIDQ
+
+If you want to experiment interactively, rather than call `eDQ`, you must set
+`EWC.NOIDQ←0` to allow "Interactive DQ" (apologies for the negative switch name) before creating objects.
+This will probably change soon.
 
 # 'Multi' Mode
 
