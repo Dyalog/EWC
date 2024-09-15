@@ -1,7 +1,7 @@
  R←DevCaps;m;z
  :Select 3↑⊃'.'⎕WG'APLVersion'
  :Case 'Win'
-     →0⊣R←Name ⎕WG Props
+     →0⊣R←'.' ⎕WG 'DevCaps'
  :Case 'Lin'
      m←⎕D∊⍨z←⊃⎕SH'xdpyinfo | grep dimensions'
      →0⊣R←(⌽¨1 0 1 0⊂2⊃⎕VFI m\m/z),¯1 100
