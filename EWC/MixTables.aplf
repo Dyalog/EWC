@@ -2,5 +2,5 @@ R←ID MixTables (Propnames R);i
 ⍝ /// This needs to reference a list of known Matrix properties in Classes
 
 :If 0≠≢i←⍸Propnames∊⊂'Values'
-    R[i]←↑¨R[i]
+    R[i]←{0=≢⍵:0 0⍴⊂'' ⋄↑⍵}¨R[i]
 :EndIf
