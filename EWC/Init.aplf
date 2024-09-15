@@ -51,7 +51,7 @@
 
  :If mode=2
      :If CODELOCATION∊# ⎕SE
-     :OrIf 3≠CODELOCATION.⎕NC'Init'
+     :OrIf 3≠CODELOCATION.⎕NC'Initialise'
          'Multi-mode must be initialised from a namespace containing a function Init'⎕SIGNAL 11
      :EndIf
  :EndIf
@@ -107,7 +107,7 @@
 
  HRBorder←40 17  ⍝ Additional space required for HR chrome
  MENUOffset←23 0 ⍝ Space to allow for menu
- NOIDQ←1      ⍝ No interactive DQ
+ NOIDQ←0         ⍝ Allow interactive DQ by default
  WGID←0
  WG_TIMEOUT←3 ⍝ Seconds to wait for response
  SESSIONS←⍬ ⍬ ⍝ (IDs, Connections, SessionData)
