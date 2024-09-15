@@ -34,7 +34,7 @@
      :If 0≠app.⎕NC 'workNamespace' ⍝ /// change this name in DWI
         app←app.workNamespace
      :EndIf
-     :If 3=app.⎕NC fn
+     :If (3=app.⎕NC fn)∧MODE≠0
          app._EWC.TID←(app⍎fn)&CONNECTED
      :ElseIf 0≠≢reqfn ⍝ Explicit function requested
          'E'Log'Initialise: Function not found: ',(⍕code),'.',fn
