@@ -28,4 +28,7 @@
  'ApexSineWave'
  '--- Flex'
  'FlexLogin'
+ '--- Kendo UI'
+ 'KendoGrids'
+ 'KendoSimpleBar'
 )
