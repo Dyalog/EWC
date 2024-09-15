@@ -55,7 +55,6 @@
  :EndIf
 
  :If (MODE=0)∧type≡'Form' ⍝ Need special handling of some Form events when hosted in an HTMLRenderer
-     hr←objref.HR
      :Select ⎕C 2⊃Event
      :Case 'close'
          'N' Log '    Expunging: ',name
