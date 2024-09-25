@@ -1,0 +1,17 @@
+ DemoApexScatter connected;n;x;y;r;k;o;series
+
+ n←20 ⋄ r←0.5
+ x←(⍳n)÷n
+ y←x+r×?(≢x)⍴0
+ series←,⊂(x+r×?(≢x)⍴0)'series1'x
+ series,←⊂(x+r×?(≢x)⍴0)'series2'x
+
+ o←'{chart:{type:"scatter"},'
+ o,←'dataLabels:{enabled:false},'
+ o,←'xaxis:{type:"numeric",min:0,stepSize:0.1,max:1},'
+ o,←'yaxis:{type:"numeric",min:0,stepSize:0.25,max:1.5},'
+ o,←'legend:{show:true},'
+ o,←'}'
+
+ 'F1'eWC'Form' 'Charts'(50 50)(600 800)('Coord' 'Pixel')
+ 'F1.XY'eWC'ApexChart'(50 10)(400 780)series'scatter'('Options'o)
